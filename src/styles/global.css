@@ -99,6 +99,12 @@ a:focus {
   outline: var(--main) dashed 2px;
 }
 
+@media screen and (max-width: 768px) {
+  a:focus {
+    outline: none;
+  }
+}
+
 button {
   outline: none;
   border: none;
