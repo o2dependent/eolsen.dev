@@ -60,16 +60,24 @@ export default function MobileNav({ toggleDarkMode }) {
       <LinkContainer isNavOpen={isNavOpen}>
         <NavProtector type="main" />
         <NavLinkContainer>
-          <NavLink to="/">Ethan Olsen</NavLink>
+          <NavLink onClick={() => setIsNavOpen(false)} to="/">
+            Ethan Olsen
+          </NavLink>
         </NavLinkContainer>
         <NavLinkContainer>
-          <NavLink to="/posts">Posts</NavLink>
+          <NavLink onClick={() => setIsNavOpen(false)} to="/posts">
+            Posts
+          </NavLink>
         </NavLinkContainer>
         <NavLinkContainer>
-          <NavLink to="/projects">Projects</NavLink>
+          <NavLink onClick={() => setIsNavOpen(false)} to="/projects">
+            Projects
+          </NavLink>
         </NavLinkContainer>
         <NavLinkContainer>
-          <NavLink to="/contact">Contact</NavLink>
+          <NavLink onClick={() => setIsNavOpen(false)} to="/contact">
+            Contact
+          </NavLink>
         </NavLinkContainer>
       </LinkContainer>
     </>

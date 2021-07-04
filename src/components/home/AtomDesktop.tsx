@@ -1,11 +1,11 @@
-import React from "react"
-import styled, { keyframes } from "styled-components"
-import mixins from "../../helpers/mixins"
-import { T_Tags } from "../PostTags"
-import SvgSwitch from "../SvgSwitch"
+import React from "react";
+import styled, { keyframes } from "styled-components";
+import mixins from "../../helpers/mixins";
+import { T_Tags } from "../PostTags";
+import SvgSwitch from "../SvgSwitch";
 
 export default function AtomDesktop() {
-  const Tags: T_Tags[] = ["React", "CSS", "Gatsby", "Nextjs", "Node", "Git"]
+  const Tags: T_Tags[] = ["React", "CSS", "Gatsby", "Nextjs", "Node", "Git"];
 
   return (
     <AtomDesktopContainer>
@@ -21,7 +21,7 @@ export default function AtomDesktop() {
         ))}
       </PulseContainer>
     </AtomDesktopContainer>
-  )
+  );
 }
 
 // --- styled components ---
@@ -35,7 +35,7 @@ const AtomDesktopContainer = styled.div`
   @media (min-width: 768px) {
     display: block;
   }
-`
+`;
 
 const PulseContainer = styled.div`
   position: relative;
@@ -45,7 +45,7 @@ const PulseContainer = styled.div`
     height: 27rem /* 432px */;
     width: 27rem /* 432px */;
   }
-`
+`;
 
 const PulseDotAnimation = keyframes`
 0% {
@@ -61,7 +61,7 @@ const PulseDotAnimation = keyframes`
     width: 6rem;
     height: 6rem;
   }
-`
+`;
 
 const PulseDot = styled.div`
   z-index: 1;
@@ -76,7 +76,7 @@ const PulseDot = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   animation: ${PulseDotAnimation} 1s ease infinite;
-`
+`;
 
 const PulseRingAnimation = keyframes`
   0% {
@@ -86,7 +86,7 @@ const PulseRingAnimation = keyframes`
   100% {
     opacity: 0;
   }
-`
+`;
 
 const PulseCircle = styled.div`
   background-color: var(--main);
@@ -107,7 +107,7 @@ const PulseCircle = styled.div`
   &:nth-of-type(3) {
     animation-delay: -2s;
   }
-`
+`;
 
 const TagCircleAnimation = keyframes`
   0% {
@@ -116,9 +116,9 @@ const TagCircleAnimation = keyframes`
   100% {
     transform: rotate(360deg) translate(-12.5rem) rotate(-360deg);
   }
-`
+`;
 
-const TagContainer = styled.div<{ delay: number }>`
+const TagContainer = styled.div<{ delay: number; }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,4 +138,4 @@ const TagContainer = styled.div<{ delay: number }>`
   .dark & {
     background-color: var(--gray-800);
   }
-`
+`;

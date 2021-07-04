@@ -9,7 +9,7 @@ import styled from "styled-components"
 import mixins from "../helpers/mixins"
 import AtomDesktop from "../components/home/AtomDesktop"
 import AtomMobile from "../components/home/AtomMobile"
-import DesktopSvg from "../components/home/DesktopSvg"
+import SvgLCEText from "../components/home/SvgLCEText"
 
 // --- query ---
 export const query = graphql`
@@ -171,7 +171,7 @@ function Hero() {
   return (
     <HeroContainer>
       <NavProtector type="main" />
-      <DesktopSvg />
+      <SvgLCEText />
       <AtomDesktop />
       <AtomMobile />
     </HeroContainer>
@@ -180,5 +180,6 @@ function Hero() {
 
 // --- hero styled components ---
 const HeroContainer = styled.div`
+  position: relative;
   width: 100%;
 `
