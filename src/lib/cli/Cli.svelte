@@ -123,7 +123,7 @@
 </script>
 
 <div
-	class="mx-auto max-w-xl relative before:absolute before:top-0 before:left-0  before:w-full  before:h-full before:blur-lg before:bg-gradient-to-br before:from-fuchsia-500  before:to-orange-500 before:-z-10"
+	class="mx-auto max-w-xl relative before:absolute before:top-0 before:left-0  before:w-full  before:h-full before:blur-lg stage before:-z-10"
 >
 	<form
 		on:submit|preventDefault={() => {
@@ -162,5 +162,32 @@
 <style>
 	label::-webkit-scrollbar-thumb {
 		border-radius: 10px !important;
+	}
+	.stage::before {
+		animation: animateBg 10s linear infinite;
+		background-image: linear-gradient(
+			90deg,
+			#cf5c5c,
+			#c19b4a,
+			#def2a0,
+			#c6ee4a,
+			#42eca6,
+			#64b3d9,
+			#208ea2,
+			#498ada,
+			#5b73df,
+			#897ed3,
+			#cf5c5c,
+			#c19b4a
+		);
+		background-size: 1100% 100%;
+	}
+	@keyframes animateBg {
+		0% {
+			background-position: 0% 0%;
+		}
+		100% {
+			background-position: 100% 0%;
+		}
 	}
 </style>
