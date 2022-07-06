@@ -2,10 +2,13 @@ const config = {
 	content: ['./src/**/*.{html,js,svelte,ts}'],
 
 	theme: {
-		extend: {}
+		extend: {
+			scrollbar: ['rounded']
+		}
 	},
 
-	plugins: []
+	plugins: [require('tailwind-scrollbar')],
+	variants: {}
 };
 
 module.exports = config;
