@@ -2,4 +2,6 @@
 	import Cli from '$lib/cli/Cli.svelte';
 </script>
 
-<Cli />
+<div class="py-8">
+	<Cli />
+</div>

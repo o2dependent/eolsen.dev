@@ -122,27 +122,36 @@
 	};
 </script>
 
-<form
-	on:submit|preventDefault={() => {
-		execute(cliInput);
-		cliInput = '';
-	}}
-	class="container mx-auto font-mono"
+<div
+	class="mx-auto max-w-md relative before:absolute before:top-0 before:left-0  before:w-full  before:h-full before:blur-lg before:bg-gradient-to-br before:from-purple-500 before:to-orange-500 before:-z-10"
 >
-	<label for="cli-input">
-		{#each lines as line}
-			<p>{line}</p>
-		{/each}
-		<div class="flex gap-[1ch]">
-			<p>{curDir?.join('/')}></p>
-			<input
-				name="cli-input"
-				id="cli-input"
-				autocomplete="off"
-				class="flex-grow outline-none bg-transparent"
-				type="text"
-				bind:value={cliInput}
-			/>
+	<form
+		on:submit|preventDefault={() => {
+			execute(cliInput);
+			cliInput = '';
+		}}
+		class=" overflow-hidden ring ring-neutral-900 ring-opacity-80 h-80 text-sm rounded-lg text-white bg-neutral-800 font-mono flex flex-col"
+	>
+		<div class="flex bg-neutral-900 items-center gap-2 py-2 px-4">
+			<div class="h-3 w-3 rounded-full bg-neutral-500" />
+			<div class="h-3 w-3 rounded-full bg-neutral-500" />
+			<div class="h-3 w-3 rounded-full bg-neutral-500" />
 		</div>
-	</label>
-</form>
+		<label class="flex-grow overflow-y-scroll py-2 px-4" for="cli-input">
+			{#each lines as line}
+				<p>{line}</p>
+			{/each}
+			<div class="flex gap-[1ch]">
+				<p>{curDir?.join('/')}></p>
+				<input
+					name="cli-input"
+					id="cli-input"
+					autocomplete="off"
+					class="flex-grow outline-none bg-transparent"
+					type="text"
+					bind:value={cliInput}
+				/>
+			</div>
+		</label>
+	</form>
+</div>
