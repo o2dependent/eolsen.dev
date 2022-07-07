@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Window from '$lib/window/Window.svelte';
+
 	let cliInput = '';
 
 	let curDir: string[] = ['Desktop'];
@@ -76,9 +78,8 @@
 				const dir = getDir([...curDir, args[0]]);
 				if (dir.name !== curDir[curDir.length - 1]) {
 					curDir = [...curDir, args[0]];
-					print(`Changed to ${dir.name}`);
 				} else {
-					print(`Directory ${args[0]} does not exist`);
+					print(`cd: no such file or directory: ${args[0]}`);
 				}
 			}
 		},
@@ -122,21 +123,14 @@
 	};
 </script>
 
-<div
-	class="mx-auto max-w-xl relative before:absolute before:top-0 before:left-0  before:w-full  before:h-full before:blur-lg stage before:-z-10"
->
+<Window>
 	<form
 		on:submit|preventDefault={() => {
 			execute(cliInput);
 			cliInput = '';
 		}}
-		class=" overflow-hidden ring ring-neutral-900 ring-opacity-80 h-80 text-sm rounded-lg text-white bg-neutral-800 font-mono flex flex-col"
+		class="h-80 text-sm text-white bg-neutral-800 font-mono flex flex-col"
 	>
-		<div class="flex bg-neutral-900 items-center gap-2 py-2 px-4">
-			<div class="h-3 w-3 rounded-full bg-neutral-500" />
-			<div class="h-3 w-3 rounded-full bg-neutral-500" />
-			<div class="h-3 w-3 rounded-full bg-neutral-500" />
-		</div>
 		<label
 			class="flex-grow scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-700 overflow-y-scroll py-2 px-4"
 			for="cli-input"
@@ -157,7 +151,7 @@
 			</div>
 		</label>
 	</form>
-</div>
+</Window>
 
 <style>
 	label::-webkit-scrollbar-thumb {
@@ -167,18 +161,17 @@
 		animation: animateBg 10s linear infinite;
 		background-image: linear-gradient(
 			90deg,
-			#cf5c5c,
-			#c19b4a,
-			#def2a0,
-			#c6ee4a,
+			#897ed3,
+			#5b73df,
+			#498ada,
+			#208ea2,
+			#64b3d9,
 			#42eca6,
 			#64b3d9,
 			#208ea2,
 			#498ada,
 			#5b73df,
-			#897ed3,
-			#cf5c5c,
-			#c19b4a
+			#897ed3
 		);
 		background-size: 1100% 100%;
 	}

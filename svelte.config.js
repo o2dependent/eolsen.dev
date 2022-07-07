@@ -12,7 +12,11 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		alias: {
+			'$stores': './stores',
+			'$stores/*': './stores/*',
+		}
 	}
 };
 
