@@ -1,7 +1,13 @@
 <script lang="ts">
+	import { removeApp, type AppNames, type AppWindow } from '$stores/apps.store';
 	import { draggable } from '@neodrag/svelte';
 
+	export let appKey: AppNames;
+	export let appWindow: AppWindow;
+
 	let isMouseDown = false;
+
+	const onRemoveAppHandler = () => removeApp(appKey, appWindow.id);
 </script>
 
 <div
@@ -12,7 +18,7 @@
 			isMouseDown = false;
 		}
 	}}
-	class="resize overflow-hidden rounded-lg min-w-fit h-40 relative shadow flex flex-col"
+	class="resize overflow-hidden rounded-lg min-w-fit h-40 absolute shadow flex flex-col"
 
 >
 	<div on:mousedown={() => {
@@ -21,7 +27,7 @@
 		? 'cursor-grabbing'
 		: 'cursor-grab'}">
 		<div class="flex gap-2">
-			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-red-500" />
+			<button on:click={onRemoveAppHandler} on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-red-500" />
 			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-yellow-500" />
 			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-green-500" />
 		</div>

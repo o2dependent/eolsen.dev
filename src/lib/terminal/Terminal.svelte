@@ -1,5 +1,9 @@
 <script lang="ts">
 	import Window from '$lib/window/Window.svelte';
+	import type { AppNames, AppWindow } from '$stores/apps.store';
+
+	export let appKey: AppNames;
+	export let appWindow: AppWindow;
 
 	let cliInput = '';
 
@@ -123,7 +127,7 @@
 	};
 </script>
 
-<Window>
+<Window {appKey} {appWindow}>
 	<form
 		on:submit|preventDefault={() => {
 			execute(cliInput);
@@ -133,7 +137,7 @@
 	>
 		<label
 			class="flex-grow scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-700 overflow-y-scroll py-2 px-4"
-			for="cli-input"
+			for="cli-input-{appWindow.id}"
 		>
 			{#each lines as line}
 				<p>{line}</p>
@@ -141,8 +145,8 @@
 			<div class="flex gap-[1ch]">
 				<p>{curDir?.join('/')}></p>
 				<input
-					name="cli-input"
-					id="cli-input"
+					name="cli-input-{appWindow.id}"
+					id="cli-input-{appWindow.id}"
 					autocomplete="off"
 					class="flex-grow outline-none bg-transparent"
 					type="text"

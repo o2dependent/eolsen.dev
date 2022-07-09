@@ -14,8 +14,8 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		alias: {
-			'$stores': './stores',
-			'$stores/*': './stores/*',
+			'$stores': './src/stores',
+			'$stores/*': './src/stores/*',
 		}
 	}
 };
