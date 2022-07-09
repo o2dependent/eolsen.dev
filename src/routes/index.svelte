@@ -1,7 +1,7 @@
 <script>
-	import Cli from '$lib/cli/Cli.svelte';
+	import AppBar from '$lib/appbar/AppBar.svelte';
 </script>
 
 <div class="py-8">
-	<Cli />
+	<AppBar />
 </div>

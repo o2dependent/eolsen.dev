@@ -129,7 +129,7 @@
 			execute(cliInput);
 			cliInput = '';
 		}}
-		class="h-80 text-sm text-white bg-neutral-800 font-mono flex flex-col"
+		class="h-full text-sm text-white bg-neutral-800 font-mono flex flex-col"
 	>
 		<label
 			class="flex-grow scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-700 overflow-y-scroll py-2 px-4"
