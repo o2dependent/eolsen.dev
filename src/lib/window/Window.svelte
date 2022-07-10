@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { removeApp, type AppNames, type AppWindow } from '$stores/apps.store';
 	import { draggable } from '@neodrag/svelte';
+	import {scale, blur} from 'svelte/transition'
 
 	export let appKey: AppNames;
 	export let appWindow: AppWindow;
@@ -18,6 +19,8 @@
 			isMouseDown = false;
 		}
 	}}
+	in:scale={{duration: 150}}
+	out:blur={{duration: 150}}
 	class="resize overflow-hidden rounded-lg min-w-fit h-40 absolute shadow flex flex-col"
 
 >
