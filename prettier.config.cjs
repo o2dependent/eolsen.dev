@@ -1,8 +1,8 @@
 module.exports = {
 	useTabs: true,
 	singleQuote: true,
-	trailingComma: "none",
+	trailingComma: 'none',
 	printWidth: 100,
 	plugins: [require('prettier-plugin-tailwindcss')],
-	tailwindConfig: './tailwind.config.cjs',
-}
+	tailwindConfig: './tailwind.config.cjs'
+};

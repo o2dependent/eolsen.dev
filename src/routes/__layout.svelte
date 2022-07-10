@@ -2,6 +2,6 @@
 	import '../app.css';
 </script>
 
-<main class="h-full container w-full mx-auto">
+<main class="container mx-auto h-full w-full">
 	<slot />
 </main>

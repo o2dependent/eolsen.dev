@@ -5,30 +5,30 @@ export interface AppWindow {
 	id: string;
 }
 
-export type Apps = Record<AppNames,AppWindow[]>
+export type Apps = Record<AppNames, AppWindow[]>;
 
 export const apps = writable<Apps>({
 	Terminal: [],
 	Project: [],
-	Settings: [],
-})
+	Settings: []
+});
 
 export const addApp = (appKey: AppNames) => {
-	const appWindow: AppWindow = {id: new Date().toISOString()}
+	const appWindow: AppWindow = { id: new Date().toISOString() };
 	apps.update((oldApps) => {
 		return {
 			...oldApps,
 			[appKey]: [...oldApps[appKey], appWindow]
-		}
-	})
-}
+		};
+	});
+};
 
 export const removeApp = (appKey: AppNames, appId: string) => {
 	apps.update((oldApps) => {
-		console.log({oldApps,appKey,appId})
+		console.log({ oldApps, appKey, appId });
 		return {
 			...oldApps,
-			[appKey]: oldApps[appKey].filter(app => app.id !== appId)
-		}
-	})
-}
+			[appKey]: oldApps[appKey].filter((app) => app.id !== appId)
+		};
+	});
+};

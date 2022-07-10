@@ -133,10 +133,10 @@
 			execute(cliInput);
 			cliInput = '';
 		}}
-		class="h-full text-sm text-white bg-neutral-800 font-mono flex flex-col"
+		class="flex h-full flex-col bg-neutral-800 font-mono text-sm text-white"
 	>
 		<label
-			class="flex-grow scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-700 overflow-y-scroll py-2 px-4"
+			class="flex-grow overflow-y-scroll py-2 px-4 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800"
 			for="cli-input-{appWindow.id}"
 		>
 			{#each lines as line}
@@ -148,7 +148,7 @@
 					name="cli-input-{appWindow.id}"
 					id="cli-input-{appWindow.id}"
 					autocomplete="off"
-					class="flex-grow outline-none bg-transparent"
+					class="flex-grow bg-transparent outline-none"
 					type="text"
 					bind:value={cliInput}
 				/>
