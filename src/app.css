@@ -9,5 +9,5 @@ body {
 }
 
 html {
-	@apply bg-black text-white;
+	@apply bg-gradient-to-br from-purple-900 via-purple-800 to-purple-900 text-white;
 }

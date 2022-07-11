@@ -22,7 +22,7 @@
 	}}
 	in:scale={{ duration: 150 }}
 	out:blur={{ duration: 150 }}
-	class="absolute flex h-40 min-w-fit resize flex-col overflow-hidden rounded-lg shadow"
+	class="absolute flex h-40 min-w-fit resize flex-col overflow-hidden rounded-lg shadow-lg"
 >
 	<div
 		on:mousedown={() => {

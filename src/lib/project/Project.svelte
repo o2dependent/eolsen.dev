@@ -31,7 +31,7 @@
 	}
 </script>
 
-<Window headerClass="bg-purple-900" {appKey} {appWindow}>
+<Window headerClass="!bg-slate-900" {appKey} {appWindow}>
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
