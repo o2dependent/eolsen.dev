@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Project from '$lib/project/Project.svelte';
+
 	import Terminal from '$lib/terminal/Terminal.svelte';
 	import { apps } from '$stores/apps.store';
 	import { append } from 'svelte/internal';
@@ -14,7 +16,9 @@
 			<Terminal {appKey} {appWindow} />
 		{/each}
 	{:else if appKey === 'Project'}
-		<div>Project</div>
+		{#each $apps[appKey] as appWindow (appWindow.id)}
+			<Project {appKey} {appWindow} />
+		{/each}
 	{:else}
 		<div>srry uwu</div>
 	{/if}

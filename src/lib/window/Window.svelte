@@ -5,6 +5,7 @@
 
 	export let appKey: AppNames;
 	export let appWindow: AppWindow;
+	export let headerClass: string = '';
 
 	let isMouseDown = false;
 
@@ -27,7 +28,7 @@
 		on:mousedown={() => {
 			isMouseDown = true;
 		}}
-		class="handle flex items-center gap-2 bg-neutral-900 py-2 px-4 {isMouseDown
+		class="handle flex items-center gap-2 bg-neutral-900 py-2 px-4 {headerClass} {isMouseDown
 			? 'cursor-grabbing'
 			: 'cursor-grab'}"
 	>
@@ -40,6 +41,7 @@
 			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-yellow-500" />
 			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-green-500" />
 		</div>
+		<slot name="header" />
 	</div>
 	<div class="max-h-full flex-grow overflow-y-auto" on:mousedown|stopPropagation>
 		<slot />
