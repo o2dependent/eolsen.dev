@@ -16,23 +16,34 @@
 		return project as DirectoryFile & { name: string };
 	});
 
-	let curProjectHistory: number[] = [];
-	let curProjectIndex: number | undefined;
+	let projectHistory: number[] = [];
+	let projectHistoryIndex: number | undefined;
+	let curProject: typeof projects[0] | undefined;
+
+	$: {
+		console.log({ curProject });
+		if (typeof projectHistoryIndex !== 'undefined') {
+			const projectIndex = projectHistory[projectHistoryIndex];
+			curProject = projects[projectIndex];
+		} else {
+			curProject = undefined;
+		}
+	}
 </script>
 
 <Window headerClass="bg-purple-900" {appKey} {appWindow}>
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
-				if (curProjectIndex === undefined) {
+				if (projectHistoryIndex === undefined) {
 					return;
-				} else if (curProjectIndex === 0) {
-					curProjectIndex = undefined;
+				} else if (projectHistoryIndex === 0) {
+					projectHistoryIndex = undefined;
 				} else {
-					curProjectIndex--;
+					projectHistoryIndex--;
 				}
 			}}
-			disabled={curProjectIndex === undefined}
+			disabled={projectHistoryIndex === undefined}
 			class="flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -53,13 +64,13 @@
 		</button>
 		<button
 			on:click={() => {
-				if (curProjectIndex === undefined) {
-					curProjectIndex = 0;
+				if (projectHistoryIndex === undefined) {
+					projectHistoryIndex = 0;
 				} else {
-					curProjectIndex++;
+					projectHistoryIndex++;
 				}
 			}}
-			disabled={curProjectIndex === curProjectHistory.length - 1}
+			disabled={projectHistory.length === 0 || projectHistoryIndex === projectHistory.length - 1}
 			class="flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -78,6 +89,11 @@
 				/>
 			</svg>
 		</button>
+		<div class="flex w-full flex-grow items-center justify-center pr-12">
+			<p>
+				Projects{curProject ? ` - ${curProject.name}` : ''}
+			</p>
+		</div>
 	</div>
 	<form class="flex h-full bg-white font-mono text-sm text-black">
 		<div class="flex w-60 flex-col border-r-2 border-slate-700 bg-slate-800">
@@ -88,14 +104,14 @@
 				{#each projects as project, index}
 					<button
 						on:click={() => {
-							if (curProjectIndex === index) {
+							if (projectHistoryIndex === index || curProject?.name === project.name) {
 								return;
 							}
-							curProjectIndex = index;
-							curProjectHistory = [...curProjectHistory, index];
+							projectHistoryIndex = projectHistory.length;
+							projectHistory = [...projectHistory, index];
 						}}
 						type="button"
-						class="{curProjectIndex === index
+						class="{curProject?.name === project.name
 							? 'bg-slate-700 text-opacity-100'
 							: ''} rounded p-2 text-left text-white text-opacity-50 transition-colors hover:bg-slate-700 hover:text-opacity-100"
 					>
