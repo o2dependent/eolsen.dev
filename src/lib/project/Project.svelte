@@ -3,6 +3,7 @@
 	import Window from '$lib/window/Window.svelte';
 	import type { AppNames, AppWindow } from '$stores/apps.store';
 	import AppBar from '$lib/appbar/AppBar.svelte';
+	import { createHistory } from '$utils/createHistory';
 
 	export let appKey: AppNames;
 	export let appWindow: AppWindow;
@@ -16,15 +17,14 @@
 		return project as DirectoryFile & { name: string };
 	});
 
-	let projectHistory: number[] = [];
-	let projectHistoryIndex: number | undefined;
+	let history = createHistory();
+
 	let curProject: typeof projects[0] | undefined;
 
 	$: {
-		console.log({ curProject });
-		if (typeof projectHistoryIndex !== 'undefined') {
-			const projectIndex = projectHistory[projectHistoryIndex];
-			curProject = projects[projectIndex];
+		console.log({ $history });
+		if (typeof $history.current !== 'undefined') {
+			curProject = projects.find((project) => project.name === $history.current);
 		} else {
 			curProject = undefined;
 		}
@@ -35,15 +35,9 @@
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
-				if (projectHistoryIndex === undefined) {
-					return;
-				} else if (projectHistoryIndex === 0) {
-					projectHistoryIndex = undefined;
-				} else {
-					projectHistoryIndex--;
-				}
+				history.back();
 			}}
-			disabled={projectHistoryIndex === undefined}
+			disabled={$history.index === 0}
 			class="flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -64,13 +58,9 @@
 		</button>
 		<button
 			on:click={() => {
-				if (projectHistoryIndex === undefined) {
-					projectHistoryIndex = 0;
-				} else {
-					projectHistoryIndex++;
-				}
+				history.forward();
 			}}
-			disabled={projectHistory.length === 0 || projectHistoryIndex === projectHistory.length - 1}
+			disabled={$history.history.length === 0 || $history.index === $history.history.length - 1}
 			class="flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -98,17 +88,16 @@
 	<form class="flex h-full bg-white font-mono text-sm text-black">
 		<div class="flex w-60 flex-col border-r-2 border-slate-700 bg-slate-800">
 			<h2 class="border-b-2 border-slate-700 bg-slate-900 p-2 text-xl font-bold text-white">
-				Projects
+				Projects {$history.history}
 			</h2>
 			<ul class="flex flex-col gap-2 p-2">
 				{#each projects as project, index}
 					<button
 						on:click={() => {
-							if (projectHistoryIndex === index || curProject?.name === project.name) {
+							if ($history.current === project.name || curProject?.name === project.name) {
 								return;
 							}
-							projectHistoryIndex = projectHistory.length;
-							projectHistory = [...projectHistory, index];
+							history.push(`${project.name}`);
 						}}
 						type="button"
 						class="{curProject?.name === project.name
