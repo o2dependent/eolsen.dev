@@ -17,13 +17,13 @@
 		return project as DirectoryFile & { name: string };
 	});
 
-	let history = createHistory();
+	let history = createHistory('');
 
 	let curProject: typeof projects[0] | undefined;
 
 	$: {
 		console.log({ $history });
-		if (typeof $history.current !== 'undefined') {
+		if ($history.current) {
 			curProject = projects.find((project) => project.name === $history.current);
 		} else {
 			curProject = undefined;
@@ -37,7 +37,7 @@
 			on:click={() => {
 				history.back();
 			}}
-			disabled={$history.index === 0}
+			disabled={!$history.canGoBack}
 			class="flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -60,7 +60,7 @@
 			on:click={() => {
 				history.forward();
 			}}
-			disabled={$history.history.length === 0 || $history.index === $history.history.length - 1}
+			disabled={!$history.canGoForward}
 			class="flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -111,7 +111,11 @@
 		</div>
 		<div class="flex-grow bg-slate-800 p-4">
 			<div class="mx-auto flex h-full w-full max-w-prose flex-col items-center justify-center">
-				<p class="w-80 text-center text-lg text-slate-300">Select a project</p>
+				{#if curProject}
+					<h1 class="text-2xl font-black">{curProject?.data?.id}</h1>
+				{:else}
+					<p class="w-80 text-center text-lg text-slate-300">Select a project</p>
+				{/if}
 			</div>
 		</div>
 	</form>

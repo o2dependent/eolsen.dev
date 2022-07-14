@@ -4,21 +4,27 @@ interface HistoryValue {
 	index: number;
 	history: string[];
 	current: string | undefined;
+	canGoBack: boolean;
+	canGoForward: boolean;
 }
 
-export const createHistory = () => {
+export const createHistory = (baseHistory: string) => {
 	const { set, subscribe, update } = writable<HistoryValue>({
 		index: 0,
-		history: [],
-		current: undefined
+		history: [baseHistory],
+		current: undefined,
+		canGoBack: false,
+		canGoForward: false
 	});
 
 	const push = (value: string) => {
 		update((oldHistory) => {
 			return {
 				index: oldHistory.index + 1,
-				history: [...oldHistory.history.slice(0, oldHistory.index), value],
-				current: value
+				history: [...oldHistory.history.slice(0, oldHistory.index + 1), value],
+				current: value,
+				canGoBack: true,
+				canGoForward: false
 			};
 		});
 	};
@@ -29,7 +35,9 @@ export const createHistory = () => {
 			return {
 				index,
 				history: [...oldHistory.history],
-				current: oldHistory.history[index]
+				current: oldHistory.history[index],
+				canGoBack: index > 0,
+				canGoForward: true
 			};
 		});
 	};
@@ -40,7 +48,9 @@ export const createHistory = () => {
 			return {
 				index,
 				history: [...oldHistory.history],
-				current: oldHistory.history[index]
+				current: oldHistory.history[index],
+				canGoBack: true,
+				canGoForward: index < oldHistory.history.length - 1
 			};
 		});
 	};

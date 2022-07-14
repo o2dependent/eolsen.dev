@@ -23,6 +23,13 @@ export const directory = writable<{ [name: string]: Directory }>({
 						data: {
 							id: 'SvelteKit.proj'
 						}
+					},
+					'FuckKit.proj': {
+						name: 'FuckKit.proj',
+						open: 'Project',
+						data: {
+							id: 'FuckKit.proj'
+						}
 					}
 				}
 			}
