@@ -1,18 +1,18 @@
 <script lang="ts">
-	import { removeApp, type AppNames, type AppWindow } from '$stores/apps.store';
+	import { focusApp, removeApp, type AppNames, type AppWindow } from '$stores/apps.store';
 	import { draggable } from '@neodrag/svelte';
 	import { scale, blur } from 'svelte/transition';
 
-	export let appKey: AppNames;
 	export let appWindow: AppWindow;
 	export let headerClass: string = '';
 
 	let isMouseDown = false;
 
-	const onRemoveAppHandler = () => removeApp(appKey, appWindow.id);
+	const onRemoveAppHandler = () => removeApp(appWindow.name, appWindow.id);
 </script>
 
 <div
+	on:mousedown={() => focusApp(appWindow.id)}
 	use:draggable={{
 		bounds: 'body',
 		handle: '.handle',
@@ -22,7 +22,8 @@
 	}}
 	in:scale={{ duration: 150 }}
 	out:blur={{ duration: 150 }}
-	class="absolute flex h-40 min-w-fit resize flex-col overflow-hidden rounded-lg shadow-lg"
+	style="width: 40rem; height: 25rem;"
+	class="absolute flex min-w-fit resize flex-col overflow-hidden rounded-lg shadow-lg"
 >
 	<div
 		on:mousedown={() => {
@@ -43,7 +44,10 @@
 		</div>
 		<slot name="header" />
 	</div>
-	<div class="max-h-full flex-grow overflow-y-auto" on:mousedown|stopPropagation>
+	<div
+		class="max-h-full flex-grow overflow-y-auto"
+		on:mousedown|stopPropagation={() => focusApp(appWindow.id)}
+	>
 		<slot />
 	</div>
 </div>

@@ -2,7 +2,6 @@
 	import Window from '$lib/window/Window.svelte';
 	import type { AppNames, AppWindow } from '$stores/apps.store';
 
-	export let appKey: AppNames;
 	export let appWindow: AppWindow;
 
 	let cliInput = '';
@@ -127,7 +126,7 @@
 	};
 </script>
 
-<Window {appKey} {appWindow}>
+<Window {appWindow}>
 	<form
 		on:submit|preventDefault={() => {
 			execute(cliInput);

@@ -1,11 +1,14 @@
 <script lang="ts">
-	import { directory, type Directory, type DirectoryFile } from '$stores/directory.store';
+	import {
+		directory,
+		type Directory,
+		type DirectoryFile,
+		type ProjectFileData
+	} from '$stores/directory.store';
 	import Window from '$lib/window/Window.svelte';
-	import type { AppNames, AppWindow } from '$stores/apps.store';
-	import AppBar from '$lib/appbar/AppBar.svelte';
+	import type { AppWindow } from '$stores/apps.store';
 	import { createHistory } from '$utils/createHistory';
 
-	export let appKey: AppNames;
 	export let appWindow: AppWindow;
 
 	let curDir: string[] = ['Desktop'];
@@ -13,8 +16,11 @@
 	const projectDir = ($directory['Desktop'].contents['Projects'] as Directory).contents;
 
 	let projects = Object.keys(projectDir).map((key) => {
-		const project = { ...(projectDir[key as keyof typeof projectDir] as DirectoryFile), name: key };
-		return project as DirectoryFile & { name: string };
+		const project = {
+			...(projectDir[key as keyof typeof projectDir] as DirectoryFile).data,
+			name: key
+		};
+		return project as ProjectFileData & { name: string };
 	});
 
 	let history = createHistory('');
@@ -31,7 +37,7 @@
 	}
 </script>
 
-<Window headerClass="!bg-slate-900" {appKey} {appWindow}>
+<Window headerClass="!bg-slate-900" {appWindow}>
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
@@ -88,7 +94,7 @@
 	<form class="flex h-full bg-white font-mono text-sm text-black">
 		<div class="flex w-60 flex-col border-r-2 border-slate-700 bg-slate-800">
 			<h2 class="border-b-2 border-slate-700 bg-slate-900 p-2 text-xl font-bold text-white">
-				Projects {$history.history}
+				Projects
 			</h2>
 			<ul class="flex flex-col gap-2 p-2">
 				{#each projects as project, index}
@@ -110,9 +116,23 @@
 			</ul>
 		</div>
 		<div class="flex-grow bg-slate-800 p-4">
-			<div class="mx-auto flex h-full w-full max-w-prose flex-col items-center justify-center">
+			<div
+				class="mx-auto flex h-full w-full flex-col items-center {curProject
+					? ''
+					: 'justify-center'}"
+			>
 				{#if curProject}
-					<h1 class="text-2xl font-black">{curProject?.data?.id}</h1>
+					<div class="w-full max-w-prose text-white">
+						<h1 class="text-2xl font-black">{curProject?.id}</h1>
+						<div class="flex w-full">
+							<a href={curProject?.githubLink ?? ''} target="_blank" rel="noopener noreferrer"
+								>Github</a
+							>
+							<a href={curProject?.projectLink ?? ''} target="_blank" rel="noopener noreferrer"
+								>Live Project</a
+							>
+						</div>
+					</div>
 				{:else}
 					<p class="w-80 text-center text-lg text-slate-300">Select a project</p>
 				{/if}
