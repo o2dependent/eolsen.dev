@@ -7,7 +7,7 @@ const config = {
 		}
 	},
 
-	plugins: [require('tailwind-scrollbar')],
+	plugins: [require('@tailwindcss/typography'), require('tailwind-scrollbar')],
 	variants: {}
 };
 

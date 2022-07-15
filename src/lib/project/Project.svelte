@@ -110,7 +110,7 @@
 							? 'bg-slate-700 text-opacity-100'
 							: ''} rounded p-2 text-left text-white text-opacity-50 transition-colors hover:bg-slate-700 hover:text-opacity-100"
 					>
-						{project.name}
+						{project.title}
 					</button>
 				{/each}
 			</ul>
@@ -122,8 +122,8 @@
 					: 'justify-center'}"
 			>
 				{#if curProject}
-					<div class="w-full max-w-prose text-white">
-						<h1 class="text-2xl font-black">{curProject?.id}</h1>
+					<div class="prose prose-invert w-full prose-headings:text-purple-400">
+						<h1 class="text-2xl font-black">{curProject?.name}</h1>
 						<div class="flex w-full">
 							<a href={curProject?.githubLink ?? ''} target="_blank" rel="noopener noreferrer"
 								>Github</a
@@ -132,6 +132,7 @@
 								>Live Project</a
 							>
 						</div>
+						{@html curProject?.html}
 					</div>
 				{:else}
 					<p class="w-80 text-center text-lg text-slate-300">Select a project</p>
