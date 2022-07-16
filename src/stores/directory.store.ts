@@ -26,23 +26,37 @@ export interface Directory {
 	contents: { [name: string]: Directory | DirectoryFile };
 }
 // const allDirFiles = import.meta.glob('./**/*.md');
-const allDirFiles = import.meta.glob('../directory/**/*.md');
+const allDirFiles = import.meta.globEager('../directory/**/*.md');
 const iterableDirFiles = Object.entries(allDirFiles);
 
-const allFiles = await Promise.all(
-	iterableDirFiles.map(async ([path, resolver]) => {
-		const { metadata } = await resolver();
-		const postPath = path.slice(2, -3).replace('/directory/', '').split('/');
+// const allFiles = await Promise.all(
+// 	iterableDirFiles.map(async ([path, resolver]) => {
+// 		const resolved = await resolver();
+// 		const { metadata } = resolved;
 
-		return {
-			meta: metadata,
-			path: postPath
-		};
-	})
-);
+// 		const postPath = path.slice(2, -3).replace('/directory/', '').split('/');
+
+// 		return {
+// 			meta: { ...metadata, html: resolved.default },
+// 			path: postPath
+// 		};
+// 	})
+// );
+const allFiles = iterableDirFiles.map(([path, data]) => {
+	console.log(data);
+	// const resolved = await resolver();
+	// const { metadata } = resolved;
+
+	const postPath = path.slice(2, -3).replace('/directory/', '').split('/');
+
+	return {
+		meta: { ...data.metadata, html: data.default },
+		path: postPath
+	};
+});
 
 const dir = { contents: {} } as Directory;
-console.log({ allFiles: allFiles?.map((file) => file.path) });
+console.log({ allFiles });
 // transform allFiles into a directory structure
 allFiles.forEach((file) => {
 	const { path, meta } = file;
