@@ -13,7 +13,9 @@
 
 	let curDir: string[] = ['Desktop'];
 
-	const projectDir = ($directory['Desktop'].contents['Projects'] as Directory).contents;
+	const projectDir = (
+		($directory.contents?.['Desktop'] as Directory)?.contents?.['Projects'] as Directory
+	).contents;
 
 	let projects = Object.keys(projectDir).map((key) => {
 		const project = {
@@ -123,7 +125,7 @@
 			>
 				{#if curProject}
 					<div class="prose prose-invert w-full prose-headings:text-purple-400">
-						<h1 class="text-2xl font-black">{curProject?.name}</h1>
+						<h1>{curProject?.title}</h1>
 						<div class="flex w-full">
 							<a href={curProject?.githubLink ?? ''} target="_blank" rel="noopener noreferrer"
 								>Github</a

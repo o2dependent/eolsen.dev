@@ -25,39 +25,43 @@ export interface Directory {
 	name: string;
 	contents: { [name: string]: Directory | DirectoryFile };
 }
-export const directory = writable<{ [name: string]: Directory }>({
-	Desktop: {
-		name: 'Desktop',
-		contents: {
-			Projects: {
-				name: 'Projects',
-				contents: {
-					'SvelteKit.proj': {
-						name: 'SvelteKit.proj',
-						open: 'Project',
-						data: {
-							id: 'SvelteKit.proj',
-							title: 'SvelteKit',
-							html: '<h1>SvelteKit</h1>',
-							projectLink: 'https://kit.svelte.dev',
-							githubLink: 'https://github.com/sveltejs/kit',
-							tags: ['svelte', 'kit']
-						}
-					},
-					'FuckKit.proj': {
-						name: 'FuckKit.proj',
-						open: 'Project',
-						data: {
-							id: 'FuckKit.proj',
-							title: 'FuckKit',
-							html: '<h1>FuckKit</h1>',
-							projectLink: 'https://kit.svelte.dev',
-							githubLink: 'https://github.com/sveltejs/kit',
-							tags: ['fuck', 'kit']
-						}
-					}
-				}
-			}
+// const allDirFiles = import.meta.glob('./**/*.md');
+const allDirFiles = import.meta.glob('../directory/**/*.md');
+const iterableDirFiles = Object.entries(allDirFiles);
+
+const allFiles = await Promise.all(
+	iterableDirFiles.map(async ([path, resolver]) => {
+		const { metadata } = await resolver();
+		const postPath = path.slice(2, -3).replace('/directory/', '').split('/');
+
+		return {
+			meta: metadata,
+			path: postPath
+		};
+	})
+);
+
+const dir = { contents: {} } as Directory;
+
+// transform allFiles into a directory structure
+allFiles.forEach((file) => {
+	const { path, meta } = file;
+	let currentDir = dir;
+
+	path.forEach((dirName, index) => {
+		if (index === path.length - 1) {
+			currentDir.contents[dirName] = {
+				...meta,
+				path: path.join('/')
+			};
 		}
-	}
+
+		if (!currentDir.contents[dirName]) {
+			currentDir.contents[dirName] = { name: dirName, contents: {} };
+		}
+
+		currentDir = currentDir.contents[dirName] as Directory;
+	});
 });
+
+export const directory = writable<Directory>(dir);
