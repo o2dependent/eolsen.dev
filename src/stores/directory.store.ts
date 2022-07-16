@@ -42,7 +42,7 @@ const allFiles = await Promise.all(
 );
 
 const dir = { contents: {} } as Directory;
-
+console.log({ allFiles: allFiles?.map((file) => file.path) });
 // transform allFiles into a directory structure
 allFiles.forEach((file) => {
 	const { path, meta } = file;
@@ -51,9 +51,10 @@ allFiles.forEach((file) => {
 	path.forEach((dirName, index) => {
 		if (index === path.length - 1) {
 			currentDir.contents[dirName] = {
-				...meta,
-				path: path.join('/')
-			};
+				data: meta,
+				name: dirName,
+				open: dirName
+			} as DirectoryFile;
 		}
 
 		if (!currentDir.contents[dirName]) {

@@ -3,7 +3,7 @@
 >
 	<div class="h-full w-full rounded-lg bg-black p-0.5">
 		<div class="h-full w-full rounded-[7px] bg-neutral-800 px-0.5">
-			<p class="text-left font-mono">>_</p>
+			<p class="text-left font-mono text-white">>_</p>
 		</div>
 	</div>
 </div>
