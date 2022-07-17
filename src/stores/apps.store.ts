@@ -8,7 +8,7 @@ export interface AppWindow {
 
 export type Apps = AppWindow[];
 
-export const apps = writable<Apps>([]);
+export const apps = writable<Apps>([{ id: 'init-terminal', name: 'Terminal' }]);
 
 export const addApp = (appName: AppNames) => {
 	const appWindow: AppWindow = { id: new Date().toISOString(), name: appName };

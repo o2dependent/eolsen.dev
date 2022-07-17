@@ -17,9 +17,12 @@
 	let lines: TerminalLine[] = [
 		{
 			text: `
-     ___     __  __      ___  /
-|  ||__ |   /  \`/  \\|\\/||__  /
-|/\\||___|___\\__,\\__/|  ||___.
+ __          __  _
+ \\ \\        / / | |
+  \\ \\  /\\  / /__| | ___ ___  _ __ ___   ___
+   \\ \\/  \\/ / _ \\ |/ __/ _ \\| '_ \` _ \\ / _ \\
+    \\  /\\  /  __/ | (_| (_) | | | | | |  __/
+     \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|
 `,
 			class:
 				'w-fit font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
@@ -33,7 +36,7 @@
 
 `,
 			class:
-				'w-fit font-black text-[0.45rem] leading-[0.5rem] text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
+				'w-fit pl-10 !font-black text-[0.5rem] leading-[0.6rem] text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
 		}
 	];
 
@@ -149,7 +152,7 @@
 			execute(cliInput);
 			cliInput = '';
 		}}
-		class="flex h-full flex-col bg-neutral-800 !font-mono text-sm text-white"
+		class="flex h-full flex-col bg-neutral-900 bg-opacity-90 !font-mono text-sm text-white backdrop-blur-lg"
 	>
 		<label
 			class="flex-grow overflow-y-scroll py-2 px-4 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800"
