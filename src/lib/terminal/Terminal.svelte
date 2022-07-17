@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Window from '$lib/window/Window.svelte';
 	import type { AppNames, AppWindow } from '$stores/apps.store';
+	import { directory, type Directory } from '$stores/directory.store';
 
 	export let appWindow: AppWindow;
 
@@ -8,49 +9,24 @@
 
 	let curDir: string[] = ['Desktop'];
 
+	interface TerminalLine {
+		text: string;
+		class?: string;
+	}
+
 	interface Commands {
 		name: string;
 		description: string;
 		action: (args: string[]) => void;
 	}
 
-	interface DirectoryFile {
-		commands: string[];
-		data: any;
-	}
-
-	interface Directory {
-		name: string;
-		contents: { [name: string]: Directory | DirectoryFile };
-	}
-
-	const directory: { [name: string]: Directory } = {
-		Desktop: {
-			name: 'Desktop',
-			contents: {
-				Projects: {
-					name: 'Projects',
-					contents: {
-						'SvelteKit.proj': {
-							name: 'SvelteKit.proj',
-							commands: ['open'],
-							data: {
-								id: 'SvelteKit.proj'
-							}
-						}
-					}
-				}
-			}
-		}
-	};
 	const getDir = (dirArr?: string[]) => {
 		if (!dirArr) {
 			dirArr = curDir;
 		}
-		let dir = directory[dirArr[0]];
+		let dir = $directory.contents[dirArr[0]] as Directory;
 		for (let i = 1; i < dirArr.length; i++) {
 			const newDir = dir.contents[dirArr[i]];
-			console.log(newDir);
 			if ('contents' in newDir) {
 				console.log('dir accepted');
 				dir = newDir;
@@ -66,24 +42,36 @@
 			description: 'List files in a directory',
 			action: (args) => {
 				const dirObj = getDir();
-				print(Object.keys(dirObj.contents).join('\t'));
+				print({ text: Object.keys(dirObj.contents).join('\t') });
 			}
 		},
 		cd: {
 			name: 'cd',
 			description: 'Change directory',
 			action: (args) => {
-				if (args.length === 0) {
-					print('No directory specified');
+				const path = args[0]?.split('/')?.filter(Boolean);
+				if (path.length === 0) {
+					print({ text: 'No directory specified', class: 'text-red-500' });
 					return;
 				}
-				console.log({ args });
-				const dir = getDir([...curDir, args[0]]);
-				if (dir.name !== curDir[curDir.length - 1]) {
-					curDir = [...curDir, args[0]];
-				} else {
-					print(`cd: no such file or directory: ${args[0]}`);
+				let newCurDir = [...curDir];
+				for (const arg of path) {
+					if (arg === '..') {
+						if (newCurDir.length === 1) {
+							print({ text: 'Cannot go above root directory', class: 'text-red-500' });
+							return;
+						}
+						newCurDir.pop();
+					} else {
+						const dir = getDir(newCurDir);
+						if (!(arg in dir.contents)) {
+							print({ text: 'Directory not found', class: 'text-red-500' });
+							return;
+						}
+						newCurDir.push(arg);
+					}
 				}
+				curDir = newCurDir;
 			}
 		},
 		clear: {
@@ -97,31 +85,31 @@
 			name: 'help',
 			description: 'Show help',
 			action: (args) => {
-				print('Available commands:');
+				print({ text: 'Available commands:', class: 'text-green-500' });
 				for (const command in commands) {
-					print(`  ${command} - ${commands[command].description}`);
+					print({ text: `  ${command} - ${commands[command].description}` });
 				}
 			}
 		}
 	};
-	let lines: string[] = [];
+	let lines: TerminalLine[] = [];
 
 	const execute = (argStr: string) => {
-		print(`${curDir?.join('/')}> ${argStr}`);
+		print({ text: `${curDir?.join('/')}> ${argStr}` });
+		if (!argStr) return;
 		const args = argStr.split(' ');
 		console.log(args);
 		const command = args[0];
 		const commandArgs = args.slice(1);
 		if (command in commands) {
-			console.log(commands[command]);
 			commands[command].action(commandArgs);
 		} else {
-			print(`Command "${command}" not found`);
-			print(`Use "help" to see available commands`);
+			print({ text: `Command "${command}" not found`, class: 'text-red-500' });
+			print({ text: `Use "help" to see available commands`, class: 'text-red-500' });
 		}
 	};
 
-	const print = (str: string) => {
+	const print = (str: TerminalLine) => {
 		lines = [...lines, str];
 	};
 </script>
@@ -139,7 +127,7 @@
 			for="cli-input-{appWindow.id}"
 		>
 			{#each lines as line}
-				<p>{line}</p>
+				<p class={line?.class ?? ''}>{line.text}</p>
 			{/each}
 			<div class="flex gap-[1ch]">
 				<p>{curDir?.join('/')}></p>

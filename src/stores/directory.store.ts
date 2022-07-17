@@ -29,19 +29,6 @@ export interface Directory {
 const allDirFiles = import.meta.globEager('../directory/**/*.md');
 const iterableDirFiles = Object.entries(allDirFiles);
 
-// const allFiles = await Promise.all(
-// 	iterableDirFiles.map(async ([path, resolver]) => {
-// 		const resolved = await resolver();
-// 		const { metadata } = resolved;
-
-// 		const postPath = path.slice(2, -3).replace('/directory/', '').split('/');
-
-// 		return {
-// 			meta: { ...metadata, html: resolved.default },
-// 			path: postPath
-// 		};
-// 	})
-// );
 const allFiles = iterableDirFiles.map(([path, data]) => {
 	console.log(data);
 	// const resolved = await resolver();
