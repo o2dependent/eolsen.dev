@@ -6,7 +6,7 @@
 	const appNames: AppNames[] = ['Terminal', 'Project'];
 </script>
 
-<div class="mb-4 flex w-full select-none items-center justify-center">
+<div class="mb-2 mt-1 flex w-full select-none items-center justify-center">
 	<div
 		class="flex gap-4 rounded-lg bg-neutral-500 bg-opacity-50 p-2 ring ring-neutral-500 backdrop-blur"
 	>

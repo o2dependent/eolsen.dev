@@ -16,7 +16,7 @@
 <div
 	on:mousedown={() => focusApp(appWindow.id)}
 	use:draggable={{
-		bounds: 'body',
+		bounds: '#desktop',
 		handle: '.handle',
 		onDragEnd: () => {
 			isMouseDown = false;
