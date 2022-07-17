@@ -22,7 +22,7 @@
 	}}
 	in:scale={{ duration: 150 }}
 	out:blur={{ duration: 150 }}
-	style="width: 40rem; height: 25rem;"
+	style="width: 30rem; height: 25rem;"
 	class="absolute flex min-w-fit resize flex-col overflow-hidden rounded-lg shadow-lg"
 >
 	<div

@@ -14,6 +14,29 @@
 		class?: string;
 	}
 
+	let lines: TerminalLine[] = [
+		{
+			text: `
+     ___     __  __      ___  /
+|  ||__ |   /  \`/  \\|\\/||__  /
+|/\\||___|___\\__,\\__/|  ||___.
+`,
+			class:
+				'w-fit font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
+		},
+		{
+			text: `
+         __  ___    __        ______               __      __  ___
+|\\/| /\\ |  \\|__    |__)\\ /   |__  ||__| /\\ |\\ |   /  \\|   /__\`|__ |\\ |
+|  |/~~\\|__/|___   |__) |    |___ ||  |/~~\\| \\|   \\__/|___.__/|___| \\|
+
+
+`,
+			class:
+				'w-fit font-black text-[0.45rem] leading-[0.5rem] text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
+		}
+	];
+
 	interface Commands {
 		name: string;
 		description: string;
@@ -28,10 +51,9 @@
 		for (let i = 1; i < dirArr.length; i++) {
 			const newDir = dir.contents[dirArr[i]];
 			if ('contents' in newDir) {
-				console.log('dir accepted');
 				dir = newDir;
 			} else {
-				return dir;
+				return;
 			}
 		}
 		return dir;
@@ -42,6 +64,10 @@
 			description: 'List files in a directory',
 			action: (args) => {
 				const dirObj = getDir();
+				if (!dirObj) {
+					print({ text: 'No directory specified', class: 'text-red-500' });
+					return;
+				}
 				print({ text: Object.keys(dirObj.contents).join('\t') });
 			}
 		},
@@ -64,7 +90,11 @@
 						newCurDir.pop();
 					} else {
 						const dir = getDir(newCurDir);
-						if (!(arg in dir.contents)) {
+						if (!getDir([...newCurDir, arg])) {
+							print({ text: `Not a directory: ${arg}`, class: 'text-red-500' });
+							return;
+						}
+						if (!dir || !(arg in dir.contents)) {
 							print({ text: 'Directory not found', class: 'text-red-500' });
 							return;
 						}
@@ -92,7 +122,6 @@
 			}
 		}
 	};
-	let lines: TerminalLine[] = [];
 
 	const execute = (argStr: string) => {
 		print({ text: `${curDir?.join('/')}> ${argStr}` });
@@ -120,14 +149,14 @@
 			execute(cliInput);
 			cliInput = '';
 		}}
-		class="flex h-full flex-col bg-neutral-800 font-mono text-sm text-white"
+		class="flex h-full flex-col bg-neutral-800 !font-mono text-sm text-white"
 	>
 		<label
 			class="flex-grow overflow-y-scroll py-2 px-4 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800"
 			for="cli-input-{appWindow.id}"
 		>
 			{#each lines as line}
-				<p class={line?.class ?? ''}>{line.text}</p>
+				<pre class={line?.class ?? ''}>{line.text}</pre>
 			{/each}
 			<div class="flex gap-[1ch]">
 				<p>{curDir?.join('/')}></p>
