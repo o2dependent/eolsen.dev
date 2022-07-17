@@ -5,6 +5,8 @@
 
 	export let appWindow: AppWindow;
 	export let headerClass: string = '';
+	export let startingWidth = '30rem';
+	export let startingHeight = '25rem';
 
 	let isMouseDown = false;
 
@@ -22,8 +24,8 @@
 	}}
 	in:scale={{ duration: 150 }}
 	out:blur={{ duration: 150 }}
-	style="width: 30rem; height: 25rem;"
-	class="absolute flex min-w-fit resize flex-col overflow-hidden rounded-lg shadow-lg"
+	style="width: {startingWidth}; height: {startingHeight};"
+	class="absolute flex max-w-[100vw] resize flex-col overflow-hidden rounded-lg shadow-lg"
 >
 	<div
 		on:mousedown={() => {

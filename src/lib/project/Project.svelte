@@ -41,7 +41,7 @@
 	}
 </script>
 
-<Window headerClass="!bg-slate-900" {appWindow}>
+<Window headerClass="!bg-slate-900" {appWindow} startingWidth="40rem">
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
@@ -95,7 +95,10 @@
 			</p>
 		</div>
 	</div>
-	<form class="flex h-full bg-white font-mono text-sm text-black">
+	<form
+		style="display: grid; grid-template-columns: 15rem 1fr"
+		class="flex h-full min-w-fit bg-white font-mono text-sm text-black"
+	>
 		<div class="flex w-60 flex-col border-r-2 border-slate-700 bg-slate-800">
 			<h2 class="border-b-2 border-slate-700 bg-slate-900 p-2 text-xl font-bold text-white">
 				Projects
@@ -119,7 +122,7 @@
 				{/each}
 			</ul>
 		</div>
-		<div class="flex-grow bg-slate-800 p-4">
+		<div class="bg-slate-800 p-4">
 			<div
 				class="mx-auto flex h-full w-full flex-col items-center {curProject
 					? ''
