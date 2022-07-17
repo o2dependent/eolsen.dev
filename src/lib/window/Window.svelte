@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { focusApp, removeApp, type AppNames, type AppWindow } from '$stores/apps.store';
+	import { apps, focusApp, removeApp, type AppWindow } from '$stores/apps.store';
 	import { draggable } from '@neodrag/svelte';
 	import { scale, blur } from 'svelte/transition';
 
@@ -25,7 +25,9 @@
 	in:scale={{ duration: 150 }}
 	out:blur={{ duration: 150 }}
 	style="width: {startingWidth}; height: {startingHeight};"
-	class="absolute flex max-w-[100vw] resize flex-col overflow-hidden rounded-lg shadow-lg"
+	class="{$apps[$apps.length - 1].id === appWindow.id
+		? 'shadow-xl'
+		: 'shadow-md'} shadow-black/15 absolute flex max-w-[100vw] resize flex-col overflow-hidden rounded-lg transition-shadow"
 >
 	<div
 		on:mousedown={() => {
