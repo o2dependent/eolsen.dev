@@ -5,7 +5,8 @@
 
 	export let appWindow: AppWindow;
 
-	let cliInput = '';
+	let cliInput: HTMLInputElement;
+	let cliLabel: HTMLLabelElement;
 
 	let curDir: string[] = ['Desktop'];
 
@@ -149,12 +150,16 @@
 <Window {appWindow}>
 	<form
 		on:submit|preventDefault={() => {
-			execute(cliInput);
-			cliInput = '';
+			execute(cliInput.value);
+			cliInput.value = '';
+			setTimeout(() => {
+				cliLabel.scrollTop = cliLabel.scrollHeight;
+			}, 0);
 		}}
 		class="flex h-full flex-col bg-neutral-900 bg-opacity-90 !font-mono text-sm text-white backdrop-blur-lg"
 	>
 		<label
+			bind:this={cliLabel}
 			class="flex-grow overflow-y-scroll py-2 px-4 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800"
 			for="cli-input-{appWindow.id}"
 		>
@@ -169,7 +174,7 @@
 					autocomplete="off"
 					class="flex-grow bg-transparent outline-none"
 					type="text"
-					bind:value={cliInput}
+					bind:this={cliInput}
 				/>
 			</div>
 		</label>
