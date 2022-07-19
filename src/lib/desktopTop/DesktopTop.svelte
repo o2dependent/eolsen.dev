@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { fade } from 'svelte/transition';
-	import { draggable } from '@neodrag/svelte';
-
 	import { clickOutside } from '../../utils/clickOutside';
+	import { apps, addApp, focusApp, type AppWindow, type AppNames } from '$stores/apps.store';
 
 	let activeTab = '';
+	let activeApp: AppWindow | undefined;
 
 	interface Tab {
 		name: string;
@@ -14,37 +13,86 @@
 		}[];
 	}
 
-	const tabs: Tab[] = [
-		{
-			name: 'Terminal',
-			content: [
-				{
-					name: 'Add Window',
-					onClick: () => {
-						activeTab = 'Terminal';
+	const removeAppsByName = (appName: AppNames) => {
+		apps.update((apps) => {
+			const newApps = apps.filter((app) => app.name !== appName);
+			console.log({
+				newApps
+			});
+			return newApps;
+		});
+		activeTab = '';
+	};
+
+	type AppTabs = Record<AppNames, Tab[]>;
+
+	const appTabs: AppTabs = {
+		Terminal: [
+			{
+				name: 'Terminal',
+				content: [
+					{
+						name: 'Add Window',
+						onClick: () => {
+							addApp('Terminal');
+						}
+					},
+					{
+						name: 'Quit',
+						onClick: () => {
+							removeAppsByName('Terminal');
+						}
 					}
-				}
-			]
-		},
-		{
-			name: 'Project',
-			content: [
-				{
-					name: 'Add Window',
-					onClick: () => {
-						activeTab = 'Project';
+				]
+			}
+		],
+		'About Site': [],
+		Project: [
+			{
+				name: 'Project',
+				content: [
+					{
+						name: 'Add Window',
+						onClick: () => {
+							addApp('Project');
+						}
+					},
+					{
+						name: 'Quit',
+						onClick: () => {
+							removeAppsByName('Terminal');
+						}
 					}
+				]
+			}
+		],
+		Settings: []
+	};
+
+	const systemInfoContent: Tab['content'] = [
+		{
+			name: 'About this site',
+			onClick: () => {
+				console.log('FUCK SYSTEM FUCKING INFO');
+				const app = $apps?.find?.((app) => app?.name === 'About Site');
+				if (app) {
+					focusApp(app.id);
+				} else {
+					addApp('About Site');
 				}
-			]
+			}
 		}
 	];
+
+	$: {
+		activeApp = [...$apps].reverse().find((app) => app.name !== 'About Site');
+	}
 </script>
 
 <div class="z-10 flex w-full bg-black/20 px-2 shadow-sm" use:clickOutside={() => (activeTab = '')}>
 	<div id="desktop-top-left" class="flex flex-grow">
 		<div class="relative">
 			<button
-				use:draggable
 				on:mouseenter={() => {
 					if (activeTab) {
 						activeTab = 'system-info';
@@ -99,55 +147,56 @@
 			</button>
 			{#if activeTab === 'system-info'}
 				<div class="dropdown">
-					{#each new Array(5) as _, i}
-						<button>
-							{i + 1}
-						</button>
+					{#each systemInfoContent as content}
+						<button
+							type="button"
+							on:click={() => {
+								content.onClick();
+								activeTab = '';
+							}}>{content.name}</button
+						>
 					{/each}
 				</div>
 			{/if}
 		</div>
-		{#each tabs as tab}
-			<div class="relative">
-				<button
-					use:draggable
-					on:mouseenter={() => {
-						if (activeTab) {
-							activeTab = tab.name;
-						}
-					}}
-					on:click={() => {
-						activeTab = activeTab === tab.name ? '' : tab.name;
-					}}
-					class:active={activeTab === tab.name}
-				>
-					{tab.name}
-				</button>
-				{#if activeTab === tab.name}
-					<div class="dropdown">
-						{#each tab.content as content}
-							<button
-								on:click={() => {
-									activeTab = '';
-									content.onClick();
-								}}
-							>
-								{content.name}
-							</button>
-						{/each}
-					</div>
-				{/if}
-			</div>
-		{/each}
-		<div>
-			<button class="">Code</button>
-		</div>
+		{#if activeApp && appTabs[activeApp.name]}
+			{#each appTabs[activeApp.name] as tab}
+				<div class="relative">
+					<button
+						on:mouseenter={() => {
+							if (activeTab) {
+								activeTab = tab.name;
+							}
+						}}
+						on:click={() => {
+							activeTab = activeTab === tab.name ? '' : tab.name;
+						}}
+						class:active={activeTab === tab.name}
+					>
+						{tab.name}
+					</button>
+					{#if activeTab === tab.name}
+						<div class="dropdown">
+							{#each tab.content as content}
+								<button
+									type="button"
+									on:click={() => {
+										content.onClick();
+										activeTab = '';
+									}}>{content.name}</button
+								>
+							{/each}
+						</div>
+					{/if}
+				</div>
+			{/each}
+		{/if}
 	</div>
 </div>
 
 <style lang="postcss">
 	#desktop-top-left > div {
-		@apply relative h-full;
+		@apply relative h-7;
 	}
 	#desktop-top-left > div > button {
 		@apply h-full rounded bg-white bg-opacity-0 px-3 py-0.5 text-left text-opacity-50 transition-colors;

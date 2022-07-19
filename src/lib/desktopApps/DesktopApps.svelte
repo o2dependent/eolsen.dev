@@ -1,4 +1,6 @@
 <script lang="ts">
+	import AboutApp from '$lib/aboutApp/AboutApp.svelte';
+
 	import Project from '$lib/project/Project.svelte';
 
 	import Terminal from '$lib/terminal/Terminal.svelte';
@@ -10,7 +12,7 @@
 		<Terminal {appWindow} />
 	{:else if appWindow.name === 'Project'}
 		<Project {appWindow} />
-	{:else}
-		<div>srry uwu</div>
+	{:else if appWindow.name === 'About Site'}
+		<AboutApp {appWindow} />
 	{/if}
 {/each}

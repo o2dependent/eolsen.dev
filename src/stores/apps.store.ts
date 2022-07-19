@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 
-export type AppNames = 'Terminal' | 'Project' | 'Settings';
+export type AppNames = 'Terminal' | 'Project' | 'About Site' | 'Settings';
 export interface AppWindow {
 	id: string;
 	name: AppNames;
