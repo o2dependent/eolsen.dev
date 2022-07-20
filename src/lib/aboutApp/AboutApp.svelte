@@ -3,21 +3,28 @@
 	import type { AppWindow } from '$stores/apps.store';
 
 	export let appWindow: AppWindow;
+	type AboutActiveTabs = 'Overview' | 'About' | 'Contact';
+	const tabs: AboutActiveTabs[] = ['Overview', 'About', 'Contact'];
+	let activeTab: AboutActiveTabs = 'Overview';
 </script>
 
 <Window
 	startingHeight="360px"
 	startingWidth="560px"
-	headerClass="!bg-slate-900 !shadow"
+	headerClass="!bg-[rgb(48,45,52)] !shadow"
+	windowClass="!ring-[2px] !ring-inset !ring-white/50 !border-[rgb(5,9,12)] !border"
 	{appWindow}
 >
 	<div slot="header" class="flex w-full items-center justify-center pr-14">
 		<div
-			class="flex items-center justify-center gap-[1px] overflow-hidden rounded-md border border-slate-700 "
+			class="flex items-center justify-center gap-[1px] overflow-hidden rounded-md border border-slate-700 opacity-75 hover:opacity-100 "
 		>
-			{#each ['Overview', 'About', 'Contact'] as item, i}
+			{#each tabs as item, i}
 				<button
-					class="flex rounded px-1 text-center text-slate-500 hover:bg-slate-700 hover:text-white"
+					on:click|preventDefault|stopPropagation={() => (activeTab = item)}
+					class="flex rounded px-1 text-center text-slate-500 {activeTab === item
+						? 'bg-slate-700 text-white'
+						: ''}"
 				>
 					{item}
 				</button>
@@ -27,5 +34,13 @@
 			{/each}
 		</div>
 	</div>
-	<div class="h-full w-full bg-slate-800" />
+	<div class="h-full w-full bg-[rgb(34,28,38)]">
+		{#if activeTab === 'Overview'}
+			<h1>Overview</h1>
+		{:else if activeTab === 'About'}
+			<h1>About</h1>
+		{:else if activeTab === 'Contact'}
+			<h1>Contact</h1>
+		{/if}
+	</div>
 </Window>

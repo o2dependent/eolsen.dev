@@ -5,6 +5,7 @@
 
 	export let appWindow: AppWindow;
 	export let headerClass: string = '';
+	export let windowClass: string = '';
 	export let startingWidth = '30rem';
 	export let startingHeight = '25rem';
 
@@ -32,7 +33,7 @@
 	style="width: {startingWidth}; height: {startingHeight};"
 	class="{$apps[$apps.length - 1].id === appWindow.id
 		? 'shadow-xl'
-		: 'shadow-md'} shadow-black/15 absolute flex max-w-[100vw] resize flex-col overflow-hidden rounded-lg transition-shadow"
+		: 'shadow-md'} shadow-black/15 absolute flex max-w-[100vw] resize flex-col overflow-hidden rounded-lg transition-shadow {windowClass}"
 >
 	<div
 		on:mousedown={() => {
