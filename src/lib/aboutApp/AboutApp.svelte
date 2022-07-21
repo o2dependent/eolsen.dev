@@ -1,4 +1,5 @@
 <script lang="ts">
+	import EOSIcon from './EOSIcon.svelte';
 	import Window from '$lib/window/Window.svelte';
 	import type { AppWindow } from '$stores/apps.store';
 
@@ -37,15 +38,48 @@
 	<div class="flex h-full w-full flex-col bg-[rgb(29,26,37)]">
 		{#if activeTab === 'Overview'}
 			<div class="flex flex-grow items-center justify-center gap-12">
-				<div
-					class="h-32 w-32 rounded-full bg-gradient-to-tr from-purple-900 to-purple-700 ring-[0.375rem] ring-white"
-				/>
+				<EOSIcon />
 				<div class="flex gap-4">
-					<div class="flex flex-col">
-						<h1 class="text-3xl font-medium">
-							olsenOS <span class="font-extralight">Monterey</span>
-						</h1>
-						<p class="text-xs font-light">Version 1.0</p>
+					<div class="flex flex-col gap-4">
+						<div>
+							<h1 class="text-3xl font-medium">
+								olsenOS <span class="font-extralight">Monterey</span>
+							</h1>
+							<p class="text-xs">Version <span class="font-light">1.0</span></p>
+						</div>
+						<div class="flex flex-col gap-0.5">
+							<p class="text-xs">Ethan Olsen Dev (2022)</p>
+							<div class="flex gap-2 text-xs">
+								<p>Developer</p>
+								<p class="font-light">Full-Stack</p>
+							</div>
+							<div class="flex gap-2 text-xs">
+								<p>Chip</p>
+								<p class="font-light">Pringles</p>
+							</div>
+							<div class="flex gap-2 text-xs">
+								<p>Memory</p>
+								<p class="font-light">Pretty good</p>
+							</div>
+							<div class="flex gap-2 text-xs">
+								<p>Cereal Number</p>
+								<p class="font-light">A lot I guess</p>
+							</div>
+						</div>
+						<div class="flex w-full gap-2">
+							<button
+								class="flex-grow rounded bg-[rgb(86,83,90)] py-[1px] px-1.5 text-xs text-white"
+								type="button"
+							>
+								System Report
+							</button>
+							<button
+								class="flex-grow rounded bg-[rgb(86,83,90)] py-[1px] px-1.5 text-xs text-white"
+								type="button"
+							>
+								Software Update
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
