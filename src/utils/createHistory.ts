@@ -9,10 +9,10 @@ interface HistoryValue {
 }
 
 export const createHistory = (baseHistory: string) => {
-	const { set, subscribe, update } = writable<HistoryValue>({
+	const { subscribe, update } = writable<HistoryValue>({
 		index: 0,
 		history: [baseHistory],
-		current: undefined,
+		current: baseHistory,
 		canGoBack: false,
 		canGoForward: false
 	});
@@ -55,10 +55,23 @@ export const createHistory = (baseHistory: string) => {
 		});
 	};
 
+	const replace = (value: string) => {
+		update(() => {
+			return {
+				index: 0,
+				history: [value],
+				current: value,
+				canGoBack: false,
+				canGoForward: false
+			};
+		});
+	};
+
 	return {
 		subscribe,
 		push,
 		back,
-		forward
+		forward,
+		replace
 	};
 };
