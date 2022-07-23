@@ -1,13 +1,18 @@
 ---
-title: Chaos in my brain
+title: This site
+description: This site is built with sveltekit and tailwindcss.
 projectLink: https://github.com/o2dependent
 githubLink: https://github.com/o2dependent
 tags: ['Death Grips']
 ---
 
-# Chaos in my brain
+# This is a test file
 
-You got no biznes questioning me, maaayne.
+some more text here.
+
+_This is a test_
+
+## This is a svelte component
 
 <script>
 	let count = 0;

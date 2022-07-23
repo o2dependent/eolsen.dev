@@ -1,10 +1,21 @@
 ---
-title: Page Builder
+title: Page builder
+description: This site is built with sveltekit and tailwindcss.
 projectLink: https://github.com/o2dependent
 githubLink: https://github.com/o2dependent
-tags: ['React', 'Web Dev']
+tags: ['Death Grips']
 ---
 
-# Hellow uwu
+# This is a test file
 
-how 'bout ya eat my cock
+some more text here.
+
+_This is a test_
+
+## This is a svelte component
+
+<script>
+	let count = 0;
+</script>
+
+<button class="w-full bg-pink-500" on:click={() => count++} type="button">{count}</button>

@@ -14,7 +14,7 @@
 	out:fly={{ duration: 200, x: -100 }}
 	class="absolute flex h-full w-60 flex-col border-r-2 border-slate-700 bg-slate-800"
 >
-	<h2 class="border-b-2 border-slate-700 bg-slate-900 p-2 text-xl font-bold text-white">
+	<h2 class="border-b-2 border-slate-700 bg-purple-900 p-2 text-xl font-bold text-white">
 		Projects
 	</h2>
 	<ul class="flex flex-col gap-2 p-2">

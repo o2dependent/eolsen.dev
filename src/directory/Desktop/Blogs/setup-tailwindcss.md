@@ -1,6 +1,6 @@
 ---
-title: Pixel art
-description: This site is built with sveltekit and tailwindcss.
+title: Setup Sveltekit with Tailwindcss easy
+description: Run this command and it happens ayo super cool.
 projectLink: https://github.com/o2dependent
 githubLink: https://github.com/o2dependent
 tags: ['Death Grips']

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { ProjectFileData } from '$stores/directory.store';
 	import type { createHistory } from '$utils/createHistory';
-
 	export let tags: string[];
 	export let projects: (ProjectFileData & { name: string })[];
 	export let history: ReturnType<typeof createHistory>;
@@ -37,10 +36,7 @@
 			</button>
 		{/each}
 	</div>
-	<div
-		class="grid w-full gap-2"
-		style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))"
-	>
+	<div class="content-grid grid w-full gap-2">
 		{#each activeProjects as project, index}
 			<button
 				on:click={() => {
@@ -50,22 +46,32 @@
 					history.push(`${project.name}`);
 				}}
 				type="button"
-				class="group rounded-xl bg-slate-700/25 p-2 text-left text-white text-opacity-50 shadow-none transition-all hover:bg-slate-700/50 hover:text-opacity-100 hover:shadow-xl"
-			>
-				<h2 class="text-2xl font-black">
-					{project.title}
-				</h2>
-				<div class="flex flex-grow gap-2">
-					{#each project.tags as tag}
-						<button
-							type="button"
-							class="inline-flex h-6 items-center justify-center rounded-full bg-slate-700 px-2 text-sm text-white text-opacity-50 shadow-none transition-all hover:text-opacity-100 group-hover:shadow-inner"
-						>
-							{tag}
-						</button>
-					{/each}
+				class="group flex flex-col gap-2 rounded-xl bg-slate-700/25 p-2 text-left text-white text-opacity-50 shadow-none transition-all hover:bg-slate-700/50 hover:text-opacity-100 hover:shadow-xl"
+				><div class="flex w-full flex-col justify-between">
+					<h2 class="flex-grow text-2xl font-black">
+						{project.title}
+					</h2>
+					<div class="flex gap-2">
+						{#each project.tags as tag}
+							<button
+								type="button"
+								class="inline-flex h-6 items-center justify-center rounded-full bg-slate-700 px-2 text-sm text-white text-opacity-50 shadow-none transition-all hover:text-opacity-100 group-hover:shadow-inner"
+							>
+								{tag}
+							</button>
+						{/each}
+					</div>
 				</div>
+				<p>{project?.description ?? ''}</p>
 			</button>
 		{/each}
 	</div>
 </div>
+
+<style lang="postcss">
+	.content-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-auto-rows: minmax(100px, auto);
+	}
+</style>

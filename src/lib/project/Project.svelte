@@ -42,7 +42,7 @@
 	}
 </script>
 
-<Window headerClass="!bg-slate-900" {appWindow} startingWidth="60rem" startingHeight="40rem">
+<Window headerClass="!bg-purple-900" {appWindow} startingWidth="60rem" startingHeight="40rem">
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
