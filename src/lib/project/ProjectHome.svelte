@@ -8,6 +8,15 @@
 	export let curProject: typeof projects[0] | undefined;
 
 	let activeTag: string | undefined;
+	let activeProjects = projects;
+
+	$: {
+		if (typeof activeTag === 'string') {
+			activeProjects = projects.filter((project) => project?.tags?.includes?.(activeTag ?? ''));
+		} else {
+			activeProjects = projects;
+		}
+	}
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 px-4">
@@ -32,7 +41,7 @@
 		class="grid w-full gap-2"
 		style="grid-template-columns: repeat(auto-fill, minmax(250px, 1fr))"
 	>
-		{#each projects as project, index}
+		{#each activeProjects as project, index}
 			<button
 				on:click={() => {
 					if ($history.current === project.name || curProject?.name === project.name) {

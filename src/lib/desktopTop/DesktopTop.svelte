@@ -60,7 +60,7 @@
 					{
 						name: 'Quit',
 						onClick: () => {
-							removeAppsByName('Terminal');
+							removeAppsByName('Project');
 						}
 					}
 				]

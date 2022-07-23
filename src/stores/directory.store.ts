@@ -26,7 +26,7 @@ export interface Directory {
 	contents: { [name: string]: Directory | DirectoryFile };
 }
 // const allDirFiles = import.meta.glob('./**/*.md');
-const allDirFiles = import.meta.globEager('../directory/**/*.md');
+const allDirFiles = import.meta.globEager('../directory/**/*.{md,svx}');
 const iterableDirFiles = Object.entries(allDirFiles);
 
 const allFiles = iterableDirFiles.map(([path, data]) => {

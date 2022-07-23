@@ -1,0 +1,16 @@
+---
+title: Chaos in my brain
+projectLink: https://github.com/o2dependent
+githubLink: https://github.com/o2dependent
+tags: ['Death Grips']
+---
+
+# Chaos in my brain
+
+You got no biznes questioning me, maaayne.
+
+<script>
+	let count = 0;
+</script>
+
+<button on:click={() => count++} type="button">{count}</button>

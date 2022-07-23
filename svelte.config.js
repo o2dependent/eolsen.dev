@@ -23,7 +23,7 @@ const config = {
 			postcss: true
 		}),
 		mdsvex({
-			extensions: ['.md']
+			extensions: ['.md', '.svx']
 		})
 	]
 };
