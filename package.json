@@ -28,6 +28,7 @@
 		"mdsvex": "^0.10.6",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",
+		"postcss-nesting": "^10.1.10",
 		"prettier": "^2.7.1",
 		"prettier-plugin-svelte": "^2.7.0",
 		"prettier-plugin-tailwindcss": "^0.1.11",
