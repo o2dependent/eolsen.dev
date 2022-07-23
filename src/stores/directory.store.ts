@@ -10,9 +10,18 @@ export interface TextFileData {
 export interface ProjectFileData {
 	id: string;
 	title: string;
+	description: string;
 	html: string;
 	projectLink: string;
 	githubLink: string;
+	tags: string[];
+}
+
+export interface BlogFileData {
+	id: string;
+	title: string;
+	description: string;
+	html: string;
 	tags: string[];
 }
 

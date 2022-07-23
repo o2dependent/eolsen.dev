@@ -66,6 +66,25 @@
 				]
 			}
 		],
+		Blog: [
+			{
+				name: 'Blog',
+				content: [
+					{
+						name: 'Add Window',
+						onClick: () => {
+							addApp('Blog');
+						}
+					},
+					{
+						name: 'Quit',
+						onClick: () => {
+							removeAppsByName('Blog');
+						}
+					}
+				]
+			}
+		],
 		Settings: []
 	};
 

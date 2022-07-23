@@ -1,5 +1,6 @@
 <script lang="ts">
 	import AboutApp from '$lib/aboutApp/AboutApp.svelte';
+	import Blog from '$lib/blog/Blog.svelte';
 
 	import Project from '$lib/project/Project.svelte';
 
@@ -14,5 +15,7 @@
 		<Project {appWindow} />
 	{:else if appWindow.name === 'About Site'}
 		<AboutApp {appWindow} />
+	{:else if appWindow.name === 'Blog'}
+		<Blog {appWindow} />
 	{/if}
 {/each}

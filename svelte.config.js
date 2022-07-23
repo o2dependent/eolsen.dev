@@ -20,7 +20,8 @@ const config = {
 	// for more information about preprocessors
 	preprocess: [
 		sveltePreprocess({
-			postcss: true
+			postcss: true,
+			typescript: true
 		}),
 		mdsvex({
 			extensions: ['.md', '.svx']
