@@ -1,9 +1,11 @@
+import type { SvelteComponent } from 'svelte';
 import { writable } from 'svelte/store';
 
-export type AppNames = 'Terminal' | 'Project' | 'Blog' | 'About Site' | 'Settings';
+export type AppNames = 'Terminal' | 'Project' | 'Blog' | 'About Site' | 'Pixel Paint' | 'Settings';
 export interface AppWindow {
 	id: string;
 	name: AppNames;
+	component?: SvelteComponent;
 }
 
 export type Apps = AppWindow[];

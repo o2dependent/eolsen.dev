@@ -1,6 +1,7 @@
 <script lang="ts">
 	import AboutApp from '$lib/aboutApp/AboutApp.svelte';
 	import Blog from '$lib/blog/Blog.svelte';
+	import Draw from '$lib/drawApp/Draw.svelte';
 
 	import Project from '$lib/project/Project.svelte';
 
@@ -15,6 +16,8 @@
 		<Project {appWindow} />
 	{:else if appWindow.name === 'About Site'}
 		<AboutApp {appWindow} />
+	{:else if appWindow.name === 'Pixel Paint'}
+		<Draw {appWindow} />
 	{:else if appWindow.name === 'Blog'}
 		<Blog {appWindow} />
 	{/if}

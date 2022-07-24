@@ -85,6 +85,25 @@
 				]
 			}
 		],
+		'Pixel Paint': [
+			{
+				name: 'Pixel Paint',
+				content: [
+					{
+						name: 'Add Window',
+						onClick: () => {
+							addApp('Pixel Paint');
+						}
+					},
+					{
+						name: 'Quit',
+						onClick: () => {
+							removeAppsByName('Pixel Paint');
+						}
+					}
+				]
+			}
+		],
 		Settings: []
 	};
 
