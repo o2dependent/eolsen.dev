@@ -124,7 +124,9 @@
 			<BlogSideBar {curBlog} {blogs} {history} />
 		{/if}
 		<div
-			class="flex-grow bg-slate-800 p-4 {curBlog ? 'pl-60' : 'pl-0'} transition-all duration-200"
+			class="flex-grow bg-slate-800 p-4 {curBlog
+				? 'pl-60 transition-all'
+				: 'pl-0 transition-colors'} duration-200"
 		>
 			<div
 				class="mx-auto flex h-full w-full flex-col items-center px-2 {curBlog
