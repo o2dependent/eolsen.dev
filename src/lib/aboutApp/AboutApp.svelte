@@ -41,8 +41,8 @@
 	<div class="relative flex h-full w-full flex-col bg-[#1E1B24]">
 		{#key activeTab}
 			<div
-				in:fade={{ duration: 300 }}
-				out:fade={{ duration: 300 }}
+				in:fade={{ duration: 100 }}
+				out:fade={{ duration: 100 }}
 				class="absolute flex h-full w-full flex-grow flex-col"
 			>
 				{#if activeTab === 'Overview'}
