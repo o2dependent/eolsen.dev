@@ -120,33 +120,43 @@
 </script>
 
 <Window startingHeight="fit" startingWidth="fit" windowClass="!resize-none bg-black" {appWindow}>
-	<div class="h-fit w-fit select-none bg-slate-700">
-		<label for="pixelNum"
-			>Size
-			<select name="pixelNum" id="pixelNum" bind:value={pixelNum}>
-				<option value={16}>16x16</option>
-				<option value={32}>32x32</option>
-				<option value={64}>64x64</option>
-			</select>
-		</label>
-		<!-- <label>Width <input bind:value={width} type="number" /></label> -->
-		<!-- <label>Height <input bind:value={height} type="number" /></label> -->
-		<label>Color <input bind:value={tool.color} type="color" max="100" /></label>
-		<button
-			class="tool-btn {tool.name === 'pencil' ? 'selected' : ''}"
-			on:click={() => (tool.name = 'pencil')}><Pencil /></button
-		>
-		<button
-			class="tool-btn {tool.name === 'select' ? 'selected' : ''}"
-			on:click={() => (tool.name = 'select')}><ColorDropper /></button
-		>
-		<button
-			class="tool-btn {tool.name === 'fill' ? 'selected' : ''}"
-			on:click={() => (tool.name = 'fill')}><FillBucket /></button
-		>
-		<button on:click={() => drawCanvas()}>Draw canvas</button>
+	<div class="relative">
+		<div class="w-full py-1">
+			<label for="pixelNum"
+				>Size
+				<select name="pixelNum" id="pixelNum" bind:value={pixelNum}>
+					<option value={16}>16x16</option>
+					<option value={32}>32x32</option>
+					<option value={64}>64x64</option>
+				</select>
+			</label>
+			<!-- <label>Width <input bind:value={width} type="number" /></label> -->
+			<!-- <label>Height <input bind:value={height} type="number" /></label> -->
+			<label>Color <input bind:value={tool.color} type="color" max="100" /></label>
+			<button
+				class="tool-btn {tool.name === 'pencil' ? 'selected' : ''}"
+				on:click={() => (tool.name = 'pencil')}><Pencil /></button
+			>
+			<button
+				class="tool-btn {tool.name === 'select' ? 'selected' : ''}"
+				on:click={() => (tool.name = 'select')}><ColorDropper /></button
+			>
+			<button
+				class="tool-btn {tool.name === 'fill' ? 'selected' : ''}"
+				on:click={() => (tool.name = 'fill')}><FillBucket /></button
+			>
+			<button on:click={() => drawCanvas()}>Draw canvas</button>
+			<button class="h-6 w-6" type="button">
+				<svg class="h-full w-full" viewBox="0 0 24 24">
+					<path
+						d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+						class="fill-current"
+					/>
+				</svg>
+			</button>
+		</div>
+		<canvas class=" rounded-md border border-white/50" bind:this={canvas} {width} {height} />
 	</div>
-	<canvas class=" rounded-md border border-white/50" bind:this={canvas} {width} {height} />
 </Window>
 
 <style lang="postcss">
