@@ -98,7 +98,7 @@
 							/>
 							<img
 								in:fly={{ y: 1200, delay: 1750, duration: 4000 }}
-								class="anaimati fixed -bottom-32 right-1/4 h-52"
+								class="fixed -bottom-32 right-1/4 h-52"
 								src={LuaStanding}
 								alt=""
 							/>
@@ -133,7 +133,7 @@
 				</svg>
 			</button>
 			<button
-				class="rounded bg-[#56545C] py-[1px] px-1.5 text-xs text-white"
+				class="rounded bg-[#56545C] py-[1px] px-1.5 text-xs text-white disabled:cursor-not-allowed disabled:opacity-75"
 				disabled={index === 2}
 				type="button"
 				on:click={() => {
