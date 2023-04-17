@@ -13,6 +13,10 @@
 </script>
 
 <Window
+	defaultPosition={{
+		x: window.innerWidth / 2 - 280,
+		y: window.innerHeight / 2 - 166 - 128
+	}}
 	startingHeight="332px"
 	startingWidth="560px"
 	headerClass="!bg-[rgb(48,45,51)] !shadow !border-b !border-black"
@@ -41,8 +45,8 @@
 	<div class="relative flex h-full w-full flex-col bg-[#1E1B24]">
 		{#key activeTab}
 			<div
-				in:fade={{ duration: 100 }}
-				out:fade={{ duration: 100 }}
+				in:fade={{ duration: 75 }}
+				out:fade={{ duration: 75 }}
 				class="absolute flex h-full w-full flex-grow flex-col"
 			>
 				{#if activeTab === 'Overview'}

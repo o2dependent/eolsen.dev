@@ -8,6 +8,10 @@
 	export let windowClass: string = '';
 	export let startingWidth = '30rem';
 	export let startingHeight = '25rem';
+	export let defaultPosition = {
+		x: 0,
+		y: 8
+	};
 
 	let isMouseDown = false;
 
@@ -23,6 +27,7 @@
 			left: -100000,
 			right: -100000
 		},
+		defaultPosition,
 		handle: '.handle',
 		onDragEnd: () => {
 			isMouseDown = false;
