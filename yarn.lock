@@ -51,6 +51,11 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.14.tgz#add4c98d341472a289190b424efbdb096991bb24"
   integrity sha512-XPSJHWmi394fuUuzDnGz1wiKqWfo1yXecHQMRf2l6hztTO+nPru658AyDngaBe7isIxEkRsPR3FZh+s7iVa4Uw==
 
+"@jridgewell/sourcemap-codec@^1.4.13":
+  version "1.4.15"
+  resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.4.15.tgz#d7c6e6755c78567a951e04ab52ef0fd26de59f32"
+  integrity sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==
+
 "@jridgewell/trace-mapping@^0.3.9":
   version "0.3.14"
   resolved "https://registry.yarnpkg.com/@jridgewell/trace-mapping/-/trace-mapping-0.3.14.tgz#b231a081d8f66796e475ad588a1ef473112701ed"
@@ -1391,6 +1396,13 @@ magic-string@^0.26.2:
   dependencies:
     sourcemap-codec "^1.4.8"
 
+magic-string@^0.30.0:
+  version "0.30.0"
+  resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.30.0.tgz#fd58a4748c5c4547338a424e90fa5dd17f4de529"
+  integrity sha512-LA+31JYDJLs82r2ScLrlz1GjSgu66ZV518eyWT+S8VhyQn/JL0u9MeBOvQMGYiPk1DBiSN9DDMOcXvigJZaViQ==
+  dependencies:
+    "@jridgewell/sourcemap-codec" "^1.4.13"
+
 make-dir@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-3.1.0.tgz#415e967046b3a7f1d185277d84aa58203726a13f"
@@ -2312,6 +2324,19 @@ svelte-hmr@^0.14.12:
   version "0.14.12"
   resolved "https://registry.yarnpkg.com/svelte-hmr/-/svelte-hmr-0.14.12.tgz#a127aec02f1896500b10148b2d4d21ddde39973f"
   integrity sha512-4QSW/VvXuqVcFZ+RhxiR8/newmwOCTlbYIezvkeN6302YFRE8cXy0naamHcjz8Y9Ce3ITTZtrHrIL0AGfyo61w==
+
+svelte-parse-markup@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/svelte-parse-markup/-/svelte-parse-markup-0.1.1.tgz#59a5b6f07d30c7b8f39aace13ca951f81b1b011a"
+  integrity sha512-xCBSldaZdwi0u0ANASVCUFynCaV8z5D6sQOnzPcYSEoD9dd40MLzOKMBVmuTf/LUuPvc+cUvF132MnwdG7mDig==
+
+svelte-preprocess-import-assets@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/svelte-preprocess-import-assets/-/svelte-preprocess-import-assets-1.0.0.tgz#9a6521b9ef63a05a909b8824f9f9dcb34b22060c"
+  integrity sha512-iuRDcuTtZnqDnq+50LWGj6YF0tziqM7QK3X+o63uKfpsZw4sFnYzb8uerEY1s9EulPa4GVeMjWZDCPgOZu1chA==
+  dependencies:
+    magic-string "^0.30.0"
+    svelte-parse-markup "^0.1.1"
 
 svelte-preprocess@^4.0.0, svelte-preprocess@^4.10.7:
   version "4.10.7"
