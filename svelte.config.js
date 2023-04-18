@@ -1,6 +1,7 @@
 import adapter from '@sveltejs/adapter-auto';
 import { mdsvex } from 'mdsvex';
 import sveltePreprocess from 'svelte-preprocess';
+import { importAssets } from 'svelte-preprocess-import-assets';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -19,6 +20,7 @@ const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	preprocess: [
+		importAssets(),
 		sveltePreprocess({
 			postcss: true,
 			typescript: true
