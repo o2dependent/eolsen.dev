@@ -6,6 +6,7 @@
 	import OverviewPanel from './panels/OverviewPanel.svelte';
 	import AboutPanel from './panels/AboutPanel.svelte';
 	import { onMount } from 'svelte';
+	import ContactPanel from './panels/ContactPanel.svelte';
 
 	export let appWindow: AppWindow;
 	type AboutActiveTabs = 'Overview' | 'About' | 'Contact';
@@ -62,7 +63,7 @@
 					{:else if activeTab === 'About'}
 						<AboutPanel />
 					{:else if activeTab === 'Contact'}
-						<h1>Contact</h1>
+						<ContactPanel />
 					{/if}
 					<p class="pb-1 text-center text-[10px] text-white/20">
 						{new Date().getFullYear()} Ethan Olsen Development
