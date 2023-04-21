@@ -1,17 +1,34 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { fly, scale } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 	let mounted = false;
-
+	export let audio: HTMLAudioElement;
+	let ringVisible = false;
 	onMount(() => (mounted = true));
+	$: {
+		if (mounted && audio) {
+			console.log(audio);
+			audio?.play?.();
+			setTimeout(() => {
+				ringVisible = true;
+			}, 1750);
+		}
+	}
 </script>
 
 {#if mounted}
 	<div
-		in:scale={{
+		in:fade={{
+			duration: 222
+		}}
+		out:fade={{
 			duration: 1000
 		}}
-		class="overflow-hidden rounded-full ring-[3px] ring-white"
+		class="overflow-hidden rounded-full {ringVisible
+			? 'ring-[50vmax]'
+			: 'ring-0'} ring-white {ringVisible
+			? 'ring-opacity-100'
+			: 'ring-opacity-0'} transition-all duration-1000"
 	>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -35,27 +52,27 @@
 			<g mask="url(#mask0_405_643)">
 				<path
 					in:fly={{
-						duration: 1500,
+						duration: 300,
 						x: -500,
-						delay: 1000
+						delay: 222
 					}}
 					d="M43 93H471V143H43V93Z"
 					fill="#FEFEFE"
 				/>
 				<path
 					in:fly={{
-						duration: 1500,
+						duration: 300,
 						x: -250,
-						delay: 1000
+						delay: 705
 					}}
 					d="M43 238H282V288H43V238Z"
 					fill="#FEFEFE"
 				/>
 				<path
 					in:fly={{
-						duration: 1500,
+						duration: 300,
 						x: -500,
-						delay: 1000
+						delay: 1083
 					}}
 					d="M43 383H471V433H43V383Z"
 					fill="#FEFEFE"

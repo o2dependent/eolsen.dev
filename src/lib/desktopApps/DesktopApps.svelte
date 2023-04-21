@@ -7,6 +7,10 @@
 
 	import Terminal from '$lib/terminal/Terminal.svelte';
 	import { apps } from '$stores/apps.store';
+
+	$: {
+		console.log({ $apps });
+	}
 </script>
 
 {#each $apps as appWindow (appWindow.id)}
