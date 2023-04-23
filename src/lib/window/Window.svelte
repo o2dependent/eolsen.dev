@@ -60,6 +60,7 @@
 		<slot name="header" />
 	</div>
 	<div
+		style="contain: layout"
 		class="max-h-full flex-grow overflow-y-auto"
 		on:mousedown|stopPropagation={() => focusApp(appWindow.id)}
 	>
