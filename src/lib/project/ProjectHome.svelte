@@ -8,6 +8,7 @@
 
 	let activeTag: string | undefined;
 	let activeProjects = projects;
+	let alertDismissed = false;
 
 	$: {
 		if (typeof activeTag === 'string') {

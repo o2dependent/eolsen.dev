@@ -122,59 +122,62 @@
 			</p>
 		</div>
 	</div>
-	{#if !alertDismissed}
-		<div out:scale class="flex bg-red-500 px-4 py-1">
-			<p class="flex-grow">
-				Most projects are not publicly available, because it is internal tooling!
-			</p>
-			<button
-				on:click={() => {
-					alertDismissed = true;
-				}}
-				class="rounded border border-white/0 bg-white/0 transition-colors duration-200 hover:border-white/30 hover:bg-white/20"
-			>
-				<svg
-					width="22"
-					height="22"
-					xmlns="http://www.w3.org/2000/svg"
-					class="ionicon"
-					viewBox="0 0 512 512"
-					><path
-						fill="none"
-						stroke="currentColor"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="32"
-						d="M368 368L144 144M368 144L144 368"
-					/></svg
+	<div class="flex h-full max-h-full flex-col overflow-y-auto">
+		{#if !alertDismissed && !curProject}
+			<div class="flex bg-red-500 px-4 py-1 text-black">
+				<p class="flex-grow">
+					I specialize in team internal tooling so most projects are not publicly available. A write
+					up will still be available
+				</p>
+				<button
+					on:click={() => {
+						alertDismissed = true;
+					}}
+					class="rounded border border-white/0 bg-white/0 transition-colors duration-200 hover:border-white/30 hover:bg-white/20"
 				>
-			</button>
-		</div>
-	{/if}
-	<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
-		{#if curProject}
-			<ProjectSideBar {curProject} {projects} {history} />
-		{/if}
-		<div
-			class="flex-grow bg-slate-800 p-4 {curProject
-				? 'pl-60 transition-all'
-				: 'pl-0 transition-colors'} duration-200"
-		>
-			<div
-				class="mx-auto flex h-full w-full flex-col items-center px-2 {curProject
-					? ''
-					: 'justify-center'}"
-			>
-				{#key curProject}
-					{#if curProject}
-						<ProjectView {curProject} />
-					{:else}
-						<ProjectHome {curProject} {projects} {history} {tags} />
-					{/if}
-				{/key}
+					<svg
+						width="22"
+						height="22"
+						xmlns="http://www.w3.org/2000/svg"
+						class="ionicon"
+						viewBox="0 0 512 512"
+						><path
+							fill="none"
+							stroke="currentColor"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="32"
+							d="M368 368L144 144M368 144L144 368"
+						/></svg
+					>
+				</button>
 			</div>
-		</div>
-	</form>
+		{/if}
+		<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
+			{#if curProject}
+				<ProjectSideBar {curProject} {projects} {history} />
+			{/if}
+			<div
+				class="flex-grow bg-slate-800 p-4 {curProject
+					? 'pl-60 transition-all max-h-full overflow-y-scroll'
+					: 'pl-0 transition-colors'} duration-200"
+			>
+				<div
+					class="mx-auto flex h-full w-full flex-col items-center px-2 {curProject
+						? ''
+						: 'justify-center'}"
+				>
+					{#key curProject}
+						{#if curProject}
+							<ProjectView {curProject} />
+						{:else}
+							<ProjectHome {curProject} {projects} {history} {tags} />
+						{/if}
+					{/key}
+				</div>
+			</div>
+		</form>
+	</div>
 </Window>
 
 <style>
