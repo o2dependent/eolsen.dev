@@ -1,21 +1,13 @@
 ---
-title: Page builder
-description: This site is built with sveltekit and tailwindcss.
+title: CMS Page builder
+description: A content management system designed for building out custom apps with a page builder.
 projectLink: https://github.com/o2dependent
 githubLink: https://github.com/o2dependent
 tags: ['Death Grips']
 ---
 
-# This is a test file
+# Purpose
 
-some more text here.
+# Tech Stack
 
-_This is a test_
-
-## This is a svelte component
-
-<script>
-	let count = 0;
-</script>
-
-<button class="w-full bg-pink-500" on:click={() => count++} type="button">{count}</button>
+# Challenges
