@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-netlify';
 import { mdsvex } from 'mdsvex';
 import sveltePreprocess from 'svelte-preprocess';
 import { importAssets } from 'svelte-preprocess-import-assets';
@@ -6,7 +6,10 @@ import { importAssets } from 'svelte-preprocess-import-assets';
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			edge: false,
+			split: false
+		}),
 		alias: {
 			$stores: './src/stores',
 			'$stores/*': './src/stores/*',
