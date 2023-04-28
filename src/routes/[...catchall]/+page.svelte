@@ -45,7 +45,7 @@
 			and check back later for more!
 		</p>
 		<button
-			class="absolute -top-2  -left-2 ml-auto rounded-full border border-white/30 bg-neutral-800 p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+			class="absolute -top-2 -left-2 ml-auto rounded-full border border-white/30 bg-neutral-800 p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
 			on:click={() => (wipAcknowledge = true)}
 			><svg
 				width="16"
