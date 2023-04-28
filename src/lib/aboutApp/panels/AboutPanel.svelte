@@ -48,7 +48,7 @@
 							out:fly={{ x: -64 * slideDir }}
 							class="absolute text-xs"
 						>
-							{['Cross platform developer', 'Amateur game developer', 'Fan of cats'][index]}
+							{['Cross platform developer', 'Hobby game developer', 'Fan of cats'][index]}
 						</p>
 					{/key}
 				</div>
