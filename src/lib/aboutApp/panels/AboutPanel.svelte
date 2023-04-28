@@ -83,25 +83,6 @@
 									language I like. Please don't tell my girlfriend she does not know.
 								</p>
 							</div>
-							<img
-								in:fly={{ x: 100, delay: 500, duration: 1000 }}
-								class="fixed -bottom-4 -left-8 h-32 -scale-x-100"
-								src={Omen}
-								alt=""
-							/>
-
-							<img
-								in:fly={{ x: 100, delay: 750, duration: 1000 }}
-								class="fixed -bottom-8 -right-8 h-32"
-								src={Lua}
-								alt=""
-							/>
-							<img
-								in:fly={{ y: 1200, delay: 1750, duration: 4000 }}
-								class="fixed -bottom-32 right-1/4 h-52"
-								src={LuaStanding}
-								alt=""
-							/>
 						{/if}
 					</div>
 				{/key}
@@ -159,6 +140,27 @@
 		</div>
 	</div>
 </div>
+{#if index === 2}
+	<img
+		in:fly={{ x: 100, delay: 500, duration: 1000 }}
+		class="absolute -bottom-4 -left-8 h-32 -scale-x-100"
+		src={Omen}
+		alt=""
+	/>
+
+	<img
+		in:fly={{ x: 100, delay: 750, duration: 1000 }}
+		class="absolute -bottom-8 -right-8 h-32"
+		src={Lua}
+		alt=""
+	/>
+	<img
+		in:fly={{ y: 1200, delay: 1750, duration: 4000 }}
+		class="absolute -bottom-32 right-1/4 h-52"
+		src={LuaStanding}
+		alt=""
+	/>
+{/if}
 
 <style>
 	.zoom-photo {

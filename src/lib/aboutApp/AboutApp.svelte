@@ -34,7 +34,7 @@
 	>
 		<div slot="header" class="flex w-full items-center justify-center pr-14">
 			<div
-				class="flex items-center justify-center gap-[1px] overflow-hidden rounded-md border border-slate-700 opacity-75 hover:opacity-100 "
+				class="flex items-center justify-center gap-[1px] overflow-hidden rounded-md border border-slate-700 opacity-75 hover:opacity-100"
 			>
 				{#each tabs as item, i}
 					<button
@@ -51,7 +51,7 @@
 				{/each}
 			</div>
 		</div>
-		<div class="relative flex h-full w-full flex-col bg-[#1E1B24]">
+		<div class="relative flex h-full w-full flex-col overflow-hidden bg-[#1E1B24]">
 			{#key activeTab}
 				<div
 					in:fade={{ duration: 75 }}
