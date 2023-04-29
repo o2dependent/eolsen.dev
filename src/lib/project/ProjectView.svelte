@@ -1,13 +1,19 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import type { ProjectFileData } from '$stores/directory.store';
 
+	export let scrollContainer: HTMLDivElement;
 	export let curProject: ProjectFileData & { name: string };
+
+	const resetScroll = () => {
+		scrollContainer.scrollTo(0, 0);
+	};
+
+	$: curProject && resetScroll();
 </script>
 
 <div class="prose prose-invert mb-4 w-full border-b border-slate-600 pb-2">
-	<h1
-		class="!m-0 !w-fit !bg-gradient-to-r from-red-500 via-pink-600 to-purple-500 bg-clip-text pb-2 !text-5xl !font-black !text-transparent"
-	>
+	<h1 class="heading !m-0 !w-fit pb-2 !text-5xl !font-black !text-white">
 		{curProject?.title}
 	</h1>
 	<div class="flex w-full">
@@ -57,5 +63,7 @@
 	</div>
 </div>
 <div class="prose prose-invert w-full">
-	<svelte:component this={curProject?.html} />
+	{#key curProject?.id}
+		<svelte:component this={curProject?.html} />
+	{/key}
 </div>

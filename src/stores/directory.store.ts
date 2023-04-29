@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import type { AppNames } from './apps.store';
+import type { SvelteComponent } from 'svelte';
 
 export interface TextFileData {
 	id: string;
@@ -11,7 +12,7 @@ export interface ProjectFileData {
 	id: string;
 	title: string;
 	description: string;
-	html: string;
+	html: SvelteComponent;
 	projectLink: string;
 	githubLink: string;
 	tags: string[];

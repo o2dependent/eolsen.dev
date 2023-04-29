@@ -34,6 +34,9 @@
 	let history = createHistory('');
 
 	let curProject: typeof projects[0] | undefined;
+	let scrollContainer: HTMLDivElement;
+
+	let open = false;
 
 	$: {
 		console.log({ $history });
@@ -122,7 +125,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="flex h-full max-h-full flex-col overflow-y-auto">
+	<div bind:this={scrollContainer} class="flex h-full max-h-full flex-col overflow-y-auto">
 		{#if !alertDismissed && !curProject}
 			<div class="flex bg-red-500 px-4 py-1 text-black">
 				<p class="flex-grow">
@@ -155,12 +158,12 @@
 		{/if}
 		<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
 			{#if curProject}
-				<ProjectSideBar {curProject} {projects} {history} />
+				<ProjectSideBar bind:open {curProject} {projects} {history} />
 			{/if}
 			<div
-				class="flex-grow bg-slate-800 p-4 {curProject
-					? 'pl-60 transition-all max-h-full overflow-y-scroll'
-					: 'pl-0 transition-colors'} duration-200"
+				class="flex-grow bg-slate-800 p-4 {open && curProject
+					? 'pl-60 max-h-full overflow-y-scroll'
+					: 'pl-0'} transition-all duration-500"
 			>
 				<div
 					class="mx-auto flex h-full w-full flex-col items-center px-2 {curProject
@@ -169,7 +172,7 @@
 				>
 					{#key curProject}
 						{#if curProject}
-							<ProjectView {curProject} />
+							<ProjectView {scrollContainer} {curProject} />
 						{:else}
 							<ProjectHome {curProject} {projects} {history} {tags} />
 						{/if}
