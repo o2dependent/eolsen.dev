@@ -157,9 +157,7 @@
 			</div>
 		{/if}
 		<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
-			{#if curProject}
-				<ProjectSideBar bind:open {curProject} {projects} {history} />
-			{/if}
+			<ProjectSideBar bind:open {curProject} {projects} {history} />
 			<div
 				class="flex-grow bg-slate-800 p-4 {open && curProject
 					? 'pl-60 max-h-full overflow-y-scroll'
