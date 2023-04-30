@@ -11,6 +11,7 @@
 	import BlogHome from './BlogHome.svelte';
 	import BlogView from './BlogView.svelte';
 	import BlogSideBar from './BlogSideBar.svelte';
+	import AppSideBar from '$lib/appComponents/TextFileApp/AppSideBar.svelte';
 
 	export let appWindow: AppWindow;
 
@@ -31,6 +32,7 @@
 	let history = createHistory('');
 
 	let curBlog: typeof blogs[0] | undefined;
+	let open = false;
 
 	$: {
 		console.log({ $history });
@@ -121,12 +123,12 @@
 	</div>
 	<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
 		{#if curBlog}
-			<BlogSideBar {curBlog} {blogs} {history} />
+			<AppSideBar curItem={curBlog} items={blogs} title="Blogs" bind:open {history} />
 		{/if}
 		<div
-			class="flex-grow bg-slate-800 p-4 {curBlog
-				? 'pl-60 transition-all'
-				: 'pl-0 transition-colors'} duration-200"
+			class="flex-grow overflow-y-auto bg-slate-800 p-4 {open && curBlog
+				? 'pl-60 max-h-full'
+				: 'pl-0'} transition-all duration-500"
 		>
 			<div
 				class="mx-auto flex h-full w-full flex-col items-center px-2 {curBlog

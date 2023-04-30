@@ -1,22 +1,24 @@
 <script lang="ts">
-	import type { BlogFileData } from '$stores/directory.store';
+	import type { ProjectFileData, BlogFileData, TextFileData } from '$stores/directory.store';
 	import type { createHistory } from '$utils/createHistory';
 
-	import { fly } from 'svelte/transition';
+	import { fly, fade } from 'svelte/transition';
 
-	export let blogs: (BlogFileData & { name: string })[];
+	export let items: ((TextFileData | ProjectFileData | BlogFileData) & { name: string })[];
 	export let history: ReturnType<typeof createHistory>;
-	export let curBlog: typeof blogs[0] | undefined;
+	export let curItem: typeof items[0] | undefined;
 	export let open = false;
+	export let title = 'Items';
+	export let color = 'bg-slate-800';
 
 	$: {
-		if (!curBlog) {
+		if (!curItem) {
 			open = false;
 		}
 	}
 </script>
 
-{#if curBlog}
+{#if curItem}
 	<div
 		in:fly={{ duration: 500, x: -32 }}
 		out:fly={{ duration: 250, x: -32 }}
@@ -32,24 +34,24 @@
 			out:fly={{ duration: 500, x: -250 }}
 			class="absolute flex h-full w-60 flex-col border-r-2 border-slate-700 bg-slate-800"
 		>
-			<div class="border-b-2 border-slate-700 bg-purple-900 p-2 pl-9 text-xl font-bold text-white">
-				<h2 in:fade={{ delay: 400, duration: 250 }}>Blogs</h2>
+			<div class="border-b-2 border-slate-700 {color} p-2 pl-9 text-xl font-bold text-white">
+				<h2 in:fade={{ delay: 400, duration: 250 }}>{title}</h2>
 			</div>
 			<ul class="flex flex-col gap-2 p-2">
-				{#each blogs as blog, index}
+				{#each items as item}
 					<button
 						on:click={() => {
-							if ($history.current === blog.name || curBlog?.name === blog.name) {
+							if ($history.current === item.name || curItem?.name === item.name) {
 								return;
 							}
-							history.push(`${blog.name}`);
+							history.push(`${item.name}`);
 						}}
 						type="button"
-						class="{curBlog?.name === blog.name
+						class="{curItem?.name === item.name
 							? 'bg-slate-700 text-opacity-100'
 							: ''} rounded p-2 text-left text-white text-opacity-50 transition-colors hover:bg-slate-700 hover:text-opacity-100"
 					>
-						{blog.title}
+						{item.title}
 					</button>
 				{/each}
 			</ul>

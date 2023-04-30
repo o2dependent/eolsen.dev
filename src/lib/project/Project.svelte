@@ -12,6 +12,8 @@
 	import ProjectHome from './ProjectHome.svelte';
 	import ProjectView from './ProjectView.svelte';
 	import ProjectSideBar from './ProjectSideBar.svelte';
+	import AppSideBar from '$lib/appComponents/TextFileApp/AppSideBar.svelte';
+	import AppHome from '$lib/appComponents/TextFileApp/AppHome.svelte';
 
 	export let appWindow: AppWindow;
 
@@ -157,10 +159,10 @@
 			</div>
 		{/if}
 		<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
-			<ProjectSideBar bind:open {curProject} {projects} {history} />
+			<AppSideBar bind:open items={projects} curItem={curProject} title="Projects" {history} />
 			<div
-				class="flex-grow bg-slate-800 p-4 {open && curProject
-					? 'pl-60 max-h-full overflow-y-scroll'
+				class="flex-grow overflow-y-auto bg-slate-800 p-4 {open && curProject
+					? 'pl-60 max-h-full'
 					: 'pl-0'} transition-all duration-500"
 			>
 				<div
@@ -172,7 +174,7 @@
 						{#if curProject}
 							<ProjectView {scrollContainer} {curProject} />
 						{:else}
-							<ProjectHome {curProject} {projects} {history} {tags} />
+							<AppHome curItem={curProject} items={projects} {history} {tags} />
 						{/if}
 					{/key}
 				</div>

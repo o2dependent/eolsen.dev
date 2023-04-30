@@ -5,14 +5,14 @@ import type { SvelteComponent } from 'svelte';
 export interface TextFileData {
 	id: string;
 	title: string;
-	html: string;
+	html: ConstructorOfATypedSvelteComponent;
 }
 
 export interface ProjectFileData {
 	id: string;
 	title: string;
 	description: string;
-	html: SvelteComponent;
+	html: ConstructorOfATypedSvelteComponent;
 	projectLink: string;
 	githubLink: string;
 	tags: string[];
@@ -22,7 +22,7 @@ export interface BlogFileData {
 	id: string;
 	title: string;
 	description: string;
-	html: string;
+	html: ConstructorOfATypedSvelteComponent;
 	tags: string[];
 }
 

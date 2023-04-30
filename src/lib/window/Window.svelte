@@ -55,7 +55,7 @@
 				class="h-3 w-3 rounded-full bg-red-500"
 			/>
 			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-yellow-500" />
-			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-green-500" />
+			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-green-500 opacity-40" />
 		</div>
 		<slot name="header" />
 	</div>
