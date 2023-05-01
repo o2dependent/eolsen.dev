@@ -16,10 +16,10 @@
 	export let appWindow: AppWindow;
 
 	const blogDir = (
-		($directory.contents?.['Desktop'] as Directory)?.contents?.['Blogs'] as Directory
-	).contents;
+		($directory?.contents?.['Desktop'] as Directory)?.contents?.['Blogs'] as Directory
+	)?.contents;
 
-	let blogs = Object.keys(blogDir).map((key) => {
+	let blogs = Object?.keys?.(blogDir ?? {}).map((key) => {
 		const blog = {
 			...((blogDir[key as keyof typeof blogDir] as DirectoryFile).data as BlogFileData),
 			name: key
@@ -31,7 +31,7 @@
 
 	let history = createHistory('');
 
-	let curBlog: typeof blogs[0] | undefined;
+	let curBlog: (typeof blogs)[0] | undefined;
 	let open = false;
 
 	$: {
@@ -135,13 +135,20 @@
 					? ''
 					: 'justify-center'}"
 			>
-				{#key curBlog}
-					{#if curBlog}
-						<BlogView {curBlog} />
-					{:else}
-						<BlogHome {curBlog} {blogs} {history} {tags} />
-					{/if}
-				{/key}
+				{#if blogs?.length}
+					{#key curBlog}
+						{#if curBlog}
+							<BlogView {curBlog} />
+						{:else}
+							<BlogHome {curBlog} {blogs} {history} {tags} />
+						{/if}
+					{/key}
+				{:else}
+					<div class="flex flex-col items-center justify-center gap-2">
+						<span class="text-2xl font-black text-white">No blogs found</span>
+						<span class="text-sm font-thin text-white">Check back later if you'd like</span>
+					</div>
+				{/if}
 			</div>
 		</div>
 	</form>

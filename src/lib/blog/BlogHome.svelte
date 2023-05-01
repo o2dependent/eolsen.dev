@@ -5,7 +5,7 @@
 	export let tags: string[];
 	export let blogs: (BlogFileData & { name: string })[];
 	export let history: ReturnType<typeof createHistory>;
-	export let curBlog: typeof blogs[0] | undefined;
+	export let curBlog: (typeof blogs)[0] | undefined;
 
 	let activeTag: string | undefined;
 	let activeBlogs = blogs;
@@ -20,7 +20,7 @@
 </script>
 
 <div class="flex h-full w-full flex-col gap-4 px-4">
-	<div class="sticky top-0 left-0 flex items-center gap-2 bg-slate-800">
+	<div class="sticky left-0 top-0 flex items-center gap-2 bg-slate-800">
 		<span class="text-xl font-black text-white">Tags</span>
 		{#each tags as tag}
 			<button
