@@ -18,7 +18,7 @@
 
 <audio bind:this={audio} src="./boot_up.wav" />
 {#if screenActive !== 'none'}
-	<div class="fixed top-0 left-0 z-10 h-full w-full bg-black" />
+	<div class="fixed left-0 top-0 z-10 h-full w-full bg-black" />
 {/if}
 {#if screenActive === 'bootup'}
 	<div
@@ -28,7 +28,7 @@
 		out:fade={{
 			duration: 500
 		}}
-		class="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black"
+		class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black"
 	>
 		<BootLogo {audio} />
 	</div>
@@ -40,7 +40,7 @@
 		in:fade={{
 			duration: 500
 		}}
-		class="fixed top-0 left-0 z-50 flex h-full w-full items-center justify-center bg-black"
+		class="fixed left-0 top-0 z-50 flex h-full w-full items-center justify-center bg-black"
 	>
 		<img class="fixed -z-10 h-full w-full object-cover" src="./background.png" alt="" />
 		<button

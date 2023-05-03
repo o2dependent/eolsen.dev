@@ -4,6 +4,9 @@ const config = {
 	theme: {
 		extend: {
 			scrollbar: ['rounded']
+		},
+		fontFamily: {
+			cmd: ['VT323', 'monospace']
 		}
 	},
 

@@ -2,6 +2,7 @@
 	import { apps, addApp, type AppNames, focusApp } from '$stores/apps.store';
 	import { fade } from 'svelte/transition';
 	import AppIcon from '$lib/appIcons/AppIcon.svelte';
+	import { browser } from '$app/environment';
 
 	export let appKey: string;
 
@@ -19,6 +20,10 @@
 </script>
 
 <button
+	on:auxclick={(e) => {
+		if (e?.button === 2) {
+		}
+	}}
 	on:mouseenter={() => (isHovered = true)}
 	on:mouseleave={() => ((isHovered = false), (isMouseDown = false))}
 	on:click={onAddAppHandler(appKey)}
