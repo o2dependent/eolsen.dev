@@ -1,111 +1,12 @@
 <script lang="ts">
+	import type { AppTabs, Tab } from './appTabs';
 	import { clickOutside } from '../../utils/clickOutside';
 	import { apps, addApp, focusApp, type AppWindow, type AppNames } from '$stores/apps.store';
+	import CurrentTime from './CurrentTime.svelte';
+	import { activeTab, appTabs } from './appTabs';
+	import DesktopTopRight from './DesktopTopRight.svelte';
 
-	let activeTab = '';
 	let activeApp: AppWindow | undefined;
-
-	interface Tab {
-		name: string;
-		content: {
-			name: string;
-			onClick: () => void;
-		}[];
-	}
-
-	const removeAppsByName = (appName: AppNames) => {
-		apps.update((apps) => {
-			const newApps = apps.filter((app) => app.name !== appName);
-			console.log({
-				newApps
-			});
-			return newApps;
-		});
-		activeTab = '';
-	};
-
-	type AppTabs = Record<AppNames, Tab[]>;
-
-	const appTabs: AppTabs = {
-		Terminal: [
-			{
-				name: 'Terminal',
-				content: [
-					{
-						name: 'Add Window',
-						onClick: () => {
-							addApp('Terminal');
-						}
-					},
-					{
-						name: 'Quit',
-						onClick: () => {
-							removeAppsByName('Terminal');
-						}
-					}
-				]
-			}
-		],
-		'About Site': [],
-		Project: [
-			{
-				name: 'Project',
-				content: [
-					{
-						name: 'Add Window',
-						onClick: () => {
-							addApp('Project');
-						}
-					},
-					{
-						name: 'Quit',
-						onClick: () => {
-							removeAppsByName('Project');
-						}
-					}
-				]
-			}
-		],
-		Blog: [
-			{
-				name: 'Blog',
-				content: [
-					{
-						name: 'Add Window',
-						onClick: () => {
-							addApp('Blog');
-						}
-					},
-					{
-						name: 'Quit',
-						onClick: () => {
-							removeAppsByName('Blog');
-						}
-					}
-				]
-			}
-		],
-		'Pixel Paint': [
-			{
-				name: 'Pixel Paint',
-				content: [
-					{
-						name: 'Add Window',
-						onClick: () => {
-							addApp('Pixel Paint');
-						}
-					},
-					{
-						name: 'Quit',
-						onClick: () => {
-							removeAppsByName('Pixel Paint');
-						}
-					}
-				]
-			}
-		],
-		Settings: []
-	};
 
 	const systemInfoContent: Tab['content'] = [
 		{
@@ -127,19 +28,23 @@
 	}
 </script>
 
-<div class="z-10 flex w-full bg-black/20 px-2 shadow-sm" use:clickOutside={() => (activeTab = '')}>
-	<div id="desktop-top-left" class="flex flex-grow">
+<div
+	class="z-10 flex w-full bg-black/20 px-[1.125rem] text-sm shadow-sm"
+	use:clickOutside={() => activeTab.set('')}
+>
+	<div id="desktop-top-left" class="flex flex-grow items-center">
 		<div class="relative">
 			<button
+				type="button"
 				on:mouseenter={() => {
 					if (activeTab) {
-						activeTab = 'system-info';
+						activeTab.set('system-info');
 					}
 				}}
 				on:click={() => {
-					activeTab = activeTab === 'system-info' ? '' : 'system-info';
+					activeTab.set($activeTab === 'system-info' ? '' : 'system-info');
 				}}
-				class:active={activeTab === 'system-info'}
+				class:active={$activeTab === 'system-info'}
 			>
 				<svg
 					width="16"
@@ -183,14 +88,14 @@
 					</g>
 				</svg>
 			</button>
-			{#if activeTab === 'system-info'}
+			{#if $activeTab === 'system-info'}
 				<div class="dropdown">
 					{#each systemInfoContent as content}
 						<button
 							type="button"
 							on:click={() => {
 								content.onClick();
-								activeTab = '';
+								activeTab.set('');
 							}}>{content.name}</button
 						>
 					{/each}
@@ -201,26 +106,27 @@
 			{#each appTabs[activeApp.name] as tab}
 				<div class="relative">
 					<button
+						type="button"
 						on:mouseenter={() => {
 							if (activeTab) {
-								activeTab = tab.name;
+								$activeTab = tab.name;
 							}
 						}}
 						on:click={() => {
-							activeTab = activeTab === tab.name ? '' : tab.name;
+							$activeTab = $activeTab === tab.name ? '' : tab.name;
 						}}
-						class:active={activeTab === tab.name}
+						class:active={$activeTab === tab.name}
 					>
 						{tab.name}
 					</button>
-					{#if activeTab === tab.name}
+					{#if $activeTab === tab.name}
 						<div class="dropdown">
 							{#each tab.content as content}
 								<button
 									type="button"
 									on:click={() => {
 										content.onClick();
-										activeTab = '';
+										activeTab.set('');
 									}}>{content.name}</button
 								>
 							{/each}
@@ -230,11 +136,12 @@
 			{/each}
 		{/if}
 	</div>
+	<DesktopTopRight />
 </div>
 
 <style lang="postcss">
 	#desktop-top-left > div {
-		@apply relative h-7;
+		@apply relative h-6;
 	}
 	#desktop-top-left > div > button {
 		@apply h-full rounded bg-white bg-opacity-0 px-3 py-0.5 text-left text-opacity-50 transition-colors;
@@ -243,7 +150,7 @@
 		@apply bg-opacity-25 text-opacity-100;
 	}
 	.dropdown {
-		@apply absolute top-full left-0 z-50 flex min-w-[10rem] flex-col rounded-lg border border-neutral-700 bg-neutral-800/80 p-1 backdrop-blur-md;
+		@apply absolute left-0 top-full z-50 flex min-w-[10rem] flex-col rounded-lg border border-neutral-700 bg-neutral-800/80 p-1 backdrop-blur-md;
 	}
 	.dropdown > button {
 		@apply w-full rounded px-2 text-left hover:bg-blue-500 hover:text-white;

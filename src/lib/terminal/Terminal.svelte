@@ -156,11 +156,11 @@
 				cliLabel.scrollTop = cliLabel.scrollHeight;
 			}, 0);
 		}}
-		class="flex h-full flex-col bg-neutral-900 bg-opacity-90 !font-mono text-sm text-white backdrop-blur-lg"
+		class="!font-mono font-mono flex h-full flex-col bg-neutral-900 bg-opacity-90 text-sm text-white backdrop-blur-lg"
 	>
 		<label
 			bind:this={cliLabel}
-			class="flex-grow overflow-y-scroll py-2 px-4 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800"
+			class="flex-grow overflow-y-scroll px-4 py-2 scrollbar-thin scrollbar-thumb-neutral-700 scrollbar-track-neutral-800"
 			for="cli-input-{appWindow.id}"
 		>
 			{#each lines as line}

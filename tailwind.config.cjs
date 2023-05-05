@@ -3,7 +3,7 @@ const config = {
 
 	theme: {
 		extend: {
-			scrollbar: ['rounded']
+			scrollbar: ['rounded'],
 		},
 		fontFamily: {
 			cmd: ['VT323', 'monospace']
