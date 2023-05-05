@@ -1,5 +1,5 @@
 <script>
-	import { fade, fly } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import AppBar from '$lib/appbar/AppBar.svelte';
 	import DesktopApps from '$lib/desktopApps/DesktopApps.svelte';
 	import DesktopTop from '$lib/desktopTop/DesktopTop.svelte';
@@ -8,7 +8,6 @@
 	export let loaded = false;
 
 	let isMobile = false;
-	let wipAcknowledge = false;
 
 	onMount(() => {
 		isMobile = window.innerWidth < 768;
@@ -32,39 +31,6 @@
 				on:click={() => (isMobile = false)}>Continue</button
 			>
 		</div>
-	</div>
-{/if}
-
-{#if !wipAcknowledge}
-	<div
-		in:fly={{ x: 250, duration: 250 }}
-		out:fly={{ x: 250, duration: 250 }}
-		class="group fixed right-4 top-8 z-50 flex w-64 flex-col gap-2 rounded-2xl border border-white/30 bg-black/40 p-4 backdrop-blur"
-	>
-		<h1 class="text-lg">Work in Progress ahead!</h1>
-		<p class="text-sm">
-			I'm still working on getting this site working just how I'd like it. Please excuse the mess
-			and check back later for more!
-		</p>
-		<button
-			class="absolute -left-2 -top-2 ml-auto rounded-full border border-white/30 bg-neutral-800 p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
-			on:click={() => (wipAcknowledge = true)}
-			><svg
-				width="16"
-				height="16"
-				xmlns="http://www.w3.org/2000/svg"
-				class="ionicon"
-				viewBox="0 0 512 512"
-				><path
-					fill="none"
-					stroke="currentColor"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="32"
-					d="M368 368L144 144M368 144L144 368"
-				/></svg
-			></button
-		>
 	</div>
 {/if}
 
