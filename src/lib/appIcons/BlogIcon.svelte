@@ -1,4 +1,4 @@
-<div class="h-12 w-12 overflow-hidden rounded-lg bg-white p-1">
+<div class="aspect-square h-full w-full overflow-hidden rounded-lg bg-white p-1">
 	<div
 		class="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-b from-cyan-400 to-cyan-500 px-0.5 shadow-md"
 	>
