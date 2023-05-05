@@ -6,7 +6,7 @@
 	<img
 		id="texture"
 		src={texture}
-		class="absolute top-0 left-0  h-full w-full rounded-full object-cover"
+		class="absolute left-0 top-0 h-full w-full rounded-full object-cover"
 		alt="Texture"
 	/>
 	<div class="z-50 h-[153px] w-[153px]">
