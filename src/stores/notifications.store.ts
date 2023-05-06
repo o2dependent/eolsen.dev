@@ -36,5 +36,15 @@ export const notifications = writable<Notification[]>([
 			addOrFocusApp('About Site');
 		},
 		dismissOnClick: true
+	},
+	{
+		id: 'project',
+		title: `New Project!`,
+		description: `Check out the write up for this site!`,
+		appKey: 'Project',
+		onClick: () => {
+			addOrFocusApp('Project');
+		},
+		dismissOnClick: true
 	}
 ]);

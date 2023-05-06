@@ -45,7 +45,7 @@
 			<div
 				in:fade={{ duration: 100 }}
 				out:fade={{ duration: 100 }}
-				class="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[rgb(148,152,166)]"
+				class="absolute -bottom-2 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-neutral-300/80"
 			/>
 		{/if}
 	{/key}

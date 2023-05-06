@@ -34,7 +34,7 @@
 			/></svg
 		></button
 	>
-	<div class="flex w-9 items-center justify-center">
+	<div class="flex h-full w-9 items-center justify-center">
 		<AppIcon {appKey} size="small" />
 	</div>
 	<div class="text-xs leading-tight">
