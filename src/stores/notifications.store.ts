@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { AppNames } from './apps.store';
+import { addOrFocusApp, type AppNames } from './apps.store';
 
 export interface Notification {
 	id: string;
@@ -7,6 +7,8 @@ export interface Notification {
 	description: string;
 	appKey: AppNames;
 	pinned?: boolean;
+	onClick?: () => void;
+	dismissOnClick?: boolean;
 }
 
 export const dismissNotification = (id: string) => {
@@ -29,6 +31,10 @@ export const notifications = writable<Notification[]>([
 		title: `Work in Progress ahead!`,
 		description: `I'm still working on getting this site working just right. If you find any bugs, please let me know!`,
 		appKey: 'About Site',
-		pinned: true
+		pinned: true,
+		onClick: () => {
+			addOrFocusApp('About Site');
+		},
+		dismissOnClick: true
 	}
 ]);

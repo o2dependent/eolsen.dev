@@ -27,6 +27,17 @@ function generateUUID() {
 	)}-${hex.substr(20, 12)}`;
 }
 
+export const addOrFocusApp = (appName: AppNames) => {
+	apps.update((oldApps) => {
+		const app = oldApps.find((app) => app.name === appName);
+		if (app) {
+			return [...oldApps.filter((app) => app.name !== appName), app];
+		}
+		const appWindow: AppWindow = { id: generateUUID(), name: appName };
+		return [...oldApps, appWindow];
+	});
+};
+
 export const addApp = (appName: AppNames) => {
 	const appWindow: AppWindow = { id: generateUUID(), name: appName };
 	apps.update((oldApps) => {
