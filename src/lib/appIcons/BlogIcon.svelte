@@ -1,10 +1,10 @@
 <div class="aspect-square h-full w-full overflow-hidden rounded-lg bg-white p-1">
 	<div
-		class="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-b from-cyan-400 to-cyan-500 px-0.5 shadow-md"
+		class="flex h-full w-full items-center justify-center rounded-full bg-gradient-to-b from-cyan-400 to-cyan-500 px-[20%] shadow-md"
 	>
 		<svg
-			width="1.75rem"
-			height="1.75rem"
+			width="100%"
+			height="100%"
 			viewBox="0 0 8 10"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg"
