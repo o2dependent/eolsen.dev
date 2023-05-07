@@ -6,26 +6,30 @@ githubLink: https://github.com/o2dependent
 tags: ['Svelte', 'Personal', 'Tailwind']
 ---
 
-# Purpose
+# Project Overview
 
-I wanted to utilize svelte and tailwind to create a complex and unique UI to showcase what I've been learning. I've developed tooling that can utilize a "plugin" or "app" ecosystem before, so I wanted to create a crude version of that by cloning OSX. OSX is the operating system that I use daily, and I like the way that it handles app management. Trying to fit the OSX look into a website is easy, but making it also _feel_ like an operating system is a difficult challenge that I was looking forward to.
+## Purpose
 
-# Tech Stack
+The purpose of this project was to demonstrate my skills in creating a sophisticated and distinctive user interface using Svelte and Tailwind. I wanted to showcase my learning achievements by developing a crude version of the OSX operating system. As an avid OSX user, I appreciate its efficient app management system. My aim was to replicate the OSX look on a website and, more importantly, capture the overall experience of using an operating system.
 
-## UI Framework
+## Tech Stack
 
-I chose Svelte and SvelteKit as the framework for the project. I knew that Svelte stores would make managing apps and other global state much easier compared to React or Vue. SvelteKit is just the best fullstack Svelte metaframework so its a no brainer to chose this.
+### UI Framework: Svelte and SvelteKit
 
-## Styling
+I made the deliberate choice to utilize Svelte and SvelteKit as the framework for this project. Compared to React or Vue, I recognized that Svelte stores would greatly simplify the management of apps and global state. SvelteKit, being the top-tier full-stack Svelte metaframework, was the obvious and ideal choice for this endeavor.
 
-For most projects I will use Tailwind, but for this I did consider just using SCSS or PostCSS. I ended up adding Tailwind primarily to see how it would work in this scenario. I didn't find too many issues other than the normal issue of bloated HTML. Since this project is a single page with a lot of elements that come in and out of the DOM the production stylesheet should be considerably smaller than if each was styled independently.
+### Styling: Tailwind
 
-# Challenges
+While Tailwind is my go-to styling tool for most projects, I did consider alternative options like SCSS or PostCSS for this particular project. However, after careful consideration, I decided to incorporate Tailwind to explore its compatibility in this context. Thankfully, I encountered minimal issues, with the exception of the potential problem of generating bloated HTML. Given that this project consists of a single page with numerous dynamic elements entering and leaving the DOM, the production stylesheet should be significantly smaller compared to styling each element independently.
 
-## OSX Functionality
+# Challenges Faced
 
-There where a few challenges with this project. The primary one was trying to mimic the OSX functionality as much as I could. There are quite a few things that I excluded. Obviously anything with key binds (like CMD + s for saving) will not be possible without running into endless compatibility issues between browsers.
+## Replicating OSX Functionality
 
-## Mobile compatibility
+One of the primary challenges encountered in this project was striving to faithfully mimic the functionality of the OSX operating system. Although I attempted to include as many features as possible, there were certain aspects that had to be excluded. For instance, implementing key bindings such as CMD + S for saving proved to be impractical due to the endless compatibility issues arising across various browsers. Nevertheless, I aimed to capture the essence of OSX's functionality within the limitations of web development.
 
-This is one of the things that I am working on developing. Since OSX is a desktop operating system it doesn't look great on phones. I'm planning on making a very basic clone of IOS for mobile, since the apps aren't fully dependent on a mouse and keyboard.
+## Mobile Compatibility
+
+Enhancing mobile compatibility emerged as another challenge during the course of this project. Considering that OSX is primarily designed for desktop operating systems, its visual appeal on mobile phones is less than optimal. To address this issue, I plan to develop a basic clone of iOS specifically tailored for mobile devices. Fortunately, the apps in this project are not heavily dependent on mouse and keyboard interactions, making the implementation of an iOS-like interface feasible.
+
+By undertaking this project, I aimed to demonstrate my expertise in developing complex user interfaces using Svelte and Tailwind, while tackling the challenges of emulating OSX functionality and ensuring mobile compatibility. The combination of these technologies and my commitment to refining the user experience can contribute to the success of future projects.

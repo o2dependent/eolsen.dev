@@ -6,28 +6,30 @@ githubLink: ''
 tags: ['CI/CD']
 ---
 
-# Purpose
+# CI/CD Pipeline for Crossplatform Products
 
-We needed a way to deliver and test crossplatform products so I looked into creating a CI/CD pipeline to handle automatic deployments. There were quite a few struggles that come with this task. Some of which come down to how the workflow would be handled for the developer and how to deploy IOS and Android application to the Apple and Google Play store.
+## Purpose
 
-# Tech Stack
+In our quest to deliver and test crossplatform products efficiently, I embarked on creating a robust CI/CD pipeline for automated deployments. However, this task presented several challenges, particularly concerning the workflow for developers and deploying iOS and Android applications to the Apple and Google Play stores.
 
-A basic version of this was written to use GitLab's CI/CD system, before moving over to AWS and using all of their services. GitLab's CI/CD system was very easy to manage and I didn't run into any issues except for the docs. Trying to port that to AWS was horrible. Not only are the AWS difficult to read, but account permission issues made it impossible to test quickly. I will be primarily be focusing on the GitLab CI/CD portion from now on, because I was unable to work further on the AWS platform.
+## Tech Stack
 
-# CI/CD Steps and Rules
+Initially, I implemented a basic version using GitLab's CI/CD system. It proved easy to manage, and I encountered no significant issues except for the documentation. Unfortunately, porting the setup to AWS proved to be a nightmare. AWS documentation was difficult to navigate, and permission-related hurdles hindered quick testing. Hence, I will primarily focus on the GitLab CI/CD portion, as further progress on the AWS platform was impeded.
 
-My primary concern when setting up the pipeline was to make is more efficient and transparent when a deployment is made. To get there though you have to make sure the code is linted, tested, and reviewed before pushing to any dev or production server. If a developer _pushed to a branch that isn't protected_ it will run a lint and test to track where issues may have arose and to assure that linting standards are followed. If a developer _merged into a protected branch_ it will run lint, test, and finally will need to be reviewed by a lead developer on that team. Once merged a lead developer would be able to create a tag with a version number to deploy that application to the environment that branch is attached to (dev, staging, prod, etc).
+## CI/CD Steps and Rules
 
-# Challenges
+My primary goal when setting up the pipeline was to optimize efficiency and transparency during deployments. To achieve this, I ensured that code was linted, tested, and reviewed before pushing it to any development or production server. If a developer pushed to an unprotected branch, the pipeline would run linting and testing to identify any arising issues and enforce linting standards. On the other hand, when a developer merged into a protected branch, the pipeline would execute linting, testing, and require review by a lead developer on the team. Once merged, a lead developer could create a tagged version to deploy the application to the respective environment associated with that branch (dev, staging, prod, etc).
 
-## Web Deployment
+## Challenges
 
-Deploying the products to web is pretty simple for both the web and api code bases. Since we were using AWS for the hosting of our web application we simply built the application, pushed that to CloudFront, and cleared the CloudFront cache to make sure we don't have to wait for the CDN cache to clear. The same process took place for the api server, but pushed the build to our EC2 instance instead. Issues mainly came up with caching issues or AWS account permission issues, because our "AWS guy" was not very responsive or helpful.
+### Web Deployment
 
-## Mobile Deployment
+Deploying the products to the web posed relatively few challenges for both the web and API codebases. Since we utilized AWS for web application hosting, we simply built the application, pushed it to CloudFront, and cleared the CloudFront cache to ensure prompt updates without waiting for the CDN cache to expire. The same process applied to the API server, except the build was pushed to our EC2 instance. Issues primarily arose from caching or AWS account permission problems, as our designated "AWS guy" was unresponsive and unhelpful.
 
-Mobile deployment is where things get tricky. We used Capacitor to bundle our web applications to mobile application so if there weren't any changes in the native code and it was just an HTML, CSS, or JavaScript change we could just push to CloudFront and have it update to all devices. For native changes though I had to find a pipeline implementation that could work with GitLab so I shamelessly followed [this article](https://medium.com/@naman.mittal/automate-ios-deployment-process-by-ci-cd-using-gitlab-ci-and-fastlane-547d824ee41a) to get it up and running. (anticlimactic... i know.)
+### Mobile Deployment
 
-# Conclusion
+Mobile deployment presented greater complexity. We utilized Capacitor to bundle our web applications into mobile apps, allowing for seamless updates to devices whenever there were HTML, CSS, or JavaScript changes without modifications to the native code. However, for native changes, I had to find a suitable pipeline implementation compatible with GitLab. To achieve this, I shamelessly followed [this article](https://medium.com/@naman.mittal/automate-ios-deployment-process-by-ci-cd-using-gitlab-ci-and-fastlane-547d824ee41a) to successfully set it up.
 
-I am a big fan of writing CI/CD pipelines. Learning to automate tasks that new developers struggle with is very rewarding. It also makes it so all deployments are transparent to the team, so I don't have to talk to the entire team each time I deploy. A system like this can be very expensive to use a 3rd part platform like [Ionic AppFlow](https://ionic.io/docs/appflow) so saving money each month is very valuable. I'd love to be able to get something like this up and running at a larger scale in the future and make it more refined to enterprise use.
+## Conclusion
+
+I am passionate about crafting CI/CD pipelines as they empower new developers by automating tasks that often pose challenges. Furthermore, such pipelines promote transparency within the team, eliminating the need for extensive communication during every deployment. Leveraging a self-built system like this can save significant costs compared to third-party platforms such as [Ionic AppFlow](https://ionic.io/docs/appflow). Looking ahead, I aspire to implement and refine similar pipelines on a larger scale, tailored to enterprise-level requirements.

@@ -6,40 +6,40 @@ githubLink: https://github.com/o2dependent
 tags: ['React', 'Nest.js']
 ---
 
-# Purpose
+# Project Overview
 
-The CMS was built around the idea of being able to manage and compose pages for the app. The apps being built needed to swap out content, hide/show features, and manage the user experience of the app. The goal was to mimic how (Sanity.io)[https://sanity.io] handles dynamic data. This system also needs to have a good developer experience so that there is minimal set up and consistent results across all applications.
+## Purpose
 
-# Tech Stack
+The purpose of this project was to develop a Content Management System (CMS) that enables easy management and composition of app pages. The CMS needed to support content swapping, feature hiding/showing, and overall user experience management. The goal was to emulate the dynamic data handling capabilities of [Sanity.io](https://sanity.io). Additionally, the CMS aimed to provide a streamlined developer experience with minimal setup requirements and consistent results across all applications.
 
-## React
+## Tech Stack
 
-React is the base for all other frontend repos so this was required to build out the CMS and CMS library. React has great type safety support so it makes it great for a solid app that doesn't unexpectedly break in prod. If I remade this I would have used svelte though due to the better global state management as well as better developer experience.
+### React
 
-## Nest.js
+React served as the foundation for all frontend repositories, making it a necessary component for building the CMS and CMS library. React's robust type safety support ensures the stability of the application in production. However, in hindsight, if I were to rebuild this project, I would have opted for Svelte due to its superior global state management and developer experience.
 
-I am a big fan of Nest.js for the same reason I am a fan of React. It has great type safety which makes it rock solid in prod. Nest.js is modular so I only needed to create CMS modules to manage the content types and page data. Most of the functionality will be the same for all apps, so being able to bake this into the existing content manager is fantastic.
+### Nest.js
 
-# Challenges
+I am a strong advocate for Nest.js for similar reasons as my support for React. Its excellent type safety features make it a reliable choice for production environments. The modular nature of Nest.js allowed me to focus on creating CMS modules specifically for content type and page data management. Since most functionality remains consistent across applications, integrating these modules into the existing content manager was a fantastic solution.
+
+# Challenges Faced
 
 ## Type Safety
 
-End to end type safety is a pain for most projects, but building out the e2e type safety systems was especially difficult. Since I was using Postgres without Graphql all endpoints needed to written by hand and all of those return types, along with errors, needed to be represented with the services used on the frontend. My solution was to create a modular system for content type creation that comes with default endpoints and add those endpoint types manually to the frontend library. This is certainly not the best solution, but it worked for the situation. I had push back on using Graphql since the team didn't know it and did not want to learn any more new technology to use the stack.
+Implementing end-to-end type safety proved challenging, especially considering the project's use of Postgres without GraphQL. With manual endpoint creation and the need to represent return types and errors in the frontend services, maintaining type safety throughout the system became complex. To address this, I devised a modular content type creation system that provided default endpoints. I then manually added these endpoint types to the frontend library. While not the optimal solution, it effectively addressed the situation. The decision not to use GraphQL stemmed from team familiarity and reluctance to learn additional technologies.
 
-## Files
+## File Management
 
-Images and files are always a bit of pain to handle in any project. Since we were using AWS S3 for storage uploading and downloading files was easy, but it was integrating file management into the CMS that caused issues. The previous CMS that was used for our app development had pitfalls in this area that I wanted to solve. The old CMS didn't save images in the DB so that you could change the file in one place and have it cascade into all entries that used that file. This caused non-stop issues when content managers tried to change the logo and it only changed in one spot. I set it up so that the files would be linked by a file table and managed through a separate "file and images" tab in the CMS. Each file could be filtered by type (image, doc, misc), internal title, and upload date.
+Handling images and files within the CMS presented its own set of challenges. While AWS S3 facilitated easy file uploading and downloading, integrating file management into the CMS was problematic. The previous CMS used in our app development lacked image storage in the database, resulting in inconsistent updates when content managers attempted to modify files like logos. To overcome this, I structured the CMS to link files through a separate "file and images" tab, allowing filtering by type (image, document, miscellaneous), internal title, and upload date.
 
 ## Versioning
 
-Since the CMS is spread across two libraries and will be shared to two repos per project the libraries need to be versioned in sync so that there isn't any issues in prod. This is handled through a CI/CD testing pipeline where both will be built into a test application and tests will be run before publishing the packages. This is a pain because this wasn't set up in a mono repo so the pipeline needs to be triggered via a tag in each of the library repos. I will go over how I could have fixed this in the conclusion of this writeup.
+As the CMS spanned two libraries shared across two repositories per project, maintaining version synchronization was crucial to avoid issues in production. To achieve this, I implemented a CI/CD testing pipeline where both libraries were built into a test application, and tests were run before package publishing. However, since this was not set up in a monorepo, triggering the pipeline required tagging each library repository individually. I will discuss potential improvements to this process in the conclusion.
 
 # Conclusion
 
-While the CMS works well for building out apps for clients to manage content simply it did not have the developer experience I was hoping for. Some of this was due to a restriction in what tech I could use and some of it was because of my own failures in designing the system. If I were to redo this today I would take a drastically different approach to make it easier for the developer.
+While the CMS effectively facilitated simple content management for client app development, it fell short of the developer experience I had envisioned. Some limitations were imposed by technology restrictions, while others stemmed from my own design shortcomings. Given the opportunity to redo this project, I would adopt a significantly different approach to enhance developer-friendliness.
 
-The first issue is the messy endpoint system. Since I was not allowed to use GraphQL for our data layer I had to write out general use CRUD endpoints for content, files, user, and pages in the backend. I then had to write factory functions to return service functions for those endpoints based on what content type I was getting on the frontend. If GraphQL was implemented this could have been reduced to just having GraphQL fragments for in the frontend library to handle fetching all this data. We also wouldn't have as much of a problem with excess data being fetched in prod.
+Firstly, I would address the convoluted endpoint system. The decision to refrain from using GraphQL for the data layer resulted in the need to manually define generalized CRUD endpoints for content, files, users, and pages on the backend. Factory functions were then employed to generate service functions based on the frontend's content type. Implementing GraphQL would have streamlined this process, allowing for GraphQL fragments within the frontend library to handle data fetching. Furthermore, excess data retrieval issues in production would have been mitigated.
 
-Type safety is very important to me. Good typing can drastically improve the developer experience of a library and I can say for certain that this is the biggest failure of this project. Having to write out general use endpoints on the backend and translate those types to the frontend was time consuming, and having a new dev touch any part of the system without translating those type changes over to the other library causes endless headaches. This could be easily fixed if GraphQL was used since you can generate types from GraphQL. This would make the whole system a lot more robust and more stable for new devs.
-
-Lastly I would have changed the UI framework to something that is more modern. React is no doubt a great framework, but since this was meant to be built out with the future in mind I would have liked to use Svelte. Svelte is by far the most loved UI framework for frontend devs. It also runs faster and has a smaller bundle size compared to React apps. Svelte also makes it easy to write web components for integration with other frameworks if we need to work on an app that isn't using Svelte yet. This means that your Svelte devs are more productive and versatile using and master one framework.
+Type safety holds great importance to me, and I consider it the biggest shortcoming of this project. The necessity to manually define generalized endpoints on the backend and translate those types
