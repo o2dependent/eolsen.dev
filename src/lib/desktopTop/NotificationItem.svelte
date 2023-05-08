@@ -72,6 +72,6 @@
 	</div>
 	<div class="h-full text-xs leading-tight">
 		<h4 class="font-semibold">{title}</h4>
-		<p>{description}</p>
+		<p class="line-clamp-3">{description}</p>
 	</div>
 </button>
