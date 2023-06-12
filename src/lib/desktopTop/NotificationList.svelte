@@ -11,7 +11,6 @@
 			duration: 500,
 			css: (t: number) => {
 				const eased = expoIn(t);
-				console.log({ eased, height, newHeight: height * eased });
 
 				return `
 					user-select: none;

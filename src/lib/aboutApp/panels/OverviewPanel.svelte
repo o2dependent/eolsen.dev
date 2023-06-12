@@ -10,7 +10,7 @@
 				<h1 class="text-3xl font-medium">
 					olsenOS <span class="font-extralight">Mint</span>
 				</h1>
-				<p class="text-xs">Version <span class="font-light">1.0</span></p>
+				<p class="text-xs">Version <span class="font-light">1.1</span></p>
 			</div>
 			<div class="flex flex-col gap-0.5">
 				<p class="text-xs">Ethan Olsen Dev (2022)</p>
@@ -33,13 +33,13 @@
 			</div>
 			<div class="flex w-full gap-2">
 				<button
-					class="flex-grow rounded bg-[#56545C] py-[1px] px-1.5 text-xs text-white"
+					class="flex-grow rounded bg-[#56545C] px-1.5 py-[1px] text-xs text-white"
 					type="button"
 				>
 					System Report
 				</button>
 				<button
-					class="flex-grow rounded bg-[#56545C] py-[1px] px-1.5 text-xs text-white disabled:cursor-not-allowed disabled:opacity-75"
+					class="flex-grow rounded bg-[#56545C] px-1.5 py-[1px] text-xs text-white disabled:cursor-not-allowed disabled:opacity-75"
 					disabled
 					type="button"
 				>

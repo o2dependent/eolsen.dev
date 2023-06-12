@@ -9,4 +9,4 @@
 	<CurrentTime />
 </button>
 
-<NotificationList {open} />
+<NotificationList bind:open />

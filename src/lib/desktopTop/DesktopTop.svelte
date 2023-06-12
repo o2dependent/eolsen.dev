@@ -37,7 +37,7 @@
 			<button
 				type="button"
 				on:mouseenter={() => {
-					if (activeTab) {
+					if ($activeTab) {
 						activeTab.set('system-info');
 					}
 				}}
@@ -108,7 +108,7 @@
 					<button
 						type="button"
 						on:mouseenter={() => {
-							if (activeTab) {
+							if ($activeTab) {
 								$activeTab = tab.name;
 							}
 						}}
