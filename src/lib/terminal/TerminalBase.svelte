@@ -4,6 +4,8 @@
 
 	export let id: string;
 	export let lines: TerminalLine[];
+	export let className = '';
+	export let style = '';
 
 	let cliInput: HTMLInputElement;
 	let cliLabel: HTMLLabelElement;
@@ -90,7 +92,7 @@
 		}
 	};
 
-	const execute = (argStr: string) => {
+	export const execute = (argStr: string) => {
 		print({ text: `${curDir?.join('/')}> ${argStr}` });
 		if (!argStr) return;
 		const args = argStr.split(' ');
@@ -118,7 +120,8 @@
 			cliLabel.scrollTop = cliLabel.scrollHeight;
 		}, 0);
 	}}
-	class="!font-mono font-mono flex h-full flex-col bg-neutral-900 bg-opacity-90 text-sm text-white backdrop-blur-lg"
+	{style}
+	class="{className} flex h-full flex-col bg-neutral-900 bg-opacity-90 !font-mono text-sm text-white backdrop-blur-lg"
 >
 	<label
 		bind:this={cliLabel}
@@ -126,7 +129,9 @@
 		for="cli-input-{id}"
 	>
 		{#each lines as line}
-			<pre class={line?.class ?? ''}>{line.text}</pre>
+			<pre
+				class={line?.class ??
+					''}>{#if line?.isMarkdown}{@html line.text}{:else}{line.text}{/if}</pre>
 		{/each}
 		<div class="flex gap-[1ch]">
 			<p>{curDir?.join('/')}></p>

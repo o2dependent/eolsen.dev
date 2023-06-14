@@ -1,5 +1,6 @@
 export interface TerminalLine {
 	text: string;
+	isMarkdown?: boolean;
 	class?: string;
 }
 
