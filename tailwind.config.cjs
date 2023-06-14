@@ -6,7 +6,9 @@ const config = {
 			scrollbar: ['rounded'],
 		},
 		fontFamily: {
-			cmd: ['VT323', 'monospace']
+			mono: ['Roboto Mono', 'monospace'],
+			roboto: ['Roboto', 'sans-serif'],
+			cmd: ['VT323', 'monospace'],
 		}
 	},
 
