@@ -47,8 +47,14 @@
 
 	let isMounted = false;
 	let isAboutVisible = false;
+	let halfTerminalHeight: number = 0;
+	let textHeight: number = 0;
+	let terminalMarginTop: number = 80;
+	let navHeight: number = 0;
+	let containerPaddingTop: number = 36;
 	$: canvasWidth = isMounted ? window.innerWidth : 0;
-	$: canvasHeight = isMounted ? window.innerHeight : 0;
+	$: canvasHeight =
+		halfTerminalHeight + textHeight + terminalMarginTop + navHeight + containerPaddingTop;
 	onMount(() => {
 		execute('help');
 		execute('ls');
@@ -75,10 +81,15 @@
 	</div>
 </div>
 <div class="background-shift h-full w-full font-roboto text-gray-50">
-	<header class="flex w-full items-center justify-center">
-		<nav class="container flex p-4">
+	<header
+		bind:clientHeight={navHeight}
+		class="relative z-50 flex w-full items-center justify-center"
+	>
+		<nav class="container flex px-4">
 			<div class="flex flex-grow items-center gap-2">
-				<a class="z-50 flex items-center justify-center gap-2 text-2xl" href="/"
+				<a
+					class="relative z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
+					href="/"
 					><svg
 						width="48"
 						height="48"
@@ -109,20 +120,20 @@
 			</div>
 			<div class="flex flex-grow items-center justify-end gap-2 text-lg">
 				<a
-					class="relative flex h-full items-center justify-center px-2 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5 active:scale-95"
+					class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
 					href="#about"
 				>
 					About
 				</a>
 				<a
-					class="relative flex h-full items-center justify-center px-2 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5 active:scale-95"
+					class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
 					href="#projects"
 				>
 					Projects
 				</a>
 				<a
-					class="flex h-full items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-all hover:opacity-100 active:scale-95"
-					href="/app/desktop"
+					class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-all hover:opacity-100 active:scale-95"
+					href="/desktop"
 				>
 					Open Desktop
 				</a>
@@ -132,6 +143,7 @@
 	<div class="relative h-full w-full pt-9">
 		<div class="fly-up mx-auto w-fit px-4">
 			<h1
+				bind:clientHeight={textHeight}
 				style="filter: drop-shadow(2px 4px 0px black);"
 				class="rainbow mx-auto max-w-2xl bg-clip-text text-center text-6xl font-bold"
 			>
@@ -139,6 +151,10 @@
 			</h1>
 		</div>
 		<div class="mt-20 grid w-full grid-cols-1 grid-rows-1">
+			<div style="grid-column: 1; grid-row: 1;" class="grid h-full w-full grid-rows-2">
+				<div bind:clientHeight={halfTerminalHeight} />
+				<div class="h-full bg-gray-950" />
+			</div>
 			<div
 				style="grid-column: 1; grid-row: 1;"
 				class="relative mx-auto grid w-full max-w-4xl grid-cols-1 grid-rows-1 px-4"
@@ -165,10 +181,6 @@
 						bind:execute
 					/>
 				</div>
-			</div>
-			<div style="grid-column: 1; grid-row: 1;" class="grid h-full w-full grid-rows-2">
-				<div />
-				<div class="h-full bg-gray-950" />
 			</div>
 		</div>
 		<div class="-mt-1 h-full w-full overflow-hidden bg-gray-950">

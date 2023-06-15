@@ -8,7 +8,7 @@ body {
 	@apply h-full w-full bg-black overflow-x-hidden;
 }
 body[data-href='/desktop'] {
-	@apply overflow-hidden;
+	@apply overflow-hidden bg-transparent;
 }
 
 html {
