@@ -5,16 +5,20 @@
 	export let width: number;
 	export let height: number;
 
-	let mouse = { x: 0, y: 0 };
+	let mouse = { x: 0, y: 0, down: false };
 
 	interface MetaBall {
-		x: number;
-		y: number;
-		vx: number;
-		vy: number;
-		r: number;
+		x: number; // x coord
+		y: number; // y coord
+		vx: number; // velocity x
+		vy: number; // velocity y
+		r: number; // radius
+		br: number; // base radius
 	}
-	let numMetaballs = Math.round(Math.min(100, width / 10));
+	let numMetaballs = Math.round(Math.min(200, Math.max(height, width) / 10));
+	// let numMetaballs = 10;
+	let maxRadius = Math.min(height, width) / (numMetaballs / 3);
+	let minRadius = maxRadius / 4;
 	let metaballs: MetaBall[] = [];
 	let gl: WebGLRenderingContext | null = null;
 	let metaballsHandle: WebGLUniformLocation | null | undefined;
@@ -70,11 +74,44 @@
 		if (!metaballsHandle) throw new Error('Failed to get metaballs handle');
 		for (let i = 0; i < numMetaballs; i++) {
 			let metaball = metaballs[i];
+			// move all element toward to mouse if mouse is down and it is within a certain distance
+			let dx = metaball.x - mouse.x;
+			let dy = metaball.y - mouse.y;
+			let dist = Math.sqrt(dx * dx + dy * dy);
+			if (dist < 300) {
+				// move vx and vy towards the mouse
+				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
+				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
+				metaball.vx += (mouse.x - metaball.x) * 0.0005;
+				metaball.vy += (mouse.y - metaball.y) * 0.0005;
+				// limit the velocity
+				metaball.vx = Math.min(5, Math.max(-5, metaball.vx));
+				metaball.vy = Math.min(5, Math.max(-5, metaball.vy));
+
+				// metaball.x += (mouse.x - metaball.x) * 0.01 + 0.1;
+				// metaball.y += (mouse.y - metaball.y) * 0.01 + 0.1;
+
+				// metaball.x += (mouse.x - metaball.x) * 0.01;
+				// metaball.y += (mouse.y - metaball.y) * 0.01;
+			} else {
+				// slow down the max velocity until it it 1
+				if (Math.abs(metaball.vx) > 3) metaball.vx *= 0.9;
+				if (Math.abs(metaball.vy) > 3) metaball.vy *= 0.9;
+			}
 			metaball.x += metaball.vx;
 			metaball.y += metaball.vy;
 
-			if (metaball.x < metaball.r || metaball.x > width - metaball.r) metaball.vx *= -1;
-			if (metaball.y < metaball.r || metaball.y > height - metaball.r) metaball.vy *= -1;
+			// if (metaball.x < metaball.r || metaball.x > width - metaball.r) metaball.vx *= -1;
+			// if (metaball.y < metaball.r || metaball.y > height - metaball.r) metaball.vy *= -1;
+			if (metaball.x < 0 || metaball.x > width || metaball.y < 0 || metaball.y > height)
+				metaball.r *= 0.9;
+			if (metaball.r <= metaball.br * 0.1) {
+				metaball.x = width / 2;
+				metaball.y = height / 2;
+				metaball.vx = (Math.random() - 0.5) * 2.75;
+				metaball.vy = Math.abs((Math.random() - 0.5) * 2.75);
+				metaball.r = metaball.br;
+			}
 		}
 
 		let dataToSendToGPU = new Float32Array(3 * numMetaballs);
@@ -100,7 +137,9 @@
 	const initMetaballs = () => {
 		gl = canvas.getContext('webgl');
 		for (let i = 0; i < numMetaballs; i++) {
-			let radius = Math.random() * Math.min(50, width / 50) + 10;
+			// let radius = Math.random() * Math.min(50, width / 50) + 10;
+			// random radius between min and max
+			let radius = Math.random() * (maxRadius - minRadius) + minRadius;
 			metaballs.push({
 				// x: Math.random() * (width - 2 * radius) + radius,
 				// y: Math.random() * (height - 2 * radius) + radius,
@@ -108,7 +147,8 @@
 				y: height / 2 - 2 * radius + radius,
 				vx: (Math.random() - 0.5) * 2.75,
 				vy: Math.abs((Math.random() - 0.5) * 2.75),
-				r: radius * 0.75
+				r: radius,
+				br: radius
 			});
 		}
 
@@ -180,9 +220,18 @@
 			}
 			return attributeLocation;
 		}
-		canvas.onmousemove = function (e) {
-			mouse.x = e.clientX;
-			mouse.y = e.clientY;
+		window.onmousemove = function (e) {
+			// find the x and y relative to the canvas position on the page
+			const boundingRect = canvas.getBoundingClientRect();
+			mouse.x = e.clientX - boundingRect.left;
+			mouse.y = -1 * e.clientY - boundingRect.top + boundingRect.height;
+			console.log(mouse);
+		};
+		window.onmousedown = function (e) {
+			mouse.down = true;
+		};
+		window.onmouseup = function (e) {
+			mouse.down = false;
 		};
 	};
 	onMount(initMetaballs);
