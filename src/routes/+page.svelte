@@ -46,23 +46,33 @@
 	];
 
 	let isMounted = false;
+	let isAboutVisible = false;
+	$: canvasWidth = isMounted ? window.innerWidth : 0;
+	$: canvasHeight = isMounted ? window.innerHeight : 0;
 	onMount(() => {
 		execute('help');
 		execute('ls');
 		isMounted = true;
+		window.addEventListener('resize', () => {
+			canvasWidth = window.innerWidth;
+			canvasHeight = window.innerHeight;
+		});
 	});
-
-	let isAboutVisible = false;
-	$: canvasWidth = isMounted ? window.innerWidth : 0;
-	$: canvasHeight = isMounted ? window.innerHeight : 0;
 </script>
 
 <div class="relative h-0 w-0">
-	{#await import('$lib/metaballs/Metaballs.svelte') then Module}
-		<div class="rainbow absolute top-0 left-0" in:fade={{ duration: 1000 }}>
-			<Module.default width={canvasWidth} height={canvasHeight} />
-		</div>
-	{/await}
+	<div class="rainbow absolute left-0 top-0">
+		{#await import('$lib/metaballs/Metaballs.svelte')}
+			<div
+				out:fade={{ duration: 2000, delay: 1000 }}
+				class="w-full h-full bg-black absolute top-0 left-0"
+			/>
+		{:then Module}
+			<div in:fade={{ duration: 1000 }}>
+				<Module.default bind:width={canvasWidth} bind:height={canvasHeight} />
+			</div>
+		{/await}
+	</div>
 </div>
 <div class="background-shift h-full w-full font-roboto text-gray-50">
 	<header class="flex w-full items-center justify-center">
@@ -131,7 +141,7 @@
 		<div class="mt-20 grid w-full grid-cols-1 grid-rows-1">
 			<div
 				style="grid-column: 1; grid-row: 1;"
-				class="relative mx-auto grid max-w-2xl grid-cols-1 grid-rows-1 px-4"
+				class="relative mx-auto grid w-full max-w-4xl grid-cols-1 grid-rows-1 px-4"
 			>
 				<div
 					style="grid-column: 1; grid-row: 1;"

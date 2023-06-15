@@ -4,56 +4,36 @@
 	let canvas: HTMLCanvasElement;
 	export let width: number;
 	export let height: number;
-	onMount(() => {
-		let gl: WebGLRenderingContext | null = null;
 
-		let mouse = { x: 0, y: 0 };
+	let mouse = { x: 0, y: 0 };
 
-		interface MetaBall {
-			x: number;
-			y: number;
-			vx: number;
-			vy: number;
-			r: number;
-		}
-		let numMetaballs = 30;
-		let metaballs: MetaBall[] = [];
-		gl = canvas.getContext('webgl');
-		for (let i = 0; i < numMetaballs; i++) {
-			let radius = Math.random() * 60 + 10;
-			metaballs.push({
-				x: Math.random() * (width - 2 * radius) + radius,
-				y: Math.random() * (height - 2 * radius) + radius,
-				vx: (Math.random() - 0.5) * 3,
-				vy: (Math.random() - 0.5) * 3,
-				r: radius * 0.75
-			});
-		}
+	interface MetaBall {
+		x: number;
+		y: number;
+		vx: number;
+		vy: number;
+		r: number;
+	}
+	let numMetaballs = Math.round(Math.min(100, width / 10));
+	let metaballs: MetaBall[] = [];
+	let gl: WebGLRenderingContext | null = null;
+	let metaballsHandle: WebGLUniformLocation | null | undefined;
+	let program: WebGLProgram | null | undefined;
 
-		let vertexShaderSrc = `
-            attribute vec2 position;
-
-            void main() {
-                // position specifies only x and y.
-                // We set z to be 0.0, and w to be 1.0
-                gl_Position = vec4(position, 0.0, 1.0);
-            }
-        `;
-
-		let fragmentShaderSrc = `
+	let fragmentShaderSrc = `
             precision highp float;
 
-            const float WIDTH = ${width >> 0}.0;
-            const float HEIGHT = ${height >> 0}.0;
+            // const float WIDTH = ${width >> 0}.0;
+            // const float HEIGHT = ${height >> 0}.0;
 
             uniform vec3 metaballs[${numMetaballs}];
 
             void main(){
-                    float x = gl_FragCoord.x;
-                    float y = gl_FragCoord.y;
+                float x = gl_FragCoord.x;
+                float y = gl_FragCoord.y;
 
-                    float sum = 0.0;
-                    for (int i = 0; i < ${numMetaballs}; i++) {
+                float sum = 0.0;
+                for (int i = 0; i < ${numMetaballs}; i++) {
                     vec3 metaball = metaballs[i];
                     float dx = metaball.x - x;
                     float dy = metaball.y - y;
@@ -73,10 +53,79 @@
             }
         `;
 
+	function compileShader(shaderSource: string, shaderType: number) {
+		let shader = gl?.createShader(shaderType);
+		if (!shader) throw new Error('Failed to create shader');
+		gl?.shaderSource(shader, shaderSource);
+		gl?.compileShader(shader);
+
+		if (!gl?.getShaderParameter(shader, gl?.COMPILE_STATUS)) {
+			throw 'Shader compile failed with: ' + gl?.getShaderInfoLog(shader);
+		}
+
+		return shader;
+	}
+
+	function loop() {
+		if (!metaballsHandle) throw new Error('Failed to get metaballs handle');
+		for (let i = 0; i < numMetaballs; i++) {
+			let metaball = metaballs[i];
+			metaball.x += metaball.vx;
+			metaball.y += metaball.vy;
+
+			if (metaball.x < metaball.r || metaball.x > width - metaball.r) metaball.vx *= -1;
+			if (metaball.y < metaball.r || metaball.y > height - metaball.r) metaball.vy *= -1;
+		}
+
+		let dataToSendToGPU = new Float32Array(3 * numMetaballs);
+		for (let i = 0; i < numMetaballs; i++) {
+			let baseIndex = 3 * i;
+			let mb = metaballs[i];
+			dataToSendToGPU[baseIndex + 0] = mb.x;
+			dataToSendToGPU[baseIndex + 1] = mb.y;
+			dataToSendToGPU[baseIndex + 2] = mb.r;
+		}
+		gl?.uniform3fv(metaballsHandle, dataToSendToGPU);
+
+		//Draw
+		gl?.drawArrays(gl?.TRIANGLE_STRIP, 0, 4);
+
+		requestAnimationFrame(loop);
+	}
+
+	$: {
+		gl?.viewport(0, 0, width, height);
+	}
+
+	const initMetaballs = () => {
+		gl = canvas.getContext('webgl');
+		for (let i = 0; i < numMetaballs; i++) {
+			let radius = Math.random() * Math.min(50, width / 50) + 10;
+			metaballs.push({
+				// x: Math.random() * (width - 2 * radius) + radius,
+				// y: Math.random() * (height - 2 * radius) + radius,
+				x: width / 2 - 2 * radius + radius,
+				y: height / 2 - 2 * radius + radius,
+				vx: (Math.random() - 0.5) * 2.75,
+				vy: Math.abs((Math.random() - 0.5) * 2.75),
+				r: radius * 0.75
+			});
+		}
+
+		let vertexShaderSrc = `
+            attribute vec2 position;
+
+            void main() {
+                // position specifies only x and y.
+                // We set z to be 0.0, and w to be 1.0
+                gl_Position = vec4(position, 0.0, 1.0);
+            }
+        `;
+
 		let vertexShader = compileShader(vertexShaderSrc, gl?.VERTEX_SHADER ?? 0);
 		let fragmentShader = compileShader(fragmentShaderSrc, gl?.FRAGMENT_SHADER ?? 0);
 
-		let program = gl?.createProgram();
+		program = gl?.createProgram();
 		if (!program) throw new Error('Failed to create program');
 		if (!vertexShader) throw new Error('Failed to create vertex shader');
 		if (!fragmentShader) throw new Error('Failed to create fragment shader');
@@ -112,48 +161,9 @@
 			0 // offset into each span of vertex data
 		);
 
-		let metaballsHandle = getUniformLocation(program, 'metaballs');
+		metaballsHandle = getUniformLocation(program, 'metaballs');
 
 		loop();
-		function loop() {
-			if (!metaballsHandle) throw new Error('Failed to get metaballs handle');
-			for (let i = 0; i < numMetaballs; i++) {
-				let metaball = metaballs[i];
-				metaball.x += metaball.vx;
-				metaball.y += metaball.vy;
-
-				if (metaball.x < metaball.r || metaball.x > width - metaball.r) metaball.vx *= -1;
-				if (metaball.y < metaball.r || metaball.y > height - metaball.r) metaball.vy *= -1;
-			}
-
-			let dataToSendToGPU = new Float32Array(3 * numMetaballs);
-			for (let i = 0; i < numMetaballs; i++) {
-				let baseIndex = 3 * i;
-				let mb = metaballs[i];
-				dataToSendToGPU[baseIndex + 0] = mb.x;
-				dataToSendToGPU[baseIndex + 1] = mb.y;
-				dataToSendToGPU[baseIndex + 2] = mb.r;
-			}
-			gl?.uniform3fv(metaballsHandle, dataToSendToGPU);
-
-			//Draw
-			gl?.drawArrays(gl?.TRIANGLE_STRIP, 0, 4);
-
-			requestAnimationFrame(loop);
-		}
-
-		function compileShader(shaderSource: string, shaderType: number) {
-			let shader = gl?.createShader(shaderType);
-			if (!shader) throw new Error('Failed to create shader');
-			gl?.shaderSource(shader, shaderSource);
-			gl?.compileShader(shader);
-
-			if (!gl?.getShaderParameter(shader, gl?.COMPILE_STATUS)) {
-				throw 'Shader compile failed with: ' + gl?.getShaderInfoLog(shader);
-			}
-
-			return shader;
-		}
 
 		function getUniformLocation(program: WebGLProgram, name: string) {
 			let uniformLocation = gl?.getUniformLocation(program, name);
@@ -174,7 +184,8 @@
 			mouse.x = e.clientX;
 			mouse.y = e.clientY;
 		};
-	});
+	};
+	onMount(initMetaballs);
 </script>
 
 <canvas {height} {width} bind:this={canvas} />
