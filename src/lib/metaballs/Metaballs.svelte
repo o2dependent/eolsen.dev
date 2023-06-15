@@ -15,14 +15,15 @@
 		r: number; // radius
 		br: number; // base radius
 	}
-	let numMetaballs = Math.round(Math.min(200, Math.max(height, width) / 10));
+	let numMetaballs = Math.round(Math.min(400, Math.max(height, width) / 7));
 	// let numMetaballs = 10;
-	let maxRadius = Math.min(height, width) / (numMetaballs / 3);
+	let maxRadius = Math.min(20, Math.min(height, width) / (numMetaballs / 5));
 	let minRadius = maxRadius / 4;
 	let metaballs: MetaBall[] = [];
 	let gl: WebGLRenderingContext | null = null;
 	let metaballsHandle: WebGLUniformLocation | null | undefined;
 	let program: WebGLProgram | null | undefined;
+	let canAttract = false;
 
 	let fragmentShaderSrc = `
             precision highp float;
@@ -78,7 +79,7 @@
 			let dx = metaball.x - mouse.x;
 			let dy = metaball.y - mouse.y;
 			let dist = Math.sqrt(dx * dx + dy * dy);
-			if (dist < 300) {
+			if (canAttract && dist < 300) {
 				// move vx and vy towards the mouse
 				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
 				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
@@ -103,11 +104,16 @@
 
 			// if (metaball.x < metaball.r || metaball.x > width - metaball.r) metaball.vx *= -1;
 			// if (metaball.y < metaball.r || metaball.y > height - metaball.r) metaball.vy *= -1;
-			if (metaball.x < 0 || metaball.x > width || metaball.y < 0 || metaball.y > height)
+			if (
+				metaball.x + metaball.r < 0 ||
+				metaball.x > width ||
+				metaball.y + metaball.r < 0 ||
+				metaball.y > height
+			)
 				metaball.r *= 0.9;
 			if (metaball.r <= metaball.br * 0.1) {
-				metaball.x = width / 2;
-				metaball.y = height / 2;
+				metaball.x = width / 2 - 2 * metaball.r + metaball.r;
+				metaball.y = metaball.r * 2;
 				metaball.vx = (Math.random() - 0.5) * 2.75;
 				metaball.vy = Math.abs((Math.random() - 0.5) * 2.75);
 				metaball.r = metaball.br;
@@ -144,7 +150,10 @@
 				// x: Math.random() * (width - 2 * radius) + radius,
 				// y: Math.random() * (height - 2 * radius) + radius,
 				x: width / 2 - 2 * radius + radius,
-				y: height / 2 - 2 * radius + radius,
+				y: radius * 2,
+				// weight the direction of the velocity based on width and height
+				// vx: (Math.random() - 0.5) * 2.75 * (width / height) * 0.5,
+				// vy: Math.abs((Math.random() - 0.5) * 2.75),
 				vx: (Math.random() - 0.5) * 2.75,
 				vy: Math.abs((Math.random() - 0.5) * 2.75),
 				r: radius,
@@ -233,6 +242,9 @@
 		window.onmouseup = function (e) {
 			mouse.down = false;
 		};
+		setTimeout(() => {
+			canAttract = true;
+		}, 4000);
 	};
 	onMount(initMetaballs);
 </script>
