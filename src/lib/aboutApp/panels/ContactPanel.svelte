@@ -4,7 +4,7 @@
 			<h1 class="text-3xl font-medium">
 				<span class="font-extralight">Contact</span> Me
 			</h1>
-			<div class="lace-items-center grid grid-cols-3 gap-4">
+			<div class="grid grid-cols-3 place-items-center gap-4">
 				<a class="aspect-square w-full" href="mailto:ethan@eolsen.dev"
 					><svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"
 						><rect
