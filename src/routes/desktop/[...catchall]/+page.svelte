@@ -1,6 +1,4 @@
 <script>
-	import BootScreen from './../../lib/bootScreen/BootScreen.svelte';
-	import { onMount } from 'svelte';
 	import BiosBootScreen from '$lib/biosBootScreen/BiosBootScreen.svelte';
 
 	let loaded = false;
