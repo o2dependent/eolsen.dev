@@ -5,7 +5,7 @@
 	export let width: number;
 	export let height: number;
 
-	let mouse = { x: 0, y: 0, down: false };
+	let mouse = { x: -1000, y: -1000, down: false };
 
 	interface MetaBall {
 		x: number; // x coord
@@ -15,9 +15,9 @@
 		r: number; // radius
 		br: number; // base radius
 	}
-	let numMetaballs = Math.round(Math.min(400, Math.max(height, width) / 7));
+	let numMetaballs = Math.round(Math.max(height, width) / 10);
 	// let numMetaballs = 10;
-	let maxRadius = Math.min(20, Math.min(height, width) / (numMetaballs / 5));
+	let maxRadius = Math.max(height, width) / numMetaballs + 10;
 	let minRadius = maxRadius / 4;
 	let metaballs: MetaBall[] = [];
 	let gl: WebGLRenderingContext | null = null;
@@ -78,13 +78,15 @@
 			// move all element toward to mouse if mouse is down and it is within a certain distance
 			let dx = metaball.x - mouse.x;
 			let dy = metaball.y - mouse.y;
-			let dist = Math.sqrt(dx * dx + dy * dy);
+			// let dist = Math.sqrt(dx * dx + dy * dy);
+			// find distance in a circle
+			let dist = Math.abs(dx) + Math.abs(dy);
 			if (canAttract && dist < 300) {
 				// move vx and vy towards the mouse
 				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
 				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
-				metaball.vx += (mouse.x - metaball.x) * 0.0005;
-				metaball.vy += (mouse.y - metaball.y) * 0.0005;
+				metaball.vx += (mouse.x - metaball.x) * (mouse.down ? 0.0025 : 0.00025);
+				metaball.vy += (mouse.y - metaball.y) * (mouse.down ? 0.0025 : 0.00025);
 				// limit the velocity
 				metaball.vx = Math.min(5, Math.max(-5, metaball.vx));
 				metaball.vy = Math.min(5, Math.max(-5, metaball.vy));
@@ -96,8 +98,8 @@
 				// metaball.y += (mouse.y - metaball.y) * 0.01;
 			} else {
 				// slow down the max velocity until it it 1
-				if (Math.abs(metaball.vx) > 3) metaball.vx *= 0.9;
-				if (Math.abs(metaball.vy) > 3) metaball.vy *= 0.9;
+				if (Math.abs(metaball.vx) > 3) metaball.vx *= 0.99;
+				if (Math.abs(metaball.vy) > 3) metaball.vy *= 0.99;
 			}
 			metaball.x += metaball.vx;
 			metaball.y += metaball.vy;

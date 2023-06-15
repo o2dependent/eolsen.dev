@@ -188,7 +188,7 @@
 				use:intersectionObserver={{ callback: () => (isAboutVisible = true) }}
 				class="prose prose-invert mx-auto max-w-2xl px-4 pt-12 prose-p:opacity-90"
 			>
-				<h2 class="mb-4 text-5xl">About</h2>
+				<h2 class="mb-10 text-5xl md:mb-4">About</h2>
 				<div class="relative my-2 h-44 w-44 md:float-right md:mr-4">
 					{#if isAboutVisible}
 						<img
@@ -205,7 +205,7 @@
 						/>
 						<img
 							in:fly={{ y: 100, delay: 1000, duration: 2000 }}
-							class="absolute -top-32 right-1/4 h-40"
+							class="absolute -top-24 right-1/4 h-40 md:-top-32"
 							src={LuaStanding}
 							alt=""
 						/>
