@@ -12,6 +12,6 @@
 	});
 </script>
 
-<main class="h-full w-full">
+<main style="display: contents" class="h-full w-full">
 	<slot />
 </main>
