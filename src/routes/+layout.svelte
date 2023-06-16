@@ -1,17 +1,15 @@
 <script>
 	import { onMount } from 'svelte';
 	import '../app.css';
+	import { afterNavigate } from '$app/navigation';
 
-	onMount(() => {
-		// add a data-href to body
-		window.document.body.setAttribute('data-href', window.location.pathname);
-		// add listener for url changes
-		window.addEventListener('popstate', () => {
-			window.document.body.setAttribute('data-href', window.location.pathname);
-		});
+	afterNavigate((navigation) => {
+		console.log('afterNavigate', navigation);
+		window.scrollTo(0, 0);
+		window.document.body.setAttribute('data-href', navigation.to?.url?.pathname ?? '');
 	});
 </script>
 
-<main style="display: contents" class="h-full w-full">
+<main class="h-full w-full">
 	<slot />
 </main>

@@ -5,7 +5,7 @@
 
 html,
 body {
-	@apply h-full w-full bg-black overflow-x-hidden;
+	@apply h-full w-full bg-black;
 }
 body[data-href='/desktop'] {
 	@apply overflow-hidden bg-transparent;
