@@ -17,7 +17,7 @@
 	}
 	let numMetaballs = Math.round(Math.max(height, width) / 5);
 	// let numMetaballs = 10;
-	let maxRadius = Math.max(height, width) / numMetaballs + 15;
+	let maxRadius = Math.max(height, width) / numMetaballs + 10;
 	let minRadius = maxRadius / 5;
 	let metaballs: MetaBall[] = [];
 	let gl: WebGLRenderingContext | null = null;
