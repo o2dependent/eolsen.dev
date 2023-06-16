@@ -303,7 +303,8 @@
 	}
 	:global(.rainbow) {
 		background-image: var(--rainbow-gradient);
-		background-size: 400% 400%;
+		background-size: 200vw 200vh;
+		background-attachment: fixed;
 
 		animation: rainbow 10s ease infinite;
 	}
