@@ -14,6 +14,7 @@
 		type DirectoryFile,
 		type ProjectFileData
 	} from '$stores/directory.store';
+	import Header from '$lib/Header.svelte';
 
 	const projectDir = (
 		($directory.contents?.['Desktop'] as Directory)?.contents?.['Projects'] as Directory
@@ -98,65 +99,7 @@
 	</div>
 </div>
 <div class="background-shift h-full w-full font-roboto text-gray-50">
-	<header
-		bind:clientHeight={navHeight}
-		class="relative z-50 flex w-full items-center justify-center"
-	>
-		<nav class="container flex px-4">
-			<div class="flex flex-grow items-center gap-2">
-				<a
-					class="relative z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
-					href="/"
-					><svg
-						width="48"
-						height="48"
-						viewBox="0 0 48 48"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<circle cx="24" cy="24" r="24" fill="#FAFAFA" />
-						<mask
-							id="mask0_6476_541"
-							style="mask-type:alpha"
-							maskUnits="userSpaceOnUse"
-							x="4"
-							y="4"
-							width="39"
-							height="40"
-						>
-							<circle cx="23.3438" cy="24" r="19.3125" fill="#FEFEFE" />
-						</mask>
-						<g mask="url(#mask0_6476_541)">
-							<path d="M7.5 7.96875H41.1562V12.6562H7.5V7.96875Z" fill="#111111" />
-							<path d="M7.5 35.0625H41.1562V39.75H7.5V35.0625Z" fill="#111111" />
-							<path d="M2.34375 22.0312H24.75V26.7188H2.34375V22.0312Z" fill="#111111" />
-						</g>
-					</svg>
-					<span>Ethan Olsen</span>
-				</a>
-			</div>
-			<div class="flex flex-grow items-center justify-end gap-2 text-lg">
-				<a
-					class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
-					href="#about"
-				>
-					About
-				</a>
-				<a
-					class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
-					href="#projects"
-				>
-					Projects
-				</a>
-				<a
-					class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-all hover:opacity-100 active:scale-95"
-					href="/desktop"
-				>
-					Open Desktop
-				</a>
-			</div>
-		</nav>
-	</header>
+	<Header bind:navHeight />
 	<div class="relative h-full w-full pt-9">
 		<div class="fly-up mx-auto w-fit px-4">
 			<h1
@@ -177,8 +120,8 @@
 				class="relative mx-auto grid w-full max-w-4xl grid-cols-1 grid-rows-1 px-4"
 			>
 				<div
-					style="grid-column: 1; grid-row: 1;"
-					class="rainbow aspect-square w-full rounded-3xl blur-md"
+					style="grid-column: 1; grid-row: 1; width: calc(100% + 0.5rem); height: calc(100% + 0.5rem);"
+					class="rainbow -m-1 aspect-square rounded-[1.75rem]"
 				/>
 				<div
 					style="grid-column: 1; grid-row: 1;"
@@ -203,12 +146,15 @@
 		<div class="-mt-1 flex h-full w-full flex-col gap-32 overflow-hidden bg-gray-950 pt-32">
 			<div
 				use:intersectionObserver={{ callback: () => (isAboutVisible = true) }}
-				class="prose prose-invert mx-auto grid h-96 w-full max-w-4xl gap-2 px-4 prose-p:opacity-90 md:grid-cols-[1fr_11rem]"
+				class="prose prose-invert mx-auto flex w-full max-w-4xl flex-col gap-2 px-4 prose-p:opacity-90"
 			>
-				<h2 class="col-span-2 mb-10 text-5xl md:mb-4">About</h2>
-				<div class="w-full">
-					{#if isAboutVisible}
-						<div class="m-0" in:slide={{ axis: 'y', duration: 2000 }}>
+				<h2 id="about" class="mb-10 text-5xl md:col-span-2 md:mb-4">About</h2>
+				<div class="flex flex-col-reverse gap-2 md:grid md:grid-cols-[1fr_11rem]">
+					<div class="w-full">
+						<div
+							class:opacity-100={isAboutVisible}
+							class="m-0 opacity-50 transition-all duration-1000"
+						>
 							<p class="m-0">
 								I am a full stack cross platform web developer with a focus on developing internal
 								development frameworks and tools to increase developer and admin productivity. My
@@ -223,56 +169,58 @@
 								like. Please don't tell my girlfriend she does not know.
 							</p>
 						</div>
-					{/if}
-				</div>
-				<div class="relative my-2 h-44 w-44 md:mr-4">
-					{#if isAboutVisible}
-						<img
-							in:fly={{ x: 100, delay: 500, duration: 1000 }}
-							class="absolute -bottom-8 -right-24 h-32 -scale-x-100"
-							src={Lua}
-							alt=""
-						/>
-						<img
-							in:fly={{ x: 100, delay: 750, duration: 1000 }}
-							class="absolute -right-16 -top-20 h-32 -rotate-12 -scale-x-100"
-							src={Omen}
-							alt=""
-						/>
-						<img
-							in:fly={{ y: 100, delay: 1000, duration: 2000 }}
-							class="absolute -top-24 right-1/4 h-40 md:-top-32"
-							src={LuaStanding}
-							alt=""
-						/>
-					{/if}
-					<div
-						class:grayscale={!isAboutVisible}
-						class="absolute left-0 top-0 m-0 h-44 w-44 overflow-hidden rounded-xl object-cover ring-4 ring-gray-950 transition-all duration-500"
-					>
-						<img
-							class:scale-[400%]={!isAboutVisible}
-							class:-translate-y-24={!isAboutVisible}
-							class:translate-x-20={!isAboutVisible}
-							class="m-0 h-44 w-44 object-cover object-center transition-all duration-1000"
-							src={AboutPhoto}
-							alt="Ethan Olsen and Omen"
-							height="11rem"
-							width="11rem"
-						/>
+					</div>
+					<div class="relative my-2 h-44 w-44 md:mr-4">
+						{#if isAboutVisible}
+							<img
+								in:fly={{ x: 100, delay: 500, duration: 1000 }}
+								class="absolute -bottom-8 -right-24 h-32 -scale-x-100"
+								src={Lua}
+								alt=""
+							/>
+							<img
+								in:fly={{ x: 100, delay: 750, duration: 1000 }}
+								class="absolute -right-16 -top-20 h-32 -rotate-12 -scale-x-100"
+								src={Omen}
+								alt=""
+							/>
+							<img
+								in:fly={{ y: 100, delay: 1000, duration: 2000 }}
+								class="absolute -top-24 right-1/4 h-40 md:-top-32"
+								src={LuaStanding}
+								alt=""
+							/>
+						{/if}
+						<div
+							class:grayscale={!isAboutVisible}
+							class="absolute left-0 top-0 m-0 h-44 w-44 overflow-hidden rounded-xl object-cover ring-4 ring-gray-950 transition-all duration-500"
+						>
+							<img
+								class:scale-[400%]={!isAboutVisible}
+								class:-translate-y-24={!isAboutVisible}
+								class:translate-x-20={!isAboutVisible}
+								class="m-0 h-44 w-44 object-cover object-center transition-all duration-1000"
+								src={AboutPhoto}
+								alt="Ethan Olsen and Omen"
+								height="11rem"
+								width="11rem"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="mx-auto w-full max-w-4xl px-4">
-				<h2 class="mb-10 text-5xl md:mb-4">Projects</h2>
-				<div class="grid w-full grid-cols-1 gap-px bg-[#374151] md:grid-cols-3">
+				<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
+				<div class="grid w-full grid-cols-1 gap-px overflow-hidden sm:grid-cols-2 md:grid-cols-3">
 					{#each projects as project}
-						<div class="flex aspect-square w-full flex-col gap-2 bg-slate-950 p-2">
+						<div
+							class="flex aspect-square w-full flex-col gap-2 bg-slate-950 p-2 ring-[1px] ring-[#374151]"
+						>
 							<strong class="text-2xl">{project.title}</strong>
 							<p class="flex-grow text-sm">
 								{project.description}
 							</p>
-							<div class="flex flex-col text-sm">
+							<div class="flex flex-col gap-2 text-sm">
 								<span class="text-center opacity-50">
 									{project.tags.join(' - ')}
 								</span>
@@ -304,7 +252,7 @@
 									</a>
 									<a
 										class="flex items-center justify-center rounded bg-white px-3 py-2 text-gray-950 opacity-75 hover:opacity-100"
-										href="/project/{project.id}"><span>Visit</span></a
+										href="project/{project.name}"><span>Visit</span></a
 									>
 								</div>
 							</div>
