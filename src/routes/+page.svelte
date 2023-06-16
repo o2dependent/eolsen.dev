@@ -88,7 +88,7 @@
 	<div class="rainbow absolute left-0 top-0">
 		{#await import('$lib/metaballs/Metaballs.svelte')}
 			<div
-				out:fade={{ duration: 2000, delay: 1000 }}
+				out:fade={{ duration: 1000, delay: 500 }}
 				class="w-full h-full bg-black absolute top-0 left-0"
 			/>
 		{:then Module}

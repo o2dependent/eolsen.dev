@@ -89,8 +89,8 @@
 				// move vx and vy towards the mouse
 				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
 				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
-				metaball.vx += (mouse.x - metaball.x) * ((mouse.down ? 0.75 : 0.25) / 10000);
-				metaball.vy += (mouse.y - metaball.y) * ((mouse.down ? 0.75 : 0.25) / 10000);
+				metaball.vx += (mouse.x - metaball.x) * ((mouse.down ? 0.5 : 0.125) / 10000);
+				metaball.vy += (mouse.y - metaball.y) * ((mouse.down ? 0.5 : 0.125) / 10000);
 				// limit the velocity
 				metaball.vx = Math.min(1.5, Math.max(-1.5, metaball.vx));
 				metaball.vy = Math.min(1.5, Math.max(-1.5, metaball.vy));
@@ -121,8 +121,8 @@
 				if (metaball.r < 0.25) {
 					metaball.x = width / 2 - 2 * metaball.r + metaball.r;
 					metaball.y = metaball.r * 2;
-					metaball.vx = (Math.random() - 0.5) * 0.25;
-					metaball.vy = Math.abs((Math.random() - 0.5) * 0.25);
+					metaball.vx = (Math.random() - 0.5) * 0.35;
+					metaball.vy = Math.abs((Math.random() - 0.5) * 0.35);
 					metaball.r = metaball.br;
 				}
 			}
@@ -155,10 +155,10 @@
 				x: width / 2 - 2 * radius + radius,
 				y: radius * 2,
 				// weight the direction of the velocity based on width and height
-				// vx: (Math.random() - 0.5) * 0.25 * (width / height) * 0.5,
-				// vy: Math.abs((Math.random() - 0.5) * 0.25),
-				vx: (Math.random() - 0.5) * 0.25,
-				vy: Math.abs((Math.random() - 0.5) * 0.25),
+				// vx: (Math.random() - 0.5) * 0.35 * (width / height) * 0.5,
+				// vy: Math.abs((Math.random() - 0.5) * 0.35),
+				vx: (Math.random() - 0.5) * 0.35,
+				vy: Math.abs((Math.random() - 0.5) * 0.35),
 				r: radius,
 				br: radius
 			});
