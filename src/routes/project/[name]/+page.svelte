@@ -7,6 +7,10 @@
 	$: console.log(project);
 </script>
 
+<svelte:head>
+	<title>EOlsen - {project?.title}</title>
+</svelte:head>
+
 <Header />
 
 <div class="prose prose-invert mx-auto mb-4 w-full pb-2">

@@ -9,6 +9,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>EOlsen - Desktop</title>
+</svelte:head>
+
 {#await import('$lib/Desktop.svelte') then Module}
 	<Module.default bind:loaded />
 {/await}

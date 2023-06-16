@@ -84,6 +84,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>EOlsen - Home</title>
+</svelte:head>
+
 <div class=" overflow-x-hidden">
 	<div class="relative h-0 w-0">
 		<div class="rainbow absolute left-0 top-0">
