@@ -15,10 +15,10 @@
 		r: number; // radius
 		br: number; // base radius
 	}
-	let numMetaballs = Math.round(Math.max(height, width) / 10);
+	let numMetaballs = Math.round(Math.max(height, width) / 5);
 	// let numMetaballs = 10;
-	let maxRadius = Math.max(height, width) / numMetaballs + 10;
-	let minRadius = maxRadius / 4;
+	let maxRadius = Math.max(height, width) / numMetaballs + 15;
+	let minRadius = maxRadius / 5;
 	let metaballs: MetaBall[] = [];
 	let gl: WebGLRenderingContext | null = null;
 	let metaballsHandle: WebGLUniformLocation | null | undefined;
@@ -70,26 +70,30 @@
 
 		return shader;
 	}
+	let lt = 0;
+	let fr = 60;
+	function loop(ct: number) {
+		const dt = ct - lt;
+		lt = ct;
 
-	function loop() {
-		if (!metaballsHandle) throw new Error('Failed to get metaballs handle');
+		const dataToSendToGPU = new Float32Array(3 * numMetaballs);
 		for (let i = 0; i < numMetaballs; i++) {
-			let metaball = metaballs[i];
+			const metaball = metaballs[i];
 			// move all element toward to mouse if mouse is down and it is within a certain distance
-			let dx = metaball.x - mouse.x;
-			let dy = metaball.y - mouse.y;
+			const dx = metaball.x - mouse.x;
+			const dy = metaball.y - mouse.y;
 			// let dist = Math.sqrt(dx * dx + dy * dy);
 			// find distance in a circle
-			let dist = Math.abs(dx) + Math.abs(dy);
+			const dist = Math.abs(dx) + Math.abs(dy);
 			if (canAttract && dist < 300) {
 				// move vx and vy towards the mouse
 				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
 				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
-				metaball.vx += (mouse.x - metaball.x) * (mouse.down ? 0.0025 : 0.00025);
-				metaball.vy += (mouse.y - metaball.y) * (mouse.down ? 0.0025 : 0.00025);
+				metaball.vx += (mouse.x - metaball.x) * ((mouse.down ? 0.75 : 0.25) / 10000);
+				metaball.vy += (mouse.y - metaball.y) * ((mouse.down ? 0.75 : 0.25) / 10000);
 				// limit the velocity
-				metaball.vx = Math.min(5, Math.max(-5, metaball.vx));
-				metaball.vy = Math.min(5, Math.max(-5, metaball.vy));
+				metaball.vx = Math.min(1.5, Math.max(-1.5, metaball.vx));
+				metaball.vy = Math.min(1.5, Math.max(-1.5, metaball.vy));
 
 				// metaball.x += (mouse.x - metaball.x) * 0.01 + 0.1;
 				// metaball.y += (mouse.y - metaball.y) * 0.01 + 0.1;
@@ -101,36 +105,35 @@
 				if (Math.abs(metaball.vx) > 3) metaball.vx *= 0.99;
 				if (Math.abs(metaball.vy) > 3) metaball.vy *= 0.99;
 			}
-			metaball.x += metaball.vx;
-			metaball.y += metaball.vy;
+			metaball.x += metaball.vx * dt;
+			metaball.y += metaball.vy * dt;
 
 			// if (metaball.x < metaball.r || metaball.x > width - metaball.r) metaball.vx *= -1;
 			// if (metaball.y < metaball.r || metaball.y > height - metaball.r) metaball.vy *= -1;
+			const mbrThreshold = metaball.r * 2;
 			if (
-				metaball.x + metaball.r < 0 ||
-				metaball.x > width ||
-				metaball.y + metaball.r < 0 ||
-				metaball.y > height
-			)
-				metaball.r *= 0.9;
-			if (metaball.r <= metaball.br * 0.1) {
-				metaball.x = width / 2 - 2 * metaball.r + metaball.r;
-				metaball.y = metaball.r * 2;
-				metaball.vx = (Math.random() - 0.5) * 2.75;
-				metaball.vy = Math.abs((Math.random() - 0.5) * 2.75);
-				metaball.r = metaball.br;
+				metaball.x + mbrThreshold < 0 ||
+				metaball.x - mbrThreshold > width ||
+				metaball.y + mbrThreshold < 0 ||
+				metaball.y - mbrThreshold > height
+			) {
+				metaball.r *= 0.85;
+				if (metaball.r < 0.25) {
+					metaball.x = width / 2 - 2 * metaball.r + metaball.r;
+					metaball.y = metaball.r * 2;
+					metaball.vx = (Math.random() - 0.5) * 0.25;
+					metaball.vy = Math.abs((Math.random() - 0.5) * 0.25);
+					metaball.r = metaball.br;
+				}
 			}
-		}
-
-		let dataToSendToGPU = new Float32Array(3 * numMetaballs);
-		for (let i = 0; i < numMetaballs; i++) {
-			let baseIndex = 3 * i;
-			let mb = metaballs[i];
+			const baseIndex = 3 * i;
+			const mb = metaballs[i];
 			dataToSendToGPU[baseIndex + 0] = mb.x;
 			dataToSendToGPU[baseIndex + 1] = mb.y;
 			dataToSendToGPU[baseIndex + 2] = mb.r;
 		}
-		gl?.uniform3fv(metaballsHandle, dataToSendToGPU);
+
+		gl?.uniform3fv(metaballsHandle!, dataToSendToGPU);
 
 		//Draw
 		gl?.drawArrays(gl?.TRIANGLE_STRIP, 0, 4);
@@ -138,12 +141,10 @@
 		requestAnimationFrame(loop);
 	}
 
-	$: {
-		gl?.viewport(0, 0, width, height);
-	}
+	$: gl?.viewport(0, 0, width, height);
 
 	const initMetaballs = () => {
-		gl = canvas.getContext('webgl');
+		gl = canvas.getContext('webgl2');
 		for (let i = 0; i < numMetaballs; i++) {
 			// let radius = Math.random() * Math.min(50, width / 50) + 10;
 			// random radius between min and max
@@ -154,10 +155,10 @@
 				x: width / 2 - 2 * radius + radius,
 				y: radius * 2,
 				// weight the direction of the velocity based on width and height
-				// vx: (Math.random() - 0.5) * 2.75 * (width / height) * 0.5,
-				// vy: Math.abs((Math.random() - 0.5) * 2.75),
-				vx: (Math.random() - 0.5) * 2.75,
-				vy: Math.abs((Math.random() - 0.5) * 2.75),
+				// vx: (Math.random() - 0.5) * 0.25 * (width / height) * 0.5,
+				// vy: Math.abs((Math.random() - 0.5) * 0.25),
+				vx: (Math.random() - 0.5) * 0.25,
+				vy: Math.abs((Math.random() - 0.5) * 0.25),
 				r: radius,
 				br: radius
 			});
@@ -214,7 +215,7 @@
 
 		metaballsHandle = getUniformLocation(program, 'metaballs');
 
-		loop();
+		requestAnimationFrame(loop);
 
 		function getUniformLocation(program: WebGLProgram, name: string) {
 			let uniformLocation = gl?.getUniformLocation(program, name);
@@ -231,22 +232,29 @@
 			}
 			return attributeLocation;
 		}
-		window.onmousemove = function (e) {
+		const onmousemove = function (e: MouseEvent) {
 			// find the x and y relative to the canvas position on the page
 			const boundingRect = canvas.getBoundingClientRect();
 			mouse.x = e.clientX - boundingRect.left;
 			mouse.y = -1 * e.clientY - boundingRect.top + boundingRect.height;
-			console.log(mouse);
 		};
-		window.onmousedown = function (e) {
+		const onmousedown = function () {
 			mouse.down = true;
 		};
-		window.onmouseup = function (e) {
+		const onmouseup = function () {
 			mouse.down = false;
 		};
+		window.onmousemove = onmousemove;
+		window.onmousedown = onmousedown;
+		window.onmouseup = onmouseup;
 		setTimeout(() => {
 			canAttract = true;
 		}, 4000);
+		return () => {
+			window.onmousemove = () => {};
+			window.onmousedown = () => {};
+			window.onmouseup = () => {};
+		};
 	};
 	onMount(initMetaballs);
 </script>
