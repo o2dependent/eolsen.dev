@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Footer from '$lib/Footer.svelte';
 	import Header from '$lib/Header.svelte';
 	import type { PageData } from './$types';
 
@@ -13,7 +14,7 @@
 
 <Header />
 
-<div class="prose prose-invert mx-auto mb-4 w-full pb-2">
+<div class="prose prose-invert mx-auto mb-4 w-full pb-8 pt-32">
 	<h1 class="heading !m-0 !w-fit pb-2 !text-5xl !font-black !text-white">
 		{project?.title}
 	</h1>
@@ -54,10 +55,11 @@
 		</div>
 	</div>
 </div>
-<div class="w-full bg-gray-950 pt-32">
+<div class="w-full bg-gray-950 pb-32 pt-24">
 	<div class="prose prose-invert mx-auto">
 		{#key project?.id}
 			<svelte:component this={project?.html} />
 		{/key}
 	</div>
 </div>
+<Footer />

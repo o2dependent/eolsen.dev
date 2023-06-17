@@ -15,6 +15,7 @@
 		type ProjectFileData
 	} from '$stores/directory.store';
 	import Header from '$lib/Header.svelte';
+	import Footer from '$lib/Footer.svelte';
 
 	const projectDir = (
 		($directory.contents?.['Desktop'] as Directory)?.contents?.['Projects'] as Directory
@@ -88,16 +89,16 @@
 	<title>EOlsen - Home</title>
 </svelte:head>
 
-<div class=" overflow-x-hidden">
+<div class="overflow-x-hidden">
 	<div class="relative h-0 w-0">
 		<div class="rainbow absolute left-0 top-0">
 			{#await import('$lib/metaballs/Metaballs.svelte')}
 				<div
-					out:fade={{ duration: 1000, delay: 500 }}
+					out:fade={{ duration: 100, delay: 75 }}
 					class="w-full h-full bg-black absolute top-0 left-0"
 				/>
 			{:then Module}
-				<div in:fade={{ duration: 1000 }}>
+				<div in:fade={{ duration: 100 }}>
 					<Module.default bind:width={canvasWidth} bind:height={canvasHeight} />
 				</div>
 			{/await}
@@ -106,13 +107,14 @@
 	<div class="background-shift h-full w-full font-roboto text-gray-50">
 		<Header bind:navHeight />
 		<div class="relative h-full w-full pt-9">
-			<div class="fly-up mx-auto w-fit px-4">
+			<div class="fly-down mx-auto w-fit px-4">
 				<h1
 					bind:clientHeight={textHeight}
-					style="filter: drop-shadow(2px 4px 0px black);"
-					class="rainbow mx-auto max-w-4xl bg-clip-text text-center text-6xl font-bold"
+					style="filter: drop-shadow(0px 0px 1px black) drop-shadow(0px 1px 1px black);"
+					class="rainbow mx-auto max-w-4xl bg-clip-text text-center text-6xl font-bold md:text-8xl"
 				>
-					Full-Stack Developer With <span class="text-transparent">Passion</span>
+					Full-Stack Developer With
+					<span class="text-transparent">Passion</span>
 				</h1>
 			</div>
 			<div class="mt-20 grid w-full grid-cols-1 grid-rows-1">
@@ -140,6 +142,7 @@
 							<div class="h-2.5 w-2.5 rounded-full bg-green-500 opacity-50" />
 						</div>
 						<TerminalBase
+							className="!bg-opacity-100 !backdrop-blur-none"
 							style="font-size: clamp(0.25rem, 2vw, 0.75rem); line-height: calc(0.25rem + clamp(0.25rem, 2vw, 0.75rem));"
 							id="home"
 							bind:lines
@@ -148,7 +151,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="-mt-1 flex h-full w-full flex-col gap-32 overflow-hidden bg-gray-950 pt-32">
+			<div class="-mt-1 flex h-full w-full flex-col gap-32 overflow-hidden bg-gray-950 pb-32 pt-32">
 				<div
 					use:intersectionObserver={{ callback: () => (isAboutVisible = true) }}
 					class="prose prose-invert mx-auto flex w-full max-w-4xl flex-col gap-2 px-4 prose-p:opacity-90"
@@ -158,16 +161,16 @@
 						<div class="w-full">
 							<div
 								class:opacity-100={isAboutVisible}
-								class="m-0 opacity-50 transition-all duration-1000"
+								class:opacity-50={!isAboutVisible}
+								class="m-0 transition-all duration-1000"
 							>
-								<p class="m-0">
+								<p>
 									I am a full stack cross platform web developer with a focus on developing internal
 									development frameworks and tools to increase developer and admin productivity. My
 									primary experience is in UI and UX design and development, backend development,
 									and database management.
 								</p>
-								<br />
-								<p class="m-0">
+								<p>
 									I've got two cats, Omen and Lua. They are both a year old and are very cute. Omen
 									is a standard issue cat and Lua is a short tail tortoise shell cat. I ended up
 									getting to name Lua which means "moon" in portuguese. It is also a scripting
@@ -214,7 +217,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="mx-auto w-full max-w-4xl px-4">
+				<div
+					class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+				>
 					<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
 					<div class="grid w-full grid-cols-1 gap-px overflow-hidden sm:grid-cols-2 md:grid-cols-3">
 						{#each projects as project}
@@ -269,13 +274,7 @@
 		</div>
 	</div>
 </div>
-<div class="w-full">
-	<div class="flex flex-col">
-		<div class="w-full px-4 py-8" />
-		<div class="h-px w-full bg-[#374151]" />
-		<div class="w-full px-4 py-8" />
-	</div>
-</div>
+<Footer />
 
 <style lang="postcss">
 	@keyframes rainbow {
@@ -321,18 +320,22 @@
 
 		animation: rainbow 10s ease infinite;
 	}
-	@keyframes fly-up {
+	@keyframes fly-down {
 		0% {
-			transform: translateY(200%);
+			transform: translateY(-200%);
+		}
+		60% {
+			transform: translateY(10%);
 		}
 		80% {
-			transform: translateY(-10%);
+			transform: translateY(-5%);
 		}
 		100% {
 			transform: translateY(0%);
 		}
 	}
-	.fly-up {
-		animation: fly-up 1.25s ease-in-out;
+	.fly-down {
+		transform-origin: center center;
+		animation: fly-down 2.25s ease-in-out;
 	}
 </style>
