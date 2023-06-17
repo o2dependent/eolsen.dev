@@ -73,7 +73,7 @@
 	let lt = 0;
 	let fr = 60;
 	function loop(ct: number) {
-		const dt = ct - lt;
+		const dt = (ct - lt) * 1.5;
 		lt = ct;
 
 		const dataToSendToGPU = new Float32Array(3 * numMetaballs);
