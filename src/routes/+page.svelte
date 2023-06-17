@@ -269,6 +269,13 @@
 		</div>
 	</div>
 </div>
+<div class="w-full">
+	<div class="flex flex-col">
+		<div class="w-full px-4 py-8" />
+		<div class="h-px w-full bg-[#374151]" />
+		<div class="w-full px-4 py-8" />
+	</div>
+</div>
 
 <style lang="postcss">
 	@keyframes rainbow {
