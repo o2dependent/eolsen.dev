@@ -262,7 +262,7 @@
 										</a>
 										<a
 											class="flex items-center justify-center rounded bg-white px-3 py-2 text-gray-950 opacity-75 hover:opacity-100"
-											href="project/{project.name}"><span>Visit</span></a
+											href="/project/{project.name}"><span>Visit</span></a
 										>
 									</div>
 								</div>
@@ -299,27 +299,7 @@
 	.background-shift {
 		animation: background-shift 2s linear infinite;
 	}
-	:global(html) {
-		--rainbow-gradient: linear-gradient(
-			90deg,
-			#fb5b58 0%,
-			#ff3d74 14.58%,
-			#f92195 25.52%,
-			#e322bc 37.5%,
-			#b55ee6 51.56%,
-			#7680fc 64.06%,
-			#0096ff 76.04%,
-			#00d0f2 87.5%,
-			#00e3b8 100%
-		);
-	}
-	:global(.rainbow) {
-		background-image: var(--rainbow-gradient);
-		background-size: 200vw 200vh;
-		background-attachment: fixed;
 
-		animation: rainbow 10s ease infinite;
-	}
 	@keyframes fly-down {
 		0% {
 			transform: translateY(-200%);
