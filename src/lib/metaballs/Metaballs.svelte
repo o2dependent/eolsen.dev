@@ -17,8 +17,8 @@
 	}
 	let numMetaballs = Math.round(Math.max(height, width) / 5);
 	// let numMetaballs = 10;
-	let maxRadius = Math.max(height, width) / numMetaballs + 10;
-	let minRadius = maxRadius / 5;
+	let maxRadius = Math.max(height, width) / numMetaballs + 15;
+	let minRadius = maxRadius / 4;
 	let metaballs: MetaBall[] = [];
 	let gl: WebGLRenderingContext | null = null;
 	let metaballsHandle: WebGLUniformLocation | null | undefined;
@@ -71,9 +71,8 @@
 		return shader;
 	}
 	let lt = 0;
-	let fr = 60;
 	function loop(ct: number) {
-		const dt = (ct - lt) * 1.5;
+		const dt = ct - lt;
 		lt = ct;
 
 		const dataToSendToGPU = new Float32Array(3 * numMetaballs);
@@ -121,8 +120,8 @@
 				if (metaball.r < 0.25) {
 					metaball.x = width / 2 - 2 * metaball.r + metaball.r;
 					metaball.y = metaball.r * 2;
-					metaball.vx = (Math.random() - 0.5) * 0.35;
-					metaball.vy = Math.abs((Math.random() - 0.5) * 0.35);
+					metaball.vx = (Math.random() - 0.5) * 0.5;
+					metaball.vy = Math.abs((Math.random() - 0.5) * 0.5);
 					metaball.r = metaball.br;
 				}
 			}
@@ -155,10 +154,10 @@
 				x: width / 2 - 2 * radius + radius,
 				y: radius * 2,
 				// weight the direction of the velocity based on width and height
-				// vx: (Math.random() - 0.5) * 0.35 * (width / height) * 0.5,
-				// vy: Math.abs((Math.random() - 0.5) * 0.35),
-				vx: (Math.random() - 0.5) * 0.35,
-				vy: Math.abs((Math.random() - 0.5) * 0.35),
+				// vx: (Math.random() - 0.5) * 0.5 * (width / height) * 0.5,
+				// vy: Math.abs((Math.random() - 0.5) * 0.5),
+				vx: (Math.random() - 0.5) * 0.5,
+				vy: Math.abs((Math.random() - 0.5) * 0.5),
 				r: radius,
 				br: radius
 			});
