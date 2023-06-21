@@ -277,17 +277,6 @@
 <Footer />
 
 <style lang="postcss">
-	@keyframes rainbow {
-		0% {
-			background-position: 0% 50%;
-		}
-		50% {
-			background-position: 100% 50%;
-		}
-		100% {
-			background-position: 0% 50%;
-		}
-	}
 	@keyframes background-shift {
 		0% {
 			background-position: 0% 0%;
