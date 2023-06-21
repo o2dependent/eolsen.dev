@@ -26,11 +26,7 @@
 		.filter(({ name }) => chProjNames.includes(name));
 
 	let isMounted = false;
-	let halfTerminalHeight: number = 0;
-	let textHeight: number = 0;
-	let terminalMarginTop: number = 80;
 	let navHeight: number = 0;
-	let containerPaddingTop: number = 36;
 	let canvasHeight = 0;
 	$: canvasWidth = isMounted ? window.innerWidth : 0;
 	// $: canvasHeight = containerHeight + navHeight;
@@ -62,7 +58,6 @@
 	<div class="relative w-full pt-9">
 		<div class="fly-down mx-auto w-fit px-4">
 			<h1
-				bind:clientHeight={textHeight}
 				style="filter: drop-shadow(0px 0px 1px black) drop-shadow(0px 1px 1px black) drop-shadow(0px 2px 0px black);"
 				class="rainbow mx-auto flex max-w-4xl flex-col bg-clip-text text-center text-6xl font-bold md:text-8xl"
 			>
@@ -73,10 +68,6 @@
 		</div>
 		<div class="mt-20 grid w-full grid-cols-1 grid-rows-1">
 			<div class="rainbow absolute bottom-0 left-0 h-1 w-screen" />
-
-			<div style="grid-column: 1; grid-row: 1;" class="grid h-full w-full grid-rows-1">
-				<div bind:clientHeight={halfTerminalHeight} />
-			</div>
 			<div
 				style="grid-column: 1; grid-row: 1;"
 				class="relative mx-auto grid w-full max-w-4xl grid-cols-1 grid-rows-1 px-4"

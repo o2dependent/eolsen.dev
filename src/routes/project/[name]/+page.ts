@@ -4,7 +4,7 @@ import {
 	type DirectoryFile,
 	type ProjectFileData
 } from '$stores/directory.store';
-import type { Load } from '@sveltejs/kit';
+import { redirect, type Load } from '@sveltejs/kit';
 import { get } from 'svelte/store';
 
 const $directory = get(directory);
@@ -30,6 +30,10 @@ export const load: Load = async ({ url, params }) => {
 	}
 	console.log($directory);
 	const project = projects.find((project) => project.name === params.name);
+
+	if (!project) {
+		throw redirect(307, '/404')
+	}
 
 	return {
 		params,
