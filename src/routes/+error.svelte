@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Footer from '$lib/Footer.svelte';
 	import Header from '$lib/Header.svelte';
+	import RandomMusic from '$lib/RandomMusic.svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 
@@ -40,6 +41,7 @@
 				class="rainbow mx-auto flex max-w-4xl flex-col bg-clip-text text-center text-6xl font-bold md:text-8xl"
 			>
 				<span><span class="text-transparent">404</span> Not Found</span>
+				<p class="w-full text-center text-lg">Found some good music though.</p>
 			</h1>
 		</div>
 		<div class="mt-20 grid w-full grid-cols-1 grid-rows-1">
@@ -64,16 +66,7 @@
 						<div class="h-2.5 w-2.5 rounded-full bg-green-500 opacity-50" />
 					</div>
 					<div class="h-full w-full">
-						<iframe
-							class="h-full w-full"
-							width="560"
-							height="315"
-							src="https://www.youtube.com/embed/1Bw2dTY3SsQ?controls=0&amp;autoplay=1"
-							title="YouTube video player"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						/>
+						<RandomMusic />
 					</div>
 				</div>
 			</div>
