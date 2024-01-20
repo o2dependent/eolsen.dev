@@ -1,5 +1,6 @@
 ---
 import BaseHead from "../components/BaseHead.astro";
+import Footer from "../lib/Footer.svelte";
 
 type Props = {
 	title: string;
@@ -15,8 +16,9 @@ const { title, description } = Astro.props;
 		<BaseHead title={title} description={description} />
 	</head>
 	<body>
-		<main class="w-full h-full">
+		<main class="w-full min-h-full">
 			<slot />
 		</main>
+		<Footer />
 	</body>
 </html>

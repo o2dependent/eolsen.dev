@@ -1,5 +1,7 @@
-import { writable } from 'svelte/store';
-import type { AppNames } from './apps.store';
+import { writable } from "svelte/store";
+import type { AppNames } from "./apps.store";
+import { getCollection } from "astro:content";
+import Desktop from "$lib/Desktop.svelte";
 
 export interface TextFileData {
 	id: string;
@@ -34,47 +36,58 @@ export interface Directory {
 	name: string;
 	contents: { [name: string]: Directory | DirectoryFile };
 }
-console.log('HELLLLLLOOOOOO');
+
+function isDirectory(obj: any): obj is Directory {
+	return (
+		obj && typeof obj.name === "string" && typeof obj.contents === "object"
+	);
+}
+
+console.log("HELLLLLLOOOOOO");
 // const allDirFiles = import.meta.glob('./**/*.md');
-const allDirFiles = import.meta.globEager('../directory/**/*.{md,svx}');
-const iterableDirFiles = Object.entries(allDirFiles);
+const projects = await getCollection("projects");
+const blogs = await getCollection("blogs");
+const allFiles = [...projects, ...blogs];
 
-const allFiles = iterableDirFiles.map(([path, data]) => {
-	console.log(data);
-	// const resolved = await resolver();
-	// const { metadata } = resolved;
+const dir = {
+	contents: {
+		Desktop: {
+			name: "Desktop",
+			contents: {
+				Projects: { name: "Projects", contents: {} },
+				Blogs: { name: "Blogs", contents: {} },
+			},
+		},
+	},
+	name: "~",
+} as Directory;
 
-	const postPath = path.slice(2, -3).replace('/directory/', '').split('/');
-	console.log({ postPath });
+const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
 
-	return {
-		meta: { ...data.metadata, html: data.default },
-		path: postPath
-	};
-});
-
-const dir = { contents: {} } as Directory;
-console.log({ allFiles });
 // transform allFiles into a directory structure
 allFiles.forEach((file) => {
-	const { path, meta } = file ?? {};
-	let currentDir = dir;
+	const { slug, collection, id, body, render, data } = file ?? {};
+	if (typeof collection !== "string") return;
 
-	path.forEach((dirName, index) => {
-		if (index === path.length - 1) {
-			currentDir.contents[dirName] = {
-				data: meta,
-				name: dirName,
-				open: dirName
-			} as DirectoryFile;
-		}
+	let open: DirectoryFile["open"] | null = null;
+	if (collection === "projects") open = "Project";
+	else if (collection === "blogs") open = "Blog";
+	else return;
 
-		if (!currentDir.contents[dirName]) {
-			currentDir.contents[dirName] = { name: dirName, contents: {} };
-		}
+	let capCollection = capitalize(collection);
 
-		currentDir = currentDir.contents[dirName] as Directory;
-	});
+	if (
+		capCollection in dir.contents &&
+		isDirectory((dir.contents.Desktop as Directory).contents[capCollection])
+	) {
+		(
+			(dir.contents.Desktop as Directory).contents[capCollection] as Directory
+		).contents[id] = {
+			data,
+			name: id,
+			open,
+		} as DirectoryFile;
+	}
 });
 console.log(dir);
 export const directory = writable<Directory>(dir);

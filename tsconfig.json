@@ -1,6 +1,17 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "strictNullChecks": true
-  }
+	"extends": "astro/tsconfigs/strict",
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"baseUrl": "./src",
+		"paths": {
+			"$stores": ["./stores"],
+			"$stores/*": ["./stores/*"],
+			"$lib": ["./lib"],
+			"$lib/*": ["./lib/*"],
+			"$islands": ["./islands"],
+			"$islands/*": ["./islands/*"],
+			"$utils": ["./utils"],
+			"$utils/*": ["./utils/*"]
+		}
+	}
 }

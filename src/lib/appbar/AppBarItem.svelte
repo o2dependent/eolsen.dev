@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { apps, addApp, type AppNames, focusApp } from '$stores/apps.store';
-	import { fade } from 'svelte/transition';
-	import AppIcon from '$lib/appIcons/AppIcon.svelte';
-	import { browser } from '$app/environment';
+	import { apps, addApp, type AppNames, focusApp } from "$stores/apps.store";
+	import { fade } from "svelte/transition";
+	import AppIcon from "$lib/appIcons/AppIcon.svelte";
 
 	export let appKey: string;
 
 	let isHovered: boolean = false;
-	$: openApps = $apps.filter((app) => app.name === appKey)?.map((app) => app.id) ?? [];
+	$: openApps =
+		$apps.filter((app) => app.name === appKey)?.map((app) => app.id) ?? [];
 	let isMouseDown: boolean = false;
 	const hasOpenApps = () => $apps.some((app) => app.name === appKey);
 	const onAddAppHandler = (appString: string) => () => {
