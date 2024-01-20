@@ -20,9 +20,15 @@ dependencies:
   '@astrojs/tailwind':
     specifier: ^5.1.0
     version: 5.1.0(astro@4.2.1)(tailwindcss@3.4.1)
+  '@neodrag/svelte':
+    specifier: ^2.0.3
+    version: 2.0.3
   astro:
     specifier: ^4.2.1
     version: 4.2.1(typescript@5.3.3)
+  date-fns:
+    specifier: ^3.3.0
+    version: 3.3.0
   svelte:
     specifier: ^4.2.9
     version: 4.2.9
@@ -672,6 +678,10 @@ packages:
       vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@neodrag/svelte@2.0.3:
+    resolution: {integrity: sha512-/7k4Byv6guBs6NpfzOnqOep8PM3HjhPg1rRPNsJsGNGDXSJNB+tn9NAi/vTXJBos3vN9XPlbnr3g/lNKGfg+Jg==}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
@@ -1426,6 +1436,10 @@ packages:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
     engines: {node: '>=4'}
     hasBin: true
+    dev: false
+
+  /date-fns@3.3.0:
+    resolution: {integrity: sha512-xuouT0GuI2W8yXhCMn/AXbSl1Av3wu2hJXxMnnILTY3bYY0UgNK0qOwVXqdFBrobW5qbX1TuOTgMw7c2H2OuhA==}
     dev: false
 
   /debug@2.6.9:
