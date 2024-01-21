@@ -1,9 +1,11 @@
 ---
 title: CMS Page builder
 description: A content management system designed for building out custom apps with a page builder.
-projectLink: ''
-githubLink: ''
-tags: ['React', 'Nest.js']
+pubDate: "Dec 01 2022"
+projectLink: ""
+githubLink: ""
+tags: ["React", "Nest.js"]
+heroImage: "/blog-placeholder-3.jpg"
 ---
 
 # Project Overview

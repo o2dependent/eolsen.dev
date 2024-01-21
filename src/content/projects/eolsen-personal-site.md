@@ -1,9 +1,11 @@
 ---
-title: This site
-description: This site is built with sveltekit and tailwindcss.
+title: EOlsen Personal Site (sveltekit version)
+description: My personal site built with sveltekit and tailwindcss.
+pubDate: "Mar 21 2023"
 projectLink: https://eolsen.dev
 githubLink: https://github.com/o2dependent
-tags: ['Svelte', 'Personal', 'Tailwind']
+tags: ["Svelte", "Personal", "Tailwind"]
+heroImage: "/blog-placeholder-4.jpg"
 ---
 
 # Project Overview

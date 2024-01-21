@@ -1,9 +1,11 @@
 ---
 title: Crossplatform CI/CD
 description: CI/CD for testing, deployment, and merging crossplatform project.
-projectLink: ''
-githubLink: ''
-tags: ['CI/CD']
+pubDate: "Dec 04 2022"
+projectLink: ""
+githubLink: ""
+tags: ["CI/CD"]
+heroImage: "/blog-placeholder-2.jpg"
 ---
 
 # CI/CD Pipeline for Crossplatform Products
