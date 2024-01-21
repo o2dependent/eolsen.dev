@@ -1,116 +1,61 @@
 ---
-import BaseHead from "../../components/BaseHead.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
 import { getCollection } from "astro:content";
 import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "$lib/Header.svelte";
+import MainLayout from "layouts/MainLayout.astro";
 
-const posts = (await getCollection("blogs")).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
+const blogs = (await getCollection("blogs")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
+<MainLayout description="Ethan Olsen Blogs." title="Blogs">
+	<Header />
+	<section class="max-w-screen-lg mx-auto px-4 pt-12">
+		<ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
+			{
+				blogs.map((blog, i) => (
+					<li
+						class={`flex items-center justify-center ${
+							i === 0 ? "md:col-span-2" : ""
+						}`}
+					>
+						<a
+							class={`group mx-auto w-fit ${i === 0 ? "md:text-center" : ""}`}
+							href={`/blog/${blog.slug}/`}
+						>
+							<div class="grid grid-cols-1 grid-rows-1">
+								<img
+									style="grid-area: 1 / 1"
+									class="rounded-xl opacity-75 group-hover:blur-md group-hover:scale-[102%] transition-all duration-500 ease-in-out"
+									width={720}
+									height={360}
+									src={blog.data.heroImage}
+									alt=""
+								/>
+								<img
+									style="grid-area: 1 / 1"
+									class="rounded-xl border-2 border-black/5 z-10 group-hover:-translate-y-1 transition-transform duration-500 ease-in-out"
+									width={720}
+									height={360}
+									src={blog.data.heroImage}
+									alt=""
+								/>
+							</div>
+							<h4
+								class={`${
+									i === 0 ? "md:text-3xl text-xl" : "text-xl"
+								} font-bold`}
+							>
+								{blog.data.title}
+							</h4>
+							<p class="text-white/75">
+								<FormattedDate date={blog.data.pubDate} />
+							</p>
+						</a>
+					</li>
+				))
 			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.slug}/`}>
-									<img
-										width={720}
-										height={360}
-										src={post.data.heroImage}
-										alt=""
-									/>
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+		</ul>
+	</section>
+</MainLayout>
