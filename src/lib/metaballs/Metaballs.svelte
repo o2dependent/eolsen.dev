@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount } from "svelte";
 
 	let canvas: HTMLCanvasElement;
 	export let width: number;
@@ -60,12 +60,12 @@
 
 	function compileShader(shaderSource: string, shaderType: number) {
 		let shader = gl?.createShader(shaderType);
-		if (!shader) throw new Error('Failed to create shader');
+		if (!shader) throw new Error("Failed to create shader");
 		gl?.shaderSource(shader, shaderSource);
 		gl?.compileShader(shader);
 
 		if (!gl?.getShaderParameter(shader, gl?.COMPILE_STATUS)) {
-			throw 'Shader compile failed with: ' + gl?.getShaderInfoLog(shader);
+			throw "Shader compile failed with: " + gl?.getShaderInfoLog(shader);
 		}
 
 		return shader;
@@ -88,8 +88,10 @@
 				// move vx and vy towards the mouse
 				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
 				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
-				metaball.vx += (mouse.x - metaball.x) * ((mouse.down ? 0.5 : 0.125) / 10000);
-				metaball.vy += (mouse.y - metaball.y) * ((mouse.down ? 0.5 : 0.125) / 10000);
+				metaball.vx +=
+					(mouse.x - metaball.x) * ((mouse.down ? 0.5 : 0.125) / 1000);
+				metaball.vy +=
+					(mouse.y - metaball.y) * ((mouse.down ? 0.5 : 0.125) / 1000);
 				// limit the velocity
 				metaball.vx = Math.min(1.5, Math.max(-1.5, metaball.vx));
 				metaball.vy = Math.min(1.5, Math.max(-1.5, metaball.vy));
@@ -143,7 +145,7 @@
 	$: gl?.viewport(0, 0, width, height);
 
 	const initMetaballs = () => {
-		gl = canvas.getContext('webgl2');
+		gl = canvas.getContext("webgl2");
 		for (let i = 0; i < numMetaballs; i++) {
 			// let radius = Math.random() * Math.min(50, width / 50) + 10;
 			// random radius between min and max
@@ -159,7 +161,7 @@
 				vx: (Math.random() - 0.5) * 0.5,
 				vy: Math.abs((Math.random() - 0.5) * 0.5),
 				r: radius,
-				br: radius
+				br: radius,
 			});
 		}
 
@@ -174,12 +176,15 @@
         `;
 
 		let vertexShader = compileShader(vertexShaderSrc, gl?.VERTEX_SHADER ?? 0);
-		let fragmentShader = compileShader(fragmentShaderSrc, gl?.FRAGMENT_SHADER ?? 0);
+		let fragmentShader = compileShader(
+			fragmentShaderSrc,
+			gl?.FRAGMENT_SHADER ?? 0,
+		);
 
 		program = gl?.createProgram();
-		if (!program) throw new Error('Failed to create program');
-		if (!vertexShader) throw new Error('Failed to create vertex shader');
-		if (!fragmentShader) throw new Error('Failed to create fragment shader');
+		if (!program) throw new Error("Failed to create program");
+		if (!vertexShader) throw new Error("Failed to create vertex shader");
+		if (!fragmentShader) throw new Error("Failed to create fragment shader");
 		gl?.attachShader(program, vertexShader);
 		gl?.attachShader(program, fragmentShader);
 		gl?.linkProgram(program);
@@ -193,15 +198,16 @@
 			1.0,
 			1.0, // top right
 			1.0,
-			-1.0 // bottom right
+			-1.0, // bottom right
 		]);
 		let vertexDataBuffer = gl?.createBuffer();
-		if (!vertexDataBuffer) throw new Error('Failed to create vertex data buffer');
+		if (!vertexDataBuffer)
+			throw new Error("Failed to create vertex data buffer");
 		gl?.bindBuffer(gl?.ARRAY_BUFFER, vertexDataBuffer);
 		gl?.bufferData(gl?.ARRAY_BUFFER, vertexData, gl?.STATIC_DRAW);
 
-		let positionHandle = getAttribLocation(program, 'position');
-		if (typeof positionHandle === 'undefined') positionHandle = 0;
+		let positionHandle = getAttribLocation(program, "position");
+		if (typeof positionHandle === "undefined") positionHandle = 0;
 		gl?.enableVertexAttribArray(positionHandle);
 		gl?.vertexAttribPointer(
 			positionHandle,
@@ -209,17 +215,17 @@
 			gl?.FLOAT, // each component is a float
 			false, // don't normalize values
 			2 * 4, // two 4 byte float components per vertex
-			0 // offset into each span of vertex data
+			0, // offset into each span of vertex data
 		);
 
-		metaballsHandle = getUniformLocation(program, 'metaballs');
+		metaballsHandle = getUniformLocation(program, "metaballs");
 
 		requestAnimationFrame(loop);
 
 		function getUniformLocation(program: WebGLProgram, name: string) {
 			let uniformLocation = gl?.getUniformLocation(program, name);
 			if (uniformLocation === -1) {
-				throw 'Can not find uniform ' + name + '.';
+				throw "Can not find uniform " + name + ".";
 			}
 			return uniformLocation;
 		}
@@ -227,7 +233,7 @@
 		function getAttribLocation(program: WebGLProgram, name: string) {
 			let attributeLocation = gl?.getAttribLocation(program, name);
 			if (attributeLocation === -1) {
-				throw 'Can not find attribute ' + name + '.';
+				throw "Can not find attribute " + name + ".";
 			}
 			return attributeLocation;
 		}
