@@ -22,7 +22,7 @@ const projects = await getCollection("projects");
 			>
 				{
 					projects?.map((project) => (
-						<div class="flex aspect-square w-full flex-col gap-2 bg-slate-950 p-2 ring-[1px] ring-[#374151]">
+						<div class="flex aspect-square w-full flex-col gap-2 p-2 ring-[1px] ring-[#374151]">
 							<strong class="text-2xl">{project.data.title}</strong>
 							<p class="flex-grow text-sm">{project.data.description}</p>
 							<div class="flex flex-col gap-2 text-sm">

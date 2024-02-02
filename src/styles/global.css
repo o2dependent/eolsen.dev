@@ -5,13 +5,13 @@
 
 @keyframes rainbow {
 	0% {
-		background-position: 0% 50%;
+		background-position: 0% 0%, 0% 50%;
 	}
 	50% {
-		background-position: 100% 50%;
+		background-position: 0% 0%, 100% 50%;
 	}
 	100% {
-		background-position: 0% 50%;
+		background-position: 0% 0%, 0% 50%;
 	}
 }
 
@@ -49,9 +49,9 @@ html {
 	);
 }
 .rainbow {
-	background-image: var(--rainbow-gradient);
-	background-size: 200vw 200vh;
-	background-attachment: fixed;
+	background-image: url(/noise-light-full.png), var(--rainbow-gradient);
+	background-size: 200px 200px, 200vw 200vh;
+	background-attachment: fixed, fixed;
 
 	animation: rainbow 10s ease infinite;
 }

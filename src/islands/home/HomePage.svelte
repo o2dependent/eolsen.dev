@@ -105,7 +105,9 @@
 					class="grid h-full w-full grid-rows-2"
 				>
 					<div bind:clientHeight={halfTerminalHeight} />
-					<div class="h-full bg-gray-950" />
+					<div class="h-full bg-gray-950">
+						<div class="rainbow h-1"></div>
+					</div>
 				</div>
 				<div
 					style="grid-column: 1; grid-row: 1;"
@@ -120,7 +122,7 @@
 						class="relative z-10 flex aspect-square w-full flex-grow flex-col overflow-hidden rounded-3xl border border-[#374151] bg-black pt-11"
 					>
 						<div
-							class="absolute left-0 top-0 z-10 flex w-full gap-2.5 border-b border-slate-700 bg-neutral-950 p-4"
+							class="absolute left-0 top-0 z-10 flex w-full gap-2.5 border-b border-slate-700 bg-gray-950 p-4"
 						>
 							<div class="h-2.5 w-2.5 rounded-full bg-red-500 opacity-50" />
 							<div class="h-2.5 w-2.5 rounded-full bg-yellow-500 opacity-50" />

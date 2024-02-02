@@ -89,9 +89,9 @@
 				// metaball.vx = (metaball.vx + (mouse.x - metaball.x) * 0.1) / 2;
 				// metaball.vy = (metaball.vy + (mouse.y - metaball.y) * 0.1) / 2;
 				metaball.vx +=
-					(mouse.x - metaball.x) * ((mouse.down ? 0.5 : 0.125) / 1000);
+					(mouse.x - metaball.x) * ((mouse.down ? 0.5 : 0.125) / 2000);
 				metaball.vy +=
-					(mouse.y - metaball.y) * ((mouse.down ? 0.5 : 0.125) / 1000);
+					(mouse.y - metaball.y) * ((mouse.down ? 0.5 : 0.125) / 2000);
 				// limit the velocity
 				metaball.vx = Math.min(1.5, Math.max(-1.5, metaball.vx));
 				metaball.vy = Math.min(1.5, Math.max(-1.5, metaball.vy));
@@ -264,4 +264,7 @@
 	onMount(initMetaballs);
 </script>
 
-<canvas {height} {width} bind:this={canvas} />
+<div class="w-full h-full relative">
+	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full"></div> -->
+	<canvas {height} {width} bind:this={canvas} />
+</div>

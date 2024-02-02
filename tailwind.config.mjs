@@ -4,6 +4,12 @@ export default {
 	theme: {
 		extend: {
 			scrollbar: ["rounded"],
+			backgroundImage: {
+				"light-noise-25": "url(/noise-light-25.png)",
+				"light-noise-50": "url(/noise-light-50.png)",
+				"light-noise-full": "url(/noise-light-full.png)",
+				"dark-noise": "url(/noise-dark.png)",
+			},
 		},
 		fontFamily: {
 			mono: ["Roboto Mono", "monospace"],
