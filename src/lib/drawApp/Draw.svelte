@@ -1,11 +1,13 @@
 <script lang="ts">
 	import Window from "$lib/window/Window.svelte";
 	import type { AppWindow } from "$stores/apps.store";
+	import chroma from "chroma-js";
 	import Select from "svelte-select";
 	import ColorDropper from "./svgs/ColorDropper.svelte";
 	import FillBucket from "./svgs/FillBucket.svelte";
 	import Pencil from "./svgs/Pencil.svelte";
 	import { onMount } from "svelte";
+	import DrawColorPicker from "./DrawColorPicker.svelte";
 
 	export let appWindow: AppWindow;
 
@@ -40,9 +42,11 @@
 	};
 
 	const drawCanvas = () => {
+		ctx.clearRect(0, 0, width, height);
 		// > Draw a grid of rectangles
 		for (let i = 0; i < pixelNum; i++) {
 			for (let j = 0; j < pixelNum; j++) {
+				if (!pixelArray[j][i]) continue;
 				ctx.fillStyle = pixelArray[j][i];
 				ctx.fillRect(
 					i * (width / pixelNum),
@@ -52,23 +56,29 @@
 				);
 			}
 		}
-		requestAnimationFrame(drawCanvas);
 	};
 
 	$: {
-		pixelArray = new Array(pixelNum).fill(new Array(pixelNum).fill("#ffffff"));
+		pixelArray = new Array(pixelNum).fill(new Array(pixelNum).fill(""));
 	}
 
 	onMount(() => {
 		ctx = canvas.getContext("2d")!;
 
-		requestAnimationFrame(drawCanvas);
-
 		const pixelMouseDown = (y: number, x: number) => {
 			if (tool.name === "pencil") {
 				// draw
 				let newArrIdx = [...pixelArray[y]];
-				newArrIdx[x] = tool.color;
+				console.log(newArrIdx[x]);
+				if (newArrIdx[x])
+					newArrIdx[x] = chroma
+						.mix(
+							newArrIdx[x],
+							chroma.hex(tool.color).alpha(1).hex(),
+							chroma.hex(tool.color).alpha(),
+						)
+						.hex();
+				else newArrIdx[x] = tool.color;
 				pixelArray[y] = newArrIdx;
 				pixelArray = [...pixelArray];
 			} else if (tool.name === "select") {
@@ -93,6 +103,7 @@
 				fill(y, x);
 				pixelArray = [...newArr];
 			}
+			drawCanvas();
 		};
 
 		// > Add event listeners
@@ -169,17 +180,18 @@
 				/> -->
 				<!-- <label>Width <input bind:value={width} type="number" /></label> -->
 				<!-- <label>Height <input bind:value={height} type="number" /></label> -->
-				<label class="block w-full aspect-square relative p-0.5">
+				<!-- <label class="block w-full aspect-square relative p-0.5">
 					<div
 						style="background-color: {tool.color}"
 						class="w-full aspect-square rounded-full border border-black/50"
 					></div>
 					<input
-						class="opacity-0 absolute top-0 left-0 w-full h-full"
-						bind:value={tool.color}
-						type="color"
+					class="opacity-0 absolute top-0 left-0 w-full h-full"
+					bind:value={tool.color}
+					type="color"
 					/>
-				</label>
+				</label> -->
+				<DrawColorPicker bind:color={tool.color} />
 			</div>
 		</div>
 		<canvas id="pixel-paint-canvas" bind:this={canvas} {width} {height} />
@@ -191,6 +203,18 @@
 		@apply relative flex;
 	}
 	#pixel-paint-canvas {
+		--checkerboard-size: 1.5rem;
+		background-image: linear-gradient(45deg, #ddd 25%, transparent 25%),
+			linear-gradient(135deg, #ddd 25%, transparent 25%),
+			linear-gradient(45deg, transparent 75%, #ddd 75%),
+			linear-gradient(135deg, transparent 75%, #ddd 75%);
+		background-color: #eee;
+		background-size: var(--checkerboard-size) var(--checkerboard-size);
+		background-position:
+			0 0,
+			calc(var(--checkerboard-size) / 2) 0,
+			calc(var(--checkerboard-size) / 2) calc(var(--checkerboard-size) / -2),
+			0px calc(var(--checkerboard-size) / 2);
 		@apply flex-grow;
 	}
 	#pixel-paint-tools {
