@@ -1,20 +1,24 @@
 <script lang="ts">
-	import { fly } from 'svelte/transition';
-	import AppIcon from '$lib/appIcons/AppIcon.svelte';
-	import { dismissNotification, type Notification } from '$stores/notifications.store';
-	import { expoIn, cubicInOut } from 'svelte/easing';
+	import { fly } from "svelte/transition";
+	import AppIcon from "$lib/appIcons/AppIcon.svelte";
+	import {
+		dismissNotification,
+		type Notification,
+	} from "$stores/notifications.store";
+	import { expoIn, cubicInOut } from "svelte/easing";
 
 	export let notification: Notification;
 	export let open: boolean;
 
-	$: ({ id, appKey, description, title, onClick, dismissOnClick, pinned } = notification);
+	$: ({ id, appKey, description, title, onClick, dismissOnClick, pinned } =
+		notification);
 
 	const move = (
 		node: HTMLElement,
 		{
 			from,
 			to,
-			duration
+			duration,
 		}: {
 			from: {
 				x: number;
@@ -23,7 +27,7 @@
 				x: number;
 			};
 			duration: number;
-		}
+		},
 	) => {
 		return {
 			duration,
@@ -34,7 +38,7 @@
 					user-select: none;
 					transform: translateX(${from.x + (to.x - from.x) * eased}px);
 				`;
-			}
+			},
 		};
 	};
 </script>
@@ -42,7 +46,7 @@
 <button
 	style="transform: translateX({pinned || open ? 0 : 400}px)"
 	type="button"
-	class="group relative flex min-h-[4.25rem] w-full cursor-default gap-3 rounded-2xl border border-[#474A56] bg-[#252B3B]/50 py-3 pl-3 pr-6 text-left backdrop-blur-2xl transition-all duration-300"
+	class="pointer-events-auto group relative flex min-h-[4.25rem] w-full gap-3 rounded-2xl border border-[#474A56] bg-[#252B3B]/50 py-3 pl-3 pr-6 text-left backdrop-blur-2xl transition-all duration-300 cursor-pointer"
 	on:click|stopPropagation={() => {
 		onClick?.();
 		dismissOnClick && dismissNotification(id);

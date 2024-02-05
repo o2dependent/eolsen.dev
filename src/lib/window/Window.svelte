@@ -1,16 +1,21 @@
 <script lang="ts">
-	import { apps, focusApp, removeApp, type AppWindow } from '$stores/apps.store';
-	import { draggable } from '@neodrag/svelte';
-	import { scale, blur } from 'svelte/transition';
+	import {
+		apps,
+		focusApp,
+		removeApp,
+		type AppWindow,
+	} from "$stores/apps.store";
+	import { draggable } from "@neodrag/svelte";
+	import { scale, blur } from "svelte/transition";
 
 	export let appWindow: AppWindow;
-	export let headerClass: string = '';
-	export let windowClass: string = '';
-	export let startingWidth = '30rem';
-	export let startingHeight = '25rem';
+	export let headerClass: string = "";
+	export let windowClass: string = "";
+	export let startingWidth = "30rem";
+	export let startingHeight = "25rem";
 	export let defaultPosition = {
 		x: 0,
-		y: 8
+		y: 8,
 	};
 
 	let isMouseDown = false;
@@ -18,6 +23,7 @@
 	const onRemoveAppHandler = () => removeApp(appWindow.name, appWindow.id);
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
 	on:mousedown={() => focusApp(appWindow.id)}
 	use:draggable={{
@@ -25,13 +31,13 @@
 			top: 28,
 			bottom: -100000,
 			left: -100000,
-			right: -100000
+			right: -100000,
 		},
 		defaultPosition,
-		handle: '.handle',
+		handle: ".handle",
 		onDragEnd: () => {
 			isMouseDown = false;
-		}
+		},
 	}}
 	in:scale={{ duration: 150 }}
 	out:blur={{ duration: 150 }}
@@ -54,8 +60,14 @@
 				on:mousedown|stopPropagation
 				class="h-3 w-3 rounded-full bg-red-500"
 			/>
-			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-yellow-500" />
-			<button on:mousedown|stopPropagation class="h-3 w-3 rounded-full bg-green-500 opacity-40" />
+			<button
+				on:mousedown|stopPropagation
+				class="h-3 w-3 rounded-full bg-yellow-500"
+			/>
+			<button
+				on:mousedown|stopPropagation
+				class="h-3 w-3 rounded-full bg-green-500 opacity-40"
+			/>
 		</div>
 		<slot name="header" />
 	</div>

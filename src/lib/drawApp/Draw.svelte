@@ -1,15 +1,16 @@
 <script lang="ts">
-	import Window from '$lib/window/Window.svelte';
-	import type { AppWindow } from '$stores/apps.store';
-	export let appWindow: AppWindow;
-	import ColorDropper from './svgs/ColorDropper.svelte';
-	import FillBucket from './svgs/FillBucket.svelte';
-	import Pencil from './svgs/Pencil.svelte';
+	import Window from "$lib/window/Window.svelte";
+	import type { AppWindow } from "$stores/apps.store";
+	import Select from "svelte-select";
+	import ColorDropper from "./svgs/ColorDropper.svelte";
+	import FillBucket from "./svgs/FillBucket.svelte";
+	import Pencil from "./svgs/Pencil.svelte";
+	import { onMount } from "svelte";
 
-	import { onMount } from 'svelte';
+	export let appWindow: AppWindow;
 
 	interface Tool {
-		name: 'pencil' | 'select' | 'fill';
+		name: "pencil" | "select" | "fill";
 		color: string;
 	}
 
@@ -17,12 +18,25 @@
 	let ctx: CanvasRenderingContext2D;
 	let width: number = 800;
 	let height: number = 800;
-	let pixelNum: number = 32;
-	let pixelArray: string[][] = new Array(pixelNum).fill(new Array(pixelNum).fill('#ffffff'));
+	let pixelNumSelected: { value: number; label: string } = {
+		value: 32,
+		label: "32x32",
+	};
+	$: pixelNum = pixelNumSelected.value;
+	const pixelNumSelectValues = [
+		{ value: 16, label: "16x16" },
+		{ value: 32, label: "32x32" },
+		{ value: 64, label: "64x64" },
+		{ value: 128, label: "128x128" },
+		{ value: 256, label: "256x256" },
+	];
+	let pixelArray: string[][] = new Array(pixelNum).fill(
+		new Array(pixelNum).fill("#ffffff"),
+	);
 	let isMouseDown: boolean = false;
 	let tool: Tool = {
-		name: 'pencil',
-		color: '#000000'
+		name: "pencil",
+		color: "#000000",
 	};
 
 	const drawCanvas = () => {
@@ -34,7 +48,7 @@
 					i * (width / pixelNum),
 					j * (height / pixelNum),
 					width / pixelNum,
-					height / pixelNum
+					height / pixelNum,
 				);
 			}
 		}
@@ -42,33 +56,34 @@
 	};
 
 	$: {
-		pixelArray = new Array(pixelNum).fill(new Array(pixelNum).fill('#ffffff'));
+		pixelArray = new Array(pixelNum).fill(new Array(pixelNum).fill("#ffffff"));
 	}
 
 	onMount(() => {
-		ctx = canvas.getContext('2d')!;
+		ctx = canvas.getContext("2d")!;
 
 		requestAnimationFrame(drawCanvas);
 
 		const pixelMouseDown = (y: number, x: number) => {
-			if (tool.name === 'pencil') {
+			if (tool.name === "pencil") {
 				// draw
 				let newArrIdx = [...pixelArray[y]];
 				newArrIdx[x] = tool.color;
 				pixelArray[y] = newArrIdx;
 				pixelArray = [...pixelArray];
-			} else if (tool.name === 'select') {
+			} else if (tool.name === "select") {
 				// change color to current pixel color
 				tool.color = pixelArray[y][x];
-				tool.name = 'pencil';
-			} else if (tool.name === 'fill') {
+				tool.name = "pencil";
+			} else if (tool.name === "fill") {
 				// recursively fill all pixels of the same color with current color
 				const currentColor = pixelArray[y][x];
 				let newArr = [...pixelArray].map((row) => [...row]);
 
 				const fill = (y: number, x: number) => {
 					if (y < 0 || y > pixelNum - 1 || x < 0 || x > pixelNum - 1) return;
-					if (newArr[y][x] === tool.color || newArr[y][x] !== currentColor) return;
+					if (newArr[y][x] === tool.color || newArr[y][x] !== currentColor)
+						return;
 					newArr[y][x] = tool.color;
 					fill(y - 1, x);
 					fill(y + 1, x);
@@ -81,19 +96,19 @@
 		};
 
 		// > Add event listeners
-		canvas.addEventListener('mousedown', (e: MouseEvent) => {
+		canvas.addEventListener("mousedown", (e: MouseEvent) => {
 			isMouseDown = true;
 			const docListener = () => {
 				isMouseDown = false;
-				document.removeEventListener('mouseup', docListener);
+				document.removeEventListener("mouseup", docListener);
 			};
 			const x = Math.floor(e.offsetX / (width / pixelNum));
 			const y = Math.floor(e.offsetY / (height / pixelNum));
 			pixelMouseDown(y, x);
-			document.addEventListener('mouseup', docListener);
+			document.addEventListener("mouseup", docListener);
 		});
 
-		canvas.addEventListener('mousemove', (e: MouseEvent) => {
+		canvas.addEventListener("mousemove", (e: MouseEvent) => {
 			if (isMouseDown) {
 				const x = Math.floor(e.offsetX / (width / pixelNum));
 				const y = Math.floor(e.offsetY / (height / pixelNum));
@@ -101,171 +116,93 @@
 			}
 		});
 
-		canvas.addEventListener('mouseleave', (e: MouseEvent) => {
+		canvas.addEventListener("mouseleave", (e: MouseEvent) => {
 			isMouseDown = false;
 		});
 
-		canvas.addEventListener('mouseenter', (e: MouseEvent) => {
+		canvas.addEventListener("mouseenter", (e: MouseEvent) => {
 			isMouseDown = false;
 		});
 
-		canvas.addEventListener('mouseup', (e: MouseEvent) => {
+		canvas.addEventListener("mouseup", (e: MouseEvent) => {
 			isMouseDown = false;
 		});
 
-		canvas.addEventListener('mouseout', (e: MouseEvent) => {
+		canvas.addEventListener("mouseout", (e: MouseEvent) => {
 			isMouseDown = false;
 		});
 	});
 </script>
 
-<Window startingHeight="fit" startingWidth="fit" windowClass="!resize-none bg-black" {appWindow}>
-	<div class="relative">
-		<div class="w-full py-1">
-			<label for="pixelNum"
-				>Size
-				<select name="pixelNum" id="pixelNum" bind:value={pixelNum}>
-					<option value={16}>16x16</option>
-					<option value={32}>32x32</option>
-					<option value={64}>64x64</option>
-				</select>
-			</label>
-			<!-- <label>Width <input bind:value={width} type="number" /></label> -->
-			<!-- <label>Height <input bind:value={height} type="number" /></label> -->
-			<label>Color <input bind:value={tool.color} type="color" max="100" /></label>
-			<button
-				class="tool-btn {tool.name === 'pencil' ? 'selected' : ''}"
-				on:click={() => (tool.name = 'pencil')}><Pencil /></button
-			>
-			<button
-				class="tool-btn {tool.name === 'select' ? 'selected' : ''}"
-				on:click={() => (tool.name = 'select')}><ColorDropper /></button
-			>
-			<button
-				class="tool-btn {tool.name === 'fill' ? 'selected' : ''}"
-				on:click={() => (tool.name = 'fill')}><FillBucket /></button
-			>
-			<button on:click={() => drawCanvas()}>Draw canvas</button>
-			<button class="h-6 w-6" type="button">
-				<svg class="h-full w-full" viewBox="0 0 24 24">
-					<path
-						d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-						class="fill-current"
+<Window
+	startingHeight="fit"
+	startingWidth="fit"
+	windowClass="!resize-none bg-black"
+	{appWindow}
+>
+	<div id="pixel-paint-container">
+		<div id="pixel-paint-tools">
+			<div class="tool-container">
+				<button
+					class="tool-btn {tool.name === 'pencil' ? 'selected' : ''}"
+					on:click={() => (tool.name = "pencil")}><Pencil /></button
+				>
+				<button
+					class="tool-btn {tool.name === 'select' ? 'selected' : ''}"
+					on:click={() => (tool.name = "select")}><ColorDropper /></button
+				>
+				<button
+					class="tool-btn {tool.name === 'fill' ? 'selected' : ''}"
+					on:click={() => (tool.name = "fill")}><FillBucket /></button
+				>
+				<!-- <button on:click={() => drawCanvas()}>Draw canvas</button> -->
+			</div>
+			<div class="tool-container">
+				<!-- <Select
+					containerStyles="--min-height: 2rem; --max-height: 2rem; --height: 2rem;"
+					inputStyles="--min-height: 2rem; --max-height: 2rem; --height: 2rem;"
+					class="p-0 !w-32 text-black"
+					clearable={false}
+					searchable={false}
+					bind:value={pixelNumSelected}
+					items={pixelNumSelectValues}
+				/> -->
+				<!-- <label>Width <input bind:value={width} type="number" /></label> -->
+				<!-- <label>Height <input bind:value={height} type="number" /></label> -->
+				<label class="block w-full aspect-square relative p-0.5">
+					<div
+						style="background-color: {tool.color}"
+						class="w-full aspect-square rounded-full border border-black/50"
+					></div>
+					<input
+						class="opacity-0 absolute top-0 left-0 w-full h-full"
+						bind:value={tool.color}
+						type="color"
 					/>
-				</svg>
-			</button>
+				</label>
+			</div>
 		</div>
-		<canvas class=" rounded-md border border-white/50" bind:this={canvas} {width} {height} />
+		<canvas id="pixel-paint-canvas" bind:this={canvas} {width} {height} />
 	</div>
 </Window>
 
 <style lang="postcss">
-	.tool-btn {
-		background-color: white;
-		border: 1px solid black;
-		border-radius: 0.5rem;
-		padding: 0.25rem;
-		&.selected {
-			filter: invert(1);
-		}
+	#pixel-paint-container {
+		@apply relative flex;
 	}
-	.pixel-art-container {
-		background-color: var(--bg);
-		border: 1px solid var(--border-color);
-		border-radius: 1rem;
-		padding: 1rem;
-		box-shadow: 0 0.25rem 0.5rem 0.25rem #00000040;
+	#pixel-paint-canvas {
+		@apply flex-grow;
 	}
-	.row {
-		display: flex;
-		flex-direction: row;
+	#pixel-paint-tools {
+		@apply flex flex-col items-center justify-between w-10 bg-gray-100;
 	}
-	.pixel-canvas {
-		& .pixel {
-			border: 2px solid var(--pixel-color);
-			background-color: var(--pixel-color);
-			width: var(--pixel-width);
-			height: var(--pixel-height);
-			&:hover {
-				border-color: var(--select-color);
-			}
-		}
-	}
-	.download-img {
-		width: 50vmin;
-		height: 50vmin;
-	}
-	@media screen and (max-width: 768px) {
-		.download-img {
-			width: 90vmin;
-			height: 90vmin;
-		}
-	}
-	.download-link {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		background-color: var(--highlight);
-		border-radius: 0.25rem;
-		padding: 0.75rem;
-		margin-top: 0.5rem;
-		text-decoration: none;
-		color: var(--contrast);
+	#pixel-paint-tools > .tool-container {
+		@apply flex flex-col w-full;
 	}
 	.tool-btn {
-		background-color: white;
-		border: 1px solid black;
-		border-radius: 0.5rem;
-		padding: 0.25rem;
+		@apply bg-gray-100 aspect-square w-full flex items-center justify-center text-black;
 		&.selected {
-			filter: invert(1);
+			@apply bg-blue-500 text-white;
 		}
-	}
-	.pixel-art-container {
-		background-color: var(--bg);
-		border: 1px solid var(--border-color);
-		border-radius: 1rem;
-		padding: 1rem;
-		box-shadow: 0 0.25rem 0.5rem 0.25rem #00000040;
-	}
-	.row {
-		display: flex;
-		flex-direction: row;
-	}
-	.pixel-canvas {
-		& .pixel {
-			border: 2px solid var(--pixel-color);
-			background-color: var(--pixel-color);
-			width: var(--pixel-width);
-			height: var(--pixel-height);
-			&:hover {
-				border-color: var(--select-color);
-			}
-		}
-	}
-	.download-img {
-		width: 50vmin;
-		height: 50vmin;
-	}
-	@media screen and (max-width: 768px) {
-		.download-img {
-			width: 90vmin;
-			height: 90vmin;
-		}
-	}
-	.download-link {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		background-color: var(--highlight);
-		border-radius: 0.25rem;
-		padding: 0.75rem;
-		margin-top: 0.5rem;
-		text-decoration: none;
-		color: var(--contrast);
 	}
 </style>

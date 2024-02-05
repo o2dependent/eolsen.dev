@@ -1,9 +1,8 @@
 <script lang="ts">
-	import TerminalIcon from '$lib/appIcons/TerminalIcon.svelte';
-	import type { AppNames } from '$stores/apps.store';
-	import AppBarItem from './AppBarItem.svelte';
+	import type { AppNames } from "$stores/apps.store";
+	import AppBarItem from "./AppBarItem.svelte";
 
-	const appNames: AppNames[] = ['Terminal', 'Project', 'Blog', 'Pixel Paint'];
+	const appNames: AppNames[] = ["Terminal", "Project", "Blog", "Pixel Paint"];
 </script>
 
 <div class="mb-2 mt-1 flex w-full select-none items-center justify-center">
