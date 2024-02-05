@@ -10,6 +10,8 @@
 			"$lib/*": ["./lib/*"],
 			"$islands": ["./islands"],
 			"$islands/*": ["./islands/*"],
+			"$layouts": ["./layouts"],
+			"$layouts/*": ["./layouts/*"],
 			"$utils": ["./utils"],
 			"$utils/*": ["./utils/*"]
 		}

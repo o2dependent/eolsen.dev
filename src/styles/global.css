@@ -19,12 +19,6 @@ html,
 body {
 	@apply h-full w-full scroll-smooth bg-black;
 }
-body[data-href="/desktop"] {
-	@apply overflow-hidden bg-transparent;
-}
-body:not([data-href="/desktop"]) {
-	@apply overflow-x-hidden;
-}
 
 html {
 	/* background-image: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&q=80');
