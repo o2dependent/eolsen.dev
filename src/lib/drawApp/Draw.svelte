@@ -43,6 +43,8 @@
 	let lastPainted: { time: number; x: number; y: number } | null = null;
 	const OVERPAINT_DELAY = 100;
 
+	let fillDistance = 1.75;
+
 	const drawCanvas = () => {
 		ctx.clearRect(0, 0, width, height);
 		// > Draw a grid of rectangles
@@ -61,7 +63,9 @@
 	};
 
 	$: {
-		pixelArray = new Array(pixelNum).fill(new Array(pixelNum).fill(""));
+		pixelArray = new Array(pixelNum).fill(
+			new Array(pixelNum).fill("#ffffff00"),
+		);
 	}
 
 	onMount(() => {
@@ -97,7 +101,14 @@
 
 				const fill = (y: number, x: number) => {
 					if (y < 0 || y > pixelNum - 1 || x < 0 || x > pixelNum - 1) return;
-					if (newArr[y][x] === tool.color || newArr[y][x] !== currentColor)
+					const distance = pixelArray[y][x]
+						? chroma.distance(pixelArray[y][x], currentColor, "gl")
+						: 0;
+					if (
+						newArr[y][x] === tool.color ||
+						newArr[y][x] !== currentColor ||
+						distance > fillDistance
+					)
 						return;
 					newArr[y][x] = tool.color;
 					fill(y - 1, x);
