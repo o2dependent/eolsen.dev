@@ -40,6 +40,8 @@
 		name: "pencil",
 		color: "#000000",
 	};
+	let lastPainted: { time: number; x: number; y: number } | null = null;
+	const OVERPAINT_DELAY = 100;
 
 	const drawCanvas = () => {
 		ctx.clearRect(0, 0, width, height);
@@ -69,7 +71,9 @@
 			if (tool.name === "pencil") {
 				// draw
 				let newArrIdx = [...pixelArray[y]];
-				console.log(newArrIdx[x]);
+				if (lastPainted?.x === x && lastPainted?.y === y) {
+					if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
+				}
 				if (newArrIdx[x])
 					newArrIdx[x] = chroma
 						.mix(
@@ -81,6 +85,7 @@
 				else newArrIdx[x] = tool.color;
 				pixelArray[y] = newArrIdx;
 				pixelArray = [...pixelArray];
+				lastPainted = { time: Date.now(), x, y };
 			} else if (tool.name === "select") {
 				// change color to current pixel color
 				tool.color = pixelArray[y][x];
@@ -111,6 +116,7 @@
 			isMouseDown = true;
 			const docListener = () => {
 				isMouseDown = false;
+				lastPainted = null;
 				document.removeEventListener("mouseup", docListener);
 			};
 			const x = Math.floor(e.offsetX / (width / pixelNum));
@@ -129,18 +135,22 @@
 
 		canvas.addEventListener("mouseleave", (e: MouseEvent) => {
 			isMouseDown = false;
+			lastPainted = null;
 		});
 
 		canvas.addEventListener("mouseenter", (e: MouseEvent) => {
 			isMouseDown = false;
+			lastPainted = null;
 		});
 
 		canvas.addEventListener("mouseup", (e: MouseEvent) => {
 			isMouseDown = false;
+			lastPainted = null;
 		});
 
 		canvas.addEventListener("mouseout", (e: MouseEvent) => {
 			isMouseDown = false;
+			lastPainted = null;
 		});
 	});
 </script>
