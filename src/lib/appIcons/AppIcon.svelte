@@ -1,26 +1,30 @@
 <script lang="ts">
-	import type { AppNames } from '$stores/apps.store';
-	import BlogIcon from './BlogIcon.svelte';
-	import ProjectIcon from './ProjectIcon.svelte';
-	import TerminalIcon from './TerminalIcon.svelte';
+	import type { AppNames } from "$stores/apps.store";
+	import BlogIcon from "./BlogIcon.svelte";
+	import ProjectIcon from "./ProjectIcon.svelte";
+	import TerminalIcon from "./TerminalIcon.svelte";
 
 	export let appKey: AppNames | string;
-	export let size: 'small' | 'medium' = 'medium';
+	export let size: "small" | "medium" = "medium";
 </script>
 
-<div class:w-9={size === 'small'} class:w-12={size === 'medium'} class="aspect-square">
-	{#if appKey === 'Terminal'}
+<div
+	class:w-9={size === "small"}
+	class:w-12={size === "medium"}
+	class="aspect-square"
+>
+	{#if appKey === "Terminal"}
 		<TerminalIcon />
-	{:else if appKey === 'Project'}
+	{:else if appKey === "Project"}
 		<ProjectIcon />
-	{:else if appKey === 'Blog'}
+	{:else if appKey === "Blog"}
 		<BlogIcon />
-	{:else if appKey === 'Pixel Paint'}
+	{:else if appKey === "Pixel Paint"}
 		<div
 			class="aspect-square h-full w-full overflow-hidden rounded-lg border-2 border-white bg-white/5 p-1"
 		>
 			<img
-				src="./pixel_paint_icon.png"
+				src="/pixel_paint_icon.png"
 				class="w-full"
 				style="image-rendering:pixelated;"
 				alt="Pixel Paint Icon"
@@ -45,7 +49,13 @@
 					width="449"
 					height="449"
 				>
-					<circle cx="255.5" cy="255.5" r="224.5" fill="#F8FAFC" stroke="white" />
+					<circle
+						cx="255.5"
+						cy="255.5"
+						r="224.5"
+						fill="#F8FAFC"
+						stroke="white"
+					/>
 				</mask>
 				<g mask="url(#mask0_9225_963)">
 					<rect x="77" y="384" width="357" height="55" fill="white" />

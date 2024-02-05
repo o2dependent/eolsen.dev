@@ -1,11 +1,13 @@
 <script lang="ts">
-	import texture from './Texture 18.png';
+	import Texture from "./Texture 18.png";
 </script>
 
-<div class="relative h-fit w-fit overflow-hidden rounded-full bg-white ring-[3px] ring-white">
+<div
+	class="relative h-fit w-fit overflow-hidden rounded-full bg-white ring-[3px] ring-white"
+>
 	<img
 		id="texture"
-		src={texture}
+		src={Texture.src}
 		class="absolute left-0 top-0 h-full w-full rounded-full object-cover"
 		alt="Texture"
 	/>

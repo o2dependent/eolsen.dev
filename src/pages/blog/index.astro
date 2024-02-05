@@ -24,24 +24,14 @@ const blogs = (await getCollection("blogs")).sort(
 							class={`group mx-auto w-fit ${i === 0 ? "md:text-center" : ""}`}
 							href={`/blog/${blog.slug}/`}
 						>
-							<div class="grid grid-cols-1 grid-rows-1">
-								<img
-									style="grid-area: 1 / 1"
-									class="rounded-xl opacity-75 group-hover:blur-xl group-hover:scale-[102%] transition-all duration-500 ease-in-out"
-									width={720}
-									height={360}
-									src={blog.data.heroImage}
-									alt=""
-								/>
-								<img
-									style="grid-area: 1 / 1"
-									class="rounded-xl border-2 border-black/5 z-10 group-hover:-translate-y-1 transition-transform duration-500 ease-in-out"
-									width={720}
-									height={360}
-									src={blog.data.heroImage}
-									alt=""
-								/>
-							</div>
+							<img
+								style="grid-area: 1 / 1"
+								class="rounded-xl border-2 border-black/5 z-10 group-hover:-translate-y-1 transition-transform duration-500 ease-in-out"
+								width={720}
+								height={360}
+								src={blog.data.heroImage}
+								alt=""
+							/>
 							<h4
 								class={`${
 									i === 0 ? "md:text-3xl text-xl" : "text-xl"
