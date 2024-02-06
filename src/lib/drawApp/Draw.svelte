@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fly } from "svelte/transition";
 	import Window from "$lib/window/Window.svelte";
 	import type { AppWindow } from "$stores/apps.store";
 	import chroma from "chroma-js";
@@ -8,11 +9,13 @@
 	import Pencil from "./svgs/Pencil.svelte";
 	import { onMount } from "svelte";
 	import DrawColorPicker from "./DrawColorPicker.svelte";
+	import LayerIcon from "./svgs/LayerIcon.svelte";
+	import { clickOutside } from "$utils/clickOutside";
 
 	export let appWindow: AppWindow;
 
 	interface Tool {
-		name: "pencil" | "select" | "fill";
+		name: "pencil" | "select" | "fill" | "eraser";
 		color: string;
 	}
 
@@ -32,8 +35,17 @@
 		{ value: 128, label: "128x128" },
 		{ value: 256, label: "256x256" },
 	];
+	let layers = [
+		{
+			name: "Layer 1",
+			visible: true,
+			pixelArray: new Array(pixelNum).fill(
+				new Array(pixelNum).fill("#ffffff00"),
+			),
+		},
+	];
 	let pixelArray: string[][] = new Array(pixelNum).fill(
-		new Array(pixelNum).fill("#ffffff"),
+		new Array(pixelNum).fill("#ffffff00"),
 	);
 	let isMouseDown: boolean = false;
 	let tool: Tool = {
@@ -75,6 +87,15 @@
 			if (tool.name === "pencil") {
 				// draw
 				let newArrIdx = [...pixelArray[y]];
+				const TEST_CANVAS_COLOR = [
+					...ctx.getImageData(
+						x * (width / pixelNum),
+						y * (height / pixelNum),
+						1,
+						1,
+					).data,
+				];
+				console.log(TEST_CANVAS_COLOR);
 				if (lastPainted?.x === x && lastPainted?.y === y) {
 					if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
 				}
@@ -118,6 +139,16 @@
 				};
 				fill(y, x);
 				pixelArray = [...newArr];
+			} else if (tool.name === "eraser") {
+				// erase
+				let newArrIdx = [...pixelArray[y]];
+				if (lastPainted?.x === x && lastPainted?.y === y) {
+					if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
+				}
+				newArrIdx[x] = "#ffffff00";
+				pixelArray[y] = newArrIdx;
+				pixelArray = [...pixelArray];
+				lastPainted = { time: Date.now(), x, y };
 			}
 			drawCanvas();
 		};
@@ -164,6 +195,8 @@
 			lastPainted = null;
 		});
 	});
+
+	let layersOpen = false;
 </script>
 
 <Window
@@ -173,23 +206,67 @@
 	{appWindow}
 >
 	<div id="pixel-paint-container">
-		<div id="pixel-paint-tools">
+		<div class:layers-open={layersOpen} id="pixel-paint-tools">
+			<div class="settings-container"></div>
+
 			<div class="tool-container">
 				<button
-					class="tool-btn {tool.name === 'pencil' ? 'selected' : ''}"
-					on:click={() => (tool.name = "pencil")}><Pencil /></button
+					class:selected={tool.name === "pencil"}
+					class="tool-btn"
+					on:click={() => (tool.name = "pencil")}
 				>
+					<Pencil />
+				</button>
 				<button
-					class="tool-btn {tool.name === 'select' ? 'selected' : ''}"
-					on:click={() => (tool.name = "select")}><ColorDropper /></button
+					class:selected={tool.name === "eraser"}
+					class="tool-btn"
+					on:click={() => (tool.name = "eraser")}
 				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24px"
+						height="24px"
+						viewBox="0 0 24 24"
+					>
+						<path
+							fill="currentColor"
+							d="M17.25 18H22v2h-6.75zm-12.5 2l-2.125-2.125q-.575-.575-.587-1.425T2.6 15l11-11.4q.575-.6 1.413-.6t1.412.575L21.4 8.55q.575.575.575 1.425T21.4 11.4L13 20z"
+						/>
+					</svg>
+				</button>
 				<button
-					class="tool-btn {tool.name === 'fill' ? 'selected' : ''}"
-					on:click={() => (tool.name = "fill")}><FillBucket /></button
+					class:selected={tool.name === "select"}
+					class="tool-btn"
+					on:click={() => (tool.name = "select")}
 				>
+					<ColorDropper />
+				</button>
+				<button
+					class:selected={tool.name === "fill"}
+					class="tool-btn"
+					on:click={() => (tool.name = "fill")}
+				>
+					<FillBucket />
+				</button>
+				<div use:clickOutside={() => (layersOpen = false)}>
+					<button
+						class:selected={layersOpen}
+						class="tool-btn relative"
+						on:click={() => (layersOpen = !layersOpen)}
+					>
+						<LayerIcon />
+					</button>
+					{#if layersOpen}
+						<div
+							in:fly={{ y: -4, duration: 350 }}
+							out:fly={{ y: -4, duration: 250 }}
+							id="pixel-paint-layers-container"
+						>
+							<h2 class="text-2xl px-1 py-2">Layers</h2>
+						</div>
+					{/if}
+				</div>
 				<!-- <button on:click={() => drawCanvas()}>Draw canvas</button> -->
-			</div>
-			<div class="tool-container">
 				<!-- <Select
 					containerStyles="--min-height: 2rem; --max-height: 2rem; --height: 2rem;"
 					inputStyles="--min-height: 2rem; --max-height: 2rem; --height: 2rem;"
@@ -215,15 +292,17 @@
 				<DrawColorPicker bind:color={tool.color} />
 			</div>
 		</div>
-		<canvas id="pixel-paint-canvas" bind:this={canvas} {width} {height} />
+		<div id="pixel-paint-canvas-container">
+			<canvas bind:this={canvas} {width} {height} />
+		</div>
 	</div>
 </Window>
 
 <style lang="postcss">
 	#pixel-paint-container {
-		@apply relative flex;
+		@apply relative flex flex-col;
 	}
-	#pixel-paint-canvas {
+	#pixel-paint-canvas-container {
 		--checkerboard-size: 1.5rem;
 		background-image: linear-gradient(45deg, #ddd 25%, transparent 25%),
 			linear-gradient(135deg, #ddd 25%, transparent 25%),
@@ -239,15 +318,25 @@
 		@apply flex-grow;
 	}
 	#pixel-paint-tools {
-		@apply flex flex-col items-center justify-between w-10 bg-gray-100;
+		@apply flex items-center justify-between w-full h-10 bg-neutral-950 relative z-10;
+	}
+	#pixel-paint-layers-container {
+		@apply absolute top-12 right-4 w-56 px-3 py-2 rounded bg-neutral-950/95 backdrop-blur-sm text-neutral-300;
+	}
+	#pixel-paint-layers-container::before {
+		content: "";
+		@apply absolute -top-1 right-12 w-2 h-2 bg-neutral-950 rotate-45;
 	}
 	#pixel-paint-tools > .tool-container {
-		@apply flex flex-col w-full;
+		@apply flex gap-4 pr-4;
+	}
+	#pixel-paint-tools > .settings-container {
+		@apply flex w-full;
 	}
 	.tool-btn {
-		@apply bg-gray-100 aspect-square w-full flex items-center justify-center text-black;
+		@apply aspect-square h-full flex items-center justify-center text-neutral-300 transition-colors;
 		&.selected {
-			@apply bg-blue-500 text-white;
+			@apply text-blue-500;
 		}
 	}
 </style>
