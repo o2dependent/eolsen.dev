@@ -11,6 +11,11 @@
 	import DrawColorPicker from "./DrawColorPicker.svelte";
 	import LayerIcon from "./svgs/LayerIcon.svelte";
 	import { clickOutside } from "$utils/clickOutside";
+	import PlusIcon from "./svgs/PlusIcon.svelte";
+	import EyeClosedIcon from "./svgs/EyeClosedIcon.svelte";
+	import EyeOpenIcon from "./svgs/EyeOpenIcon.svelte";
+	import TrashIcon from "./svgs/TrashIcon.svelte";
+	import EllipsisVerticalIcon from "./svgs/EllipsisVerticalIcon.svelte";
 
 	export let appWindow: AppWindow;
 
@@ -19,7 +24,7 @@
 		color: string;
 	}
 
-	let canvas: HTMLCanvasElement;
+	let canvas: HTMLCanvasElement[] = [];
 	let ctx: CanvasRenderingContext2D;
 	let width: number = 800;
 	let height: number = 800;
@@ -35,15 +40,7 @@
 		{ value: 128, label: "128x128" },
 		{ value: 256, label: "256x256" },
 	];
-	let layers = [
-		{
-			name: "Layer 1",
-			visible: true,
-			pixelArray: new Array(pixelNum).fill(
-				new Array(pixelNum).fill("#ffffff00"),
-			),
-		},
-	];
+
 	let pixelArray: string[][] = new Array(pixelNum).fill(
 		new Array(pixelNum).fill("#ffffff00"),
 	);
@@ -80,14 +77,143 @@
 		);
 	}
 
-	onMount(() => {
-		ctx = canvas.getContext("2d")!;
+	const pixelMouseDown = (y: number, x: number) => {
+		if (!layers[layerSelectedIdx].visible) return;
+		if (tool.name === "pencil") {
+			// draw
+			let newArrIdx = [...pixelArray[y]];
+			if (lastPainted?.x === x && lastPainted?.y === y) {
+				if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
+			}
+			if (newArrIdx[x])
+				newArrIdx[x] = chroma
+					.mix(
+						newArrIdx[x],
+						chroma.hex(tool.color).alpha(1).hex(),
+						chroma.hex(tool.color).alpha(),
+					)
+					.hex();
+			else newArrIdx[x] = tool.color;
+			pixelArray[y] = newArrIdx;
+			pixelArray = [...pixelArray];
+			lastPainted = { time: Date.now(), x, y };
+		} else if (tool.name === "select") {
+			// change color to current pixel color
+			tool.color = pixelArray[y][x];
+			tool.name = "pencil";
+		} else if (tool.name === "fill") {
+			// recursively fill all pixels of the same color with current color
+			const currentColor = pixelArray[y][x];
+			let newArr = [...pixelArray].map((row) => [...row]);
 
-		const pixelMouseDown = (y: number, x: number) => {
-			if (tool.name === "pencil") {
-				// draw
-				let newArrIdx = [...pixelArray[y]];
-				const TEST_CANVAS_COLOR = [
+			const fill = (y: number, x: number) => {
+				if (y < 0 || y > pixelNum - 1 || x < 0 || x > pixelNum - 1) return;
+				const distance = pixelArray[y][x]
+					? chroma.distance(pixelArray[y][x], currentColor, "gl")
+					: 0;
+				if (
+					newArr[y][x] === tool.color ||
+					newArr[y][x] !== currentColor ||
+					distance > fillDistance
+				)
+					return;
+				newArr[y][x] = tool.color;
+				fill(y - 1, x);
+				fill(y + 1, x);
+				fill(y, x - 1);
+				fill(y, x + 1);
+			};
+			fill(y, x);
+			pixelArray = [...newArr];
+		} else if (tool.name === "eraser") {
+			// erase
+			let newArrIdx = [...pixelArray[y]];
+			if (lastPainted?.x === x && lastPainted?.y === y) {
+				if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
+			}
+			newArrIdx[x] = "#ffffff00";
+			pixelArray[y] = newArrIdx;
+			pixelArray = [...pixelArray];
+			lastPainted = { time: Date.now(), x, y };
+		}
+		drawCanvas();
+	};
+
+	// > Add event listeners
+	const canvasmousedown = (e: MouseEvent) => {
+		isMouseDown = true;
+		const docListener = () => {
+			isMouseDown = false;
+			lastPainted = null;
+			document.removeEventListener("mouseup", docListener);
+		};
+		const x = Math.floor(e.offsetX / (width / pixelNum));
+		const y = Math.floor(e.offsetY / (height / pixelNum));
+		pixelMouseDown(y, x);
+		document.addEventListener("mouseup", docListener);
+	};
+
+	const canvasmousemove = (e: MouseEvent) => {
+		if (isMouseDown) {
+			const x = Math.floor(e.offsetX / (width / pixelNum));
+			const y = Math.floor(e.offsetY / (height / pixelNum));
+			pixelMouseDown(y, x);
+		}
+	};
+
+	const canvasmouseleave = (e: MouseEvent) => {
+		isMouseDown = false;
+		lastPainted = null;
+	};
+
+	const canvasmouseenter = (e: MouseEvent) => {
+		isMouseDown = false;
+		lastPainted = null;
+	};
+
+	const canvasmouseup = (e: MouseEvent) => {
+		isMouseDown = false;
+		lastPainted = null;
+	};
+
+	const canvasmouseout = (e: MouseEvent) => {
+		isMouseDown = false;
+		lastPainted = null;
+	};
+
+	let layersOpen = false;
+	let layers = [
+		{
+			name: "Layer 1",
+			visible: true,
+		},
+	];
+	let layerSelectedIdx = 0;
+	const addLayer = () => {
+		let layerNum = 1;
+		let layerName = `Layer ${layerNum}`;
+		while (layers.some((layer) => layer.name === layerName)) {
+			layerNum++;
+			layerName = `Layer ${layerNum}`;
+		}
+		layers = [
+			...layers,
+			{
+				name: layerName,
+				visible: true,
+			},
+		];
+	};
+	const changeLayer = (idx: number) => {
+		layerSelectedIdx = idx;
+		ctx = canvas[idx]?.getContext("2d", {
+			willReadFrequently: true,
+		})!;
+		const newLayerPixelArray: typeof pixelArray = [];
+		for (let y = 0; y < pixelNum; y++) {
+			newLayerPixelArray[y] = [];
+			for (let x = 0; x < pixelNum; x++) {
+				let [r, g, b, a] = [
 					...ctx.getImageData(
 						x * (width / pixelNum),
 						y * (height / pixelNum),
@@ -95,108 +221,31 @@
 						1,
 					).data,
 				];
-				console.log(TEST_CANVAS_COLOR);
-				if (lastPainted?.x === x && lastPainted?.y === y) {
-					if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
+				if (a === 0) {
+					newLayerPixelArray[y][x] = "#ffffff00";
+					continue;
 				}
-				if (newArrIdx[x])
-					newArrIdx[x] = chroma
-						.mix(
-							newArrIdx[x],
-							chroma.hex(tool.color).alpha(1).hex(),
-							chroma.hex(tool.color).alpha(),
-						)
-						.hex();
-				else newArrIdx[x] = tool.color;
-				pixelArray[y] = newArrIdx;
-				pixelArray = [...pixelArray];
-				lastPainted = { time: Date.now(), x, y };
-			} else if (tool.name === "select") {
-				// change color to current pixel color
-				tool.color = pixelArray[y][x];
-				tool.name = "pencil";
-			} else if (tool.name === "fill") {
-				// recursively fill all pixels of the same color with current color
-				const currentColor = pixelArray[y][x];
-				let newArr = [...pixelArray].map((row) => [...row]);
-
-				const fill = (y: number, x: number) => {
-					if (y < 0 || y > pixelNum - 1 || x < 0 || x > pixelNum - 1) return;
-					const distance = pixelArray[y][x]
-						? chroma.distance(pixelArray[y][x], currentColor, "gl")
-						: 0;
-					if (
-						newArr[y][x] === tool.color ||
-						newArr[y][x] !== currentColor ||
-						distance > fillDistance
-					)
-						return;
-					newArr[y][x] = tool.color;
-					fill(y - 1, x);
-					fill(y + 1, x);
-					fill(y, x - 1);
-					fill(y, x + 1);
-				};
-				fill(y, x);
-				pixelArray = [...newArr];
-			} else if (tool.name === "eraser") {
-				// erase
-				let newArrIdx = [...pixelArray[y]];
-				if (lastPainted?.x === x && lastPainted?.y === y) {
-					if (Date.now() - lastPainted.time < OVERPAINT_DELAY) return;
-				}
-				newArrIdx[x] = "#ffffff00";
-				pixelArray[y] = newArrIdx;
-				pixelArray = [...pixelArray];
-				lastPainted = { time: Date.now(), x, y };
+				const color = chroma.rgb(r, g, b, a / 255).hex();
+				newLayerPixelArray[y][x] = color;
 			}
-			drawCanvas();
-		};
+		}
+		pixelArray = newLayerPixelArray;
+	};
+	const removeLayer = (idx: number) => {
+		layers = layers.filter((_, i) => i !== idx);
+		if (layerSelectedIdx === idx) {
+			layerSelectedIdx = 0;
+			ctx = canvas[0]?.getContext("2d", {
+				willReadFrequently: true,
+			})!;
+		}
+	};
 
-		// > Add event listeners
-		canvas.addEventListener("mousedown", (e: MouseEvent) => {
-			isMouseDown = true;
-			const docListener = () => {
-				isMouseDown = false;
-				lastPainted = null;
-				document.removeEventListener("mouseup", docListener);
-			};
-			const x = Math.floor(e.offsetX / (width / pixelNum));
-			const y = Math.floor(e.offsetY / (height / pixelNum));
-			pixelMouseDown(y, x);
-			document.addEventListener("mouseup", docListener);
-		});
-
-		canvas.addEventListener("mousemove", (e: MouseEvent) => {
-			if (isMouseDown) {
-				const x = Math.floor(e.offsetX / (width / pixelNum));
-				const y = Math.floor(e.offsetY / (height / pixelNum));
-				pixelMouseDown(y, x);
-			}
-		});
-
-		canvas.addEventListener("mouseleave", (e: MouseEvent) => {
-			isMouseDown = false;
-			lastPainted = null;
-		});
-
-		canvas.addEventListener("mouseenter", (e: MouseEvent) => {
-			isMouseDown = false;
-			lastPainted = null;
-		});
-
-		canvas.addEventListener("mouseup", (e: MouseEvent) => {
-			isMouseDown = false;
-			lastPainted = null;
-		});
-
-		canvas.addEventListener("mouseout", (e: MouseEvent) => {
-			isMouseDown = false;
-			lastPainted = null;
-		});
+	onMount(() => {
+		ctx = canvas?.[layerSelectedIdx]?.getContext("2d", {
+			willReadFrequently: true,
+		})!;
 	});
-
-	let layersOpen = false;
 </script>
 
 <Window
@@ -262,7 +311,70 @@
 							out:fly={{ y: -4, duration: 250 }}
 							id="pixel-paint-layers-container"
 						>
-							<h2 class="text-2xl px-1 py-2">Layers</h2>
+							<div class="flex w-full justify-between px-3 pb-2">
+								<h2 class="text-2xl">Layers</h2>
+								<button on:click={addLayer} type="button" class="aspect-square">
+									<PlusIcon />
+								</button>
+							</div>
+							<div class="flex flex-col gap-1 px-2">
+								{#each layers as layer, idx}
+									<button
+										type="button"
+										class="flex gap-2 items-center bg-white rounded py-1 px-2"
+										class:bg-opacity-15={idx === layerSelectedIdx}
+										class:bg-opacity-5={idx !== layerSelectedIdx}
+										on:click={() => changeLayer(idx)}
+									>
+										<label
+											class="relative h-5 w-5 flex items-center justify-center cursor-pointer"
+										>
+											<input
+												on:click|stopPropagation
+												class="cursor-pointer peer/visible opacity-0 absolute top-0 left-0 w-full h-full"
+												type="checkbox"
+												on:change={(e) => {
+													const newLayers = [...layers];
+													newLayers[idx].visible = e.currentTarget.checked;
+													layers = newLayers;
+												}}
+												checked={layer.visible}
+											/>
+											<div class="peer-checked/visible:hidden">
+												<EyeClosedIcon />
+											</div>
+											<div class="peer-checked/visible:block hidden">
+												<EyeOpenIcon />
+											</div>
+										</label>
+
+										<!-- <input
+												type="text"
+												name="name"
+												on:change={(e) => {
+													const newLayers = [...layers];
+													newLayers[idx].name = e.currentTarget.value;
+													layers = newLayers;
+												}}
+												value={layer.name}
+												class="bg-transparent text-neutral-300 w-full focus:outline-none border-none focus:bg-neutral-500/50 rounded px-1"
+											/> -->
+										<p class="text-neutral-300 text-left w-full px-1">
+											{layer.name}
+										</p>
+										<button
+											type="button"
+											disabled={layers?.length === 1}
+											on:click={layers?.length > 1
+												? () => removeLayer(idx)
+												: null}
+											class="relative h-5 w-5 flex items-center justify-center cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+										>
+											<TrashIcon />
+										</button>
+									</button>
+								{/each}
+							</div>
 						</div>
 					{/if}
 				</div>
@@ -292,8 +404,27 @@
 				<DrawColorPicker bind:color={tool.color} />
 			</div>
 		</div>
-		<div id="pixel-paint-canvas-container">
-			<canvas bind:this={canvas} {width} {height} />
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<!-- svelte-ignore a11y-mouse-events-have-key-events -->
+		<div
+			style="width: {width}px; height: {height}px;"
+			id="pixel-paint-canvas-container"
+			on:mousedown={canvasmousedown}
+			on:mousemove={canvasmousemove}
+			on:mouseleave={canvasmouseleave}
+			on:mouseenter={canvasmouseenter}
+			on:mouseup={canvasmouseup}
+			on:mouseout={canvasmouseout}
+		>
+			{#each layers as layer, idx}
+				<canvas
+					class="absolute top-0 left-0"
+					class:opacity-0={!layer.visible}
+					bind:this={canvas[idx]}
+					{width}
+					{height}
+				/>
+			{/each}
 		</div>
 	</div>
 </Window>
@@ -321,7 +452,7 @@
 		@apply flex items-center justify-between w-full h-10 bg-neutral-950 relative z-10;
 	}
 	#pixel-paint-layers-container {
-		@apply absolute top-12 right-4 w-56 px-3 py-2 rounded bg-neutral-950/95 backdrop-blur-sm text-neutral-300;
+		@apply absolute top-12 right-4 w-56 py-2 rounded bg-neutral-950/95 backdrop-blur-sm text-neutral-300;
 	}
 	#pixel-paint-layers-container::before {
 		content: "";
