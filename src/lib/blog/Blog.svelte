@@ -3,33 +3,36 @@
 		directory,
 		type Directory,
 		type DirectoryFile,
-		type BlogFileData
-	} from '$stores/directory.store';
-	import Window from '$lib/window/Window.svelte';
-	import type { AppWindow } from '$stores/apps.store';
-	import { createHistory } from '$utils/createHistory';
-	import BlogHome from './BlogHome.svelte';
-	import BlogView from './BlogView.svelte';
-	import BlogSideBar from './BlogSideBar.svelte';
-	import AppSideBar from '$lib/appComponents/TextFileApp/AppSideBar.svelte';
+		type BlogFileData,
+	} from "$stores/directory.store";
+	import Window from "$lib/window/Window.svelte";
+	import type { AppWindow } from "$stores/apps.store";
+	import { createHistory } from "$utils/createHistory";
+	import BlogHome from "./BlogHome.svelte";
+	import BlogView from "./BlogView.svelte";
+	import BlogSideBar from "./BlogSideBar.svelte";
+	import AppSideBar from "$lib/appComponents/TextFileApp/AppSideBar.svelte";
 
 	export let appWindow: AppWindow;
-
+	console.log({ $directory });
 	const blogDir = (
-		($directory?.contents?.['Desktop'] as Directory)?.contents?.['Blogs'] as Directory
+		($directory?.contents?.["Desktop"] as Directory)?.contents?.[
+			"Blogs"
+		] as Directory
 	)?.contents;
 
 	let blogs = Object?.keys?.(blogDir ?? {}).map((key) => {
 		const blog = {
-			...((blogDir[key as keyof typeof blogDir] as DirectoryFile).data as BlogFileData),
-			name: key
+			...((blogDir[key as keyof typeof blogDir] as DirectoryFile)
+				.data as BlogFileData),
+			name: key,
 		};
 		return blog;
 	});
 
 	let tags = [...new Set(blogs.flatMap((blog) => blog.tags))];
 
-	let history = createHistory('');
+	let history = createHistory("");
 
 	let curBlog: (typeof blogs)[0] | undefined;
 	let open = false;
@@ -44,13 +47,18 @@
 	}
 </script>
 
-<Window headerClass="!bg-cyan-900" {appWindow} startingWidth="60rem" startingHeight="40rem">
+<Window
+	headerClass="!bg-cyan-900"
+	{appWindow}
+	startingWidth="60rem"
+	startingHeight="40rem"
+>
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
-				history.replace('');
+				history.replace("");
 			}}
-			disabled={$history.current === ''}
+			disabled={$history.current === ""}
 			class="mr-4 flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -117,13 +125,21 @@
 		</button>
 		<div class="flex w-full flex-grow items-center justify-center pr-12">
 			<p>
-				Blogs{curBlog ? ` - ${curBlog.name}` : ''}
+				Blogs{curBlog ? ` - ${curBlog.name}` : ""}
 			</p>
 		</div>
 	</div>
-	<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
+	<form
+		class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black"
+	>
 		{#if curBlog}
-			<AppSideBar curItem={curBlog} items={blogs} title="Blogs" bind:open {history} />
+			<AppSideBar
+				curItem={curBlog}
+				items={blogs}
+				title="Blogs"
+				bind:open
+				{history}
+			/>
 		{/if}
 		<div
 			class="flex-grow overflow-y-auto bg-slate-800 p-4 {open && curBlog
@@ -146,7 +162,9 @@
 				{:else}
 					<div class="flex flex-col items-center justify-center gap-2">
 						<span class="text-2xl font-black text-white">No blogs found</span>
-						<span class="text-sm font-thin text-white">Check back later if you'd like</span>
+						<span class="text-sm font-thin text-white"
+							>Check back later if you'd like</span
+						>
 					</div>
 				{/if}
 			</div>

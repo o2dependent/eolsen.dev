@@ -1,8 +1,4 @@
 <script lang="ts">
-	import Lua from "./lua.png";
-	import LuaStanding from "./lua_standing.png";
-	import Omen from "./omen.png";
-	import AboutPhoto from "../about_photo.jpeg";
 	import { fly } from "svelte/transition";
 	const getBirthday = () => {
 		const birthday = new Date("1998-01-31");
@@ -31,7 +27,7 @@
 	>
 		<img
 			class="zoom-photo h-full w-full object-cover transition-transform duration-[3s] hover:-translate-y-20 hover:translate-x-16 hover:scale-[400%]"
-			src={AboutPhoto.src}
+			src="/about_app/about_photo.jpeg"
 			alt=""
 		/>
 	</div>
@@ -48,11 +44,9 @@
 							out:fly={{ x: -64 * slideDir }}
 							class="absolute text-xs"
 						>
-							{[
-								"Cross platform developer",
-								"Hobby game developer",
-								"Fan of cats",
-							][index]}
+							{["Cross platform developer", "Hobby artist", "Fan of cats"][
+								index
+							]}
 						</p>
 					{/key}
 				</div>
@@ -74,20 +68,20 @@
 							</p>
 						{:else if index === 1}
 							<p class="w-full text-xs opacity-80">
-								I'm currently playing with tools like Godot and Unity to create
-								games as a hobby. Super Meat Boy, Enter the Gungeon, and Nuclear
-								Throne are a few of the games I've been modeling games after to
-								learn these engines. I've made a game for my little brother that
-								I will be releasing soon on itch.io.
+								I enjoy drawing and painting to relax and express myself. I
+								primarily use digital mediums and have been using an IPad Air
+								and Procreate. I have no training in art, but have been doing
+								digital art since I was a kid since my dad is a graphic designer
+								and artist.
 							</p>
 						{:else if index === 2}
 							<div>
 								<p class="w-full text-xs opacity-80">
-									I've got two cats, Omen and Lua. They are both a year old and
-									are very cute. Omen is a standard issue cat and Lua is a short
-									tail tortoise shell cat. I ended up getting to name Lua which
-									means "moon" in portuguese. It is also a scripting language I
-									like. Please don't tell my girlfriend she does not know.
+									I've got two cats, Omen and Lua. Omen is a standard issue cat
+									and Lua is a short tail tortoise shell cat. I ended up getting
+									to name Lua which means "moon" in portuguese. It is also a
+									scripting language I like. Please don't tell my girlfriend she
+									does not know.
 								</p>
 							</div>
 						{/if}
@@ -151,20 +145,20 @@
 	<img
 		in:fly={{ x: 100, delay: 500, duration: 1000 }}
 		class="absolute -bottom-4 -left-8 h-32 -scale-x-100"
-		src={Omen.src}
+		src="/about_app/omen.png"
 		alt="Omen"
 	/>
 
 	<img
 		in:fly={{ x: 100, delay: 750, duration: 1000 }}
 		class="absolute -bottom-8 -right-8 h-32"
-		src={Lua.src}
+		src="/about_app/lua.png"
 		alt="Lua"
 	/>
 	<img
 		in:fly={{ y: 1200, delay: 1750, duration: 4000 }}
 		class="absolute -bottom-32 right-1/4 h-52"
-		src={LuaStanding.src}
+		src="/about_app/lua_standing.png"
 		alt="Lua Standing"
 	/>
 {/if}
