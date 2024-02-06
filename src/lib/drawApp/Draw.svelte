@@ -24,7 +24,7 @@
 		color: string;
 	}
 
-	let canvas: HTMLCanvasElement[] = [];
+	let canvas: Record<string, HTMLCanvasElement> = {};
 	let ctx: CanvasRenderingContext2D;
 	let width: number = 800;
 	let height: number = 800;
@@ -206,7 +206,7 @@
 	};
 	const changeLayer = (idx: number) => {
 		layerSelectedIdx = idx;
-		ctx = canvas[idx]?.getContext("2d", {
+		ctx = canvas[layers[idx].name]?.getContext("2d", {
 			willReadFrequently: true,
 		})!;
 		const newLayerPixelArray: typeof pixelArray = [];
@@ -232,17 +232,18 @@
 		pixelArray = newLayerPixelArray;
 	};
 	const removeLayer = (idx: number) => {
-		layers = layers.filter((_, i) => i !== idx);
-		if (layerSelectedIdx === idx) {
-			layerSelectedIdx = 0;
-			ctx = canvas[0]?.getContext("2d", {
-				willReadFrequently: true,
-			})!;
+		console.log(idx);
+		const newLayers = [...layers].filter((_, i) => i !== idx);
+		console.log({ layers, newLayers, canvas });
+		if (newLayers.length - 1 < layerSelectedIdx) {
+			layerSelectedIdx = newLayers.length - 1;
 		}
+		layers = newLayers;
+		changeLayer(layerSelectedIdx);
 	};
 
 	onMount(() => {
-		ctx = canvas?.[layerSelectedIdx]?.getContext("2d", {
+		ctx = canvas?.[layers[layerSelectedIdx].name]?.getContext("2d", {
 			willReadFrequently: true,
 		})!;
 	});
@@ -416,11 +417,11 @@
 			on:mouseup={canvasmouseup}
 			on:mouseout={canvasmouseout}
 		>
-			{#each layers as layer, idx}
+			{#each layers as layer (layer.name)}
 				<canvas
 					class="absolute top-0 left-0"
 					class:opacity-0={!layer.visible}
-					bind:this={canvas[idx]}
+					bind:this={canvas[layer?.name]}
 					{width}
 					{height}
 				/>
