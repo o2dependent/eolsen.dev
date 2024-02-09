@@ -4,6 +4,8 @@
 		"strictNullChecks": true,
 		"baseUrl": "./src",
 		"paths": {
+			"$components": ["./components"],
+			"$components/*": ["./components/*"],
 			"$stores": ["./stores"],
 			"$stores/*": ["./stores/*"],
 			"$lib": ["./lib"],
