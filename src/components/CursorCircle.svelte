@@ -3,7 +3,8 @@
 
 	let cursorCircle: HTMLDivElement;
 
-	console.clear();
+	let borderWidth = "1px";
+	let transform = "translate(0, 0) rotate(0deg) scale(1, 1)";
 
 	// Create objects to track mouse position and custom cursor position
 	const mouse = { x: 0, y: 0 }; // Track current mouse position
@@ -55,7 +56,7 @@
 		// 3. Create a transformation string for rotation
 		const rotateTransform = `rotate(${currentAngle}deg)`;
 
-		cursorCircle.style.transform = `${translateTransform} ${rotateTransform} ${scaleTransform}`;
+		transform = `${translateTransform} ${rotateTransform} ${scaleTransform}`;
 		window.requestAnimationFrame(tick);
 	};
 	onMount(() => {
@@ -66,14 +67,29 @@
 			mouse.x = e.x;
 			mouse.y = e.y;
 		};
+		const mousedown = () => {
+			borderWidth = "2px";
+		};
+		const mouseup = () => {
+			borderWidth = "1px";
+		};
 		window.addEventListener("mousemove", mousemove);
+		window.addEventListener("mousedown", mousedown);
+		window.addEventListener("mouseup", mouseup);
 		return () => {
 			window.removeEventListener("mousemove", mousemove);
+			window.removeEventListener("mousedown", mousedown);
+			window.removeEventListener("mouseup", mouseup);
 		};
 	});
 </script>
 
-<div id="cursor-circle" bind:this={cursorCircle}></div>
+<div
+	id="cursor-circle"
+	style:border="{borderWidth} solid white"
+	style:transform
+	bind:this={cursorCircle}
+></div>
 
 <style lang="postcss">
 	#cursor-circle {
@@ -82,6 +98,10 @@
 		width: var(--circle-size);
 		top: calc(var(--circle-size) / 2 * -1);
 		left: calc(var(--circle-size) / 2 * -1);
-		@apply z-50 pointer-events-none rounded-full border-white border fixed;
+		border-color: white;
+		opacity: 0.8;
+		border-style: solid;
+		border-width: 1px;
+		@apply z-50 pointer-events-none rounded-full fixed;
 	}
 </style>
