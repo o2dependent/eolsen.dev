@@ -1,8 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
+import FormattedDate from "../../components/FormattedDate.svelte";
 import Header from "$lib/Header.svelte";
 import MainLayout from "layouts/MainLayout.astro";
+import PostCard from "$components/PostCard.svelte";
 
 const projects = (await getCollection("projects")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -15,45 +16,14 @@ const projects = (await getCollection("projects")).sort(
 		<ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
 			{
 				projects.map((project, i) => (
-					<li
-						class={`flex items-center justify-center ${
-							i === 0 ? "md:col-span-2" : ""
-						}`}
-					>
-						<a
-							class={`group mx-auto w-fit ${i === 0 ? "md:text-center" : ""}`}
-							href={`/project/${project.slug}/`}
-						>
-							<div class="grid grid-cols-1 grid-rows-1">
-								<img
-									style="grid-area: 1 / 1"
-									class="rounded-xl opacity-75 group-hover:blur-[2px] group-hover:scale-[102%] transition-all duration-500 ease-in-out"
-									width={720}
-									height={360}
-									src={project.data.heroImage}
-									alt=""
-								/>
-								<img
-									style="grid-area: 1 / 1"
-									class="rounded-xl border-2 border-black/5 z-10 group-hover:-translate-y-1 transition-transform duration-500 ease-in-out"
-									width={720}
-									height={360}
-									src={project.data.heroImage}
-									alt=""
-								/>
-							</div>
-							<h4
-								class={`${
-									i === 0 ? "md:text-3xl text-xl" : "text-xl"
-								} font-bold`}
-							>
-								{project.data.title}
-							</h4>
-							<p class="text-white/75">
-								<FormattedDate date={project.data.pubDate} />
-							</p>
-						</a>
-					</li>
+					<PostCard
+						client:load
+						title={project.data.title}
+						href={`/project/${project.slug}`}
+						image={project.data.heroImage}
+						pubDate={project.data.pubDate}
+						isFull={i === 0}
+					/>
 				))
 			}
 		</ul>

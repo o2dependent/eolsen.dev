@@ -1,8 +1,4 @@
 <script lang="ts">
-	import Lua from "$lib/aboutApp/panels/lua.png";
-	import LuaStanding from "$lib/aboutApp/panels/lua_standing.png";
-	import Omen from "$lib/aboutApp/panels/omen.png";
-	import AboutPhoto from "$lib/aboutApp/about_photo.jpeg";
 	import TerminalBase from "$lib/terminal/TerminalBase.svelte";
 	import type { TerminalLine } from "$lib/terminal/terminal";
 	import { onMount } from "svelte";
@@ -176,19 +172,19 @@
 								<img
 									in:fly={{ x: 100, delay: 500, duration: 1000 }}
 									class="absolute -bottom-8 -right-24 h-32 -scale-x-100"
-									src={Lua.src}
+									src="/about_app/lua.png"
 									alt=""
 								/>
 								<img
 									in:fly={{ x: 100, delay: 750, duration: 1000 }}
 									class="absolute -right-16 -top-20 h-32 -rotate-12 -scale-x-100"
-									src={Omen.src}
+									src="/about_app/omen.png"
 									alt=""
 								/>
 								<img
 									in:fly={{ y: 100, delay: 1000, duration: 2000 }}
 									class="absolute -top-24 right-1/4 h-40 md:-top-32"
-									src={LuaStanding.src}
+									src="/about_app/lua_standing.png"
 									alt=""
 								/>
 							{/if}
@@ -201,7 +197,7 @@
 									class:-translate-y-24={!isAboutVisible}
 									class:translate-x-20={!isAboutVisible}
 									class="m-0 h-44 w-44 object-cover object-center transition-all duration-1000"
-									src={AboutPhoto.src}
+									src="/about_app/about_photo.jpeg"
 									alt="Ethan Olsen and Omen"
 									height="11rem"
 									width="11rem"

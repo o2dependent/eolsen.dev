@@ -3,29 +3,39 @@ import type { AppNames } from "./apps.store";
 import { getCollection } from "astro:content";
 import Desktop from "$lib/Desktop.svelte";
 
-export interface TextFileData {
-	id: string;
-	title: string;
-	html: ConstructorOfATypedSvelteComponent;
-}
+export type ProjectFileData = Awaited<
+	ReturnType<typeof getCollection<"projects">>
+>[number]["data"];
+// export interface ProjectFileData {
+// 	id: string;
+// 	title: string;
+// 	description: string;
+// 	html: ConstructorOfATypedSvelteComponent;
+// 	projectLink: string;
+// 	githubLink: string;
+// 	tags: string[];
+// }
 
-export interface ProjectFileData {
-	id: string;
-	title: string;
-	description: string;
-	html: ConstructorOfATypedSvelteComponent;
-	projectLink: string;
-	githubLink: string;
-	tags: string[];
-}
+export type BlogFileData = Awaited<
+	ReturnType<typeof getCollection<"blogs">>
+>[number]["data"];
+// export interface BlogFileData {
+// 	id: string;
+// 	title: string;
+// 	description: string;
+// 	html: ConstructorOfATypedSvelteComponent;
+// 	tags: string[];
+// }
 
-export interface BlogFileData {
-	id: string;
-	title: string;
-	description: string;
-	html: ConstructorOfATypedSvelteComponent;
-	tags: string[];
-}
+export type TextFileData = Pick<
+	ProjectFileData | BlogFileData,
+	"tags" | "description" | "pubDate" | "title" | "heroImage" | "updatedDate"
+>;
+// export interface TextFileData {
+// 	id: string;
+// 	title: string;
+// 	html: ConstructorOfATypedSvelteComponent;
+// }
 
 export interface DirectoryFile {
 	open: AppNames;
@@ -43,7 +53,6 @@ function isDirectory(obj: any): obj is Directory {
 	);
 }
 
-console.log("HELLLLLLOOOOOO");
 // const allDirFiles = import.meta.glob('./**/*.md');
 const projects = await getCollection("projects");
 const blogs = await getCollection("blogs");
@@ -66,7 +75,7 @@ const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
 
 // transform allFiles into a directory structure
 allFiles.forEach((file) => {
-	const { slug, collection, id, body, render, data } = file ?? {};
+	const { slug, collection, id, body, data } = file ?? {};
 	if (typeof collection !== "string") return;
 
 	let open: DirectoryFile["open"] | null = null;
