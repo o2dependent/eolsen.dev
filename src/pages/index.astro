@@ -4,8 +4,14 @@ import MainLayout from "../layouts/MainLayout.astro";
 import HomePage from "../islands/home/HomePage.svelte";
 import { getCollection } from "astro:content";
 import PostCard from "$components/PostCard.svelte";
+import StickyLink from "$components/StickyLink.svelte";
 
-const projects = await getCollection("projects");
+const projects = (await getCollection("projects"))
+	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	?.slice(0, 3);
+const blogs = (await getCollection("blogs"))
+	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	?.slice(0, 3);
 ---
 
 <MainLayout
@@ -13,25 +19,64 @@ const projects = await getCollection("projects");
 	title="Home"
 >
 	<HomePage client:load>
-		<div
-			slot="projects"
-			class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
-		>
-			<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
+		<div slot="content" class="flex flex-col gap-4">
 			<div
-				class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+				class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
 			>
-				{
-					projects?.map((project) => (
-						<PostCard
-							client:load
-							title={project.data.title}
-							href={`/project/${project.slug}`}
-							image={project.data.heroImage}
-							pubDate={project.data.pubDate}
-						/>
-					))
-				}
+				<div class="flex justify-between items-baseline">
+					<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
+					<StickyLink
+						client:load
+						href="/project"
+						class="px-2 py-1 rounded text-xl"
+					>
+						View All
+					</StickyLink>
+				</div>
+				<div
+					class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+				>
+					{
+						projects?.map((project) => (
+							<PostCard
+								client:load
+								title={project.data.title}
+								href={`/project/${project.slug}`}
+								image={project.data.heroImage}
+								pubDate={project.data.pubDate}
+							/>
+						))
+					}
+				</div>
+			</div>
+			<div
+				class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+			>
+				<div class="flex justify-between items-baseline">
+					<h2 id="blogs" class="!mt-0 text-5xl md:mb-4">Blog Posts</h2>
+					<StickyLink
+						client:load
+						href="/blog"
+						class="px-2 py-1 rounded text-xl"
+					>
+						View All
+					</StickyLink>
+				</div>
+				<div
+					class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+				>
+					{
+						blogs?.map((blog) => (
+							<PostCard
+								client:load
+								title={blog.data.title}
+								href={`/blog/${blog.slug}`}
+								image={blog.data.heroImage}
+								pubDate={blog.data.pubDate}
+							/>
+						))
+					}
+				</div>
 			</div>
 		</div>
 	</HomePage>

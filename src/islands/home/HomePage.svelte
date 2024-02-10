@@ -135,7 +135,7 @@
 				</div>
 			</div>
 			<div
-				class="-mt-1 flex h-full w-full flex-col gap-32 overflow-hidden bg-gray-950 pb-32 pt-32"
+				class="-mt-1 flex h-full w-full flex-col overflow-hidden bg-gray-950 pb-32 pt-32"
 			>
 				<div
 					use:intersectionObserver={{ callback: () => (isAboutVisible = true) }}
@@ -206,7 +206,7 @@
 						</div>
 					</div>
 				</div>
-				<slot name="projects" />
+				<slot name="content" />
 			</div>
 		</div>
 	</div>
