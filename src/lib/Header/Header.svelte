@@ -6,7 +6,7 @@
 
 <header
 	bind:clientHeight={navHeight}
-	class="relative z-50 flex w-full items-center justify-center"
+	class="relative z-50 hidden md:flex w-full items-center justify-center"
 >
 	<nav class="container flex px-4">
 		<div class="flex flex-grow items-center gap-2">

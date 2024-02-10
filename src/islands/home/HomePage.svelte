@@ -4,7 +4,7 @@
 	import { onMount } from "svelte";
 	import { fade, fly } from "svelte/transition";
 	import { intersectionObserver } from "$lib/actions/intersectionObserver";
-	import Header from "$lib/Header.svelte";
+	import Header from "$lib/Header/Header.svelte";
 
 	let execute: (command: string) => void;
 	let lines: TerminalLine[] = [
@@ -57,8 +57,6 @@
 		navHeight +
 		containerPaddingTop;
 	onMount(() => {
-		execute("help");
-		execute("ls");
 		isMounted = true;
 		window.addEventListener("resize", () => {
 			canvasWidth = window.innerWidth;
@@ -128,6 +126,7 @@
 							className="!bg-opacity-100 !backdrop-blur-none"
 							style="font-size: clamp(0.25rem, 2vw, 0.75rem); line-height: calc(0.25rem + clamp(0.25rem, 2vw, 0.75rem));"
 							id="home"
+							preExecute={["help", "ls"]}
 							bind:lines
 							bind:execute
 						/>
