@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cursorFlow } from "./../utils/cursorFlow.ts";
 	import { magneticHover } from "./../utils/magneticHover.ts";
 	import FormattedDate from "./FormattedDate.svelte";
 
@@ -17,10 +18,16 @@
 	$: console.log(imageBoundingRect);
 </script>
 
-<li
-	class={`relative max-w-fit mx-auto group flex items-center justify-center ${
+<a
+	class={`relative max-w-fit rounded-xl mx-auto group flex items-center justify-center ${
 		isFull ? "md:col-span-2" : ""
 	}`}
+	{href}
+	use:magneticHover={{
+		strength: { x: isFull ? 0.1 : 0.15, y: isFull ? 0.1 : 0.15 },
+	}}
+	use:cursorFlow
+	bind:this={hoverParent}
 >
 	<div
 		class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center w-full h-5/6 transition-all"
@@ -39,14 +46,7 @@
 			}}
 		/>
 	</div>
-	<a
-		{href}
-		use:magneticHover={{
-			strength: { x: isFull ? 0.1 : 0.15, y: isFull ? 0.1 : 0.15 },
-		}}
-		bind:this={hoverParent}
-		class={`z-10 mx-auto w-fit ${isFull ? "md:text-center" : ""}`}
-	>
+	<div class={`z-10 mx-auto w-fit p-2 ${isFull ? "md:text-center" : ""}`}>
 		<img
 			style="grid-area: 1 / 1"
 			class="rounded-xl border-2 border-black/5 z-10"
@@ -61,5 +61,5 @@
 		<p class="text-white/75">
 			<FormattedDate date={pubDate} />
 		</p>
-	</a>
-</li>
+	</div>
+</a>
