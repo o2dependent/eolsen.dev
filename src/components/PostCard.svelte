@@ -18,7 +18,7 @@
 	}`}
 	{href}
 	mag={{
-		strength: { x: isFull ? 0.2 : 0.15, y: isFull ? 0.2 : 0.15 },
+		strength: { x: isFull ? 0.1 : 0.15, y: isFull ? 0.1 : 0.15 },
 	}}
 	bind:ref={hoverParent}
 >
