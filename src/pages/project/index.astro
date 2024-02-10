@@ -13,6 +13,17 @@ const projects = (await getCollection("projects")).sort(
 <MainLayout description="Ethan Olsen Projects." title="Projects">
 	<Header client:load />
 	<section class="max-w-screen-lg mx-auto px-4 pt-12">
+		<div class="w-full pb-2 mb-6 flex flex-col-reverse">
+			<div
+				class="w-full h-1 rainbow relative after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-r after:from-black after:via-black/0 after:to-black"
+			>
+			</div>
+			<h1
+				class="text-center mx-auto text-6xl md:text-9xl w-full -mb-2 md:-mb-4 relative"
+			>
+				Projects
+			</h1>
+		</div>
 		<ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
 			{
 				projects.map((project, i) => (
