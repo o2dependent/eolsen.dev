@@ -26,8 +26,12 @@ export const magneticHover: Action<HTMLElement, Options> = (
 	if (!initTranslate) initTranslate = { x: 0, y: 0 };
 
 	let boundingRect = node.getBoundingClientRect();
+	let top = boundingRect.top + window.scrollY;
+	let left = boundingRect.left + window.scrollX;
 	const resizeWindow = () => {
 		boundingRect = node.getBoundingClientRect();
+		top = boundingRect.top + window.scrollY;
+		left = boundingRect.left + window.scrollX;
 	};
 	const mouseleave = () => {
 		// Animate the node back to its original position
@@ -46,8 +50,8 @@ export const magneticHover: Action<HTMLElement, Options> = (
 	};
 	const mousemove = (e: MouseEvent) => {
 		// Calculate mouse position relative to the node
-		const mousePosX = e.pageX - boundingRect.left;
-		const mousePosY = e.pageY - boundingRect.top;
+		const mousePosX = e.pageX - left;
+		const mousePosY = e.pageY - top;
 
 		// This creates a 'magnetic' effect where the node moves towards the mouse
 		gsap.to(node, {
