@@ -1,7 +1,14 @@
+<script lang="ts">
+	import { cursorFlow } from "./../utils/cursorFlow";
+</script>
+
 <div class="w-full">
 	<div class="mx-auto flex max-w-4xl flex-col px-4">
-		<div class="w-full px-4 py-8">
-			<a class="relative z-50 flex w-fit items-center justify-center gap-2 text-2xl" href="/"
+		<div class="w-full px-2 py-6">
+			<a
+				use:cursorFlow
+				class="relative z-50 flex w-fit items-center justify-center gap-2 text-2xl rounded p-2"
+				href="/"
 				><svg
 					width="48"
 					height="48"
@@ -22,9 +29,15 @@
 						<circle cx="23.3438" cy="24" r="19.3125" fill="#FEFEFE" />
 					</mask>
 					<g mask="url(#mask0_6476_541)">
-						<path d="M7.5 7.96875H41.1562V12.6562H7.5V7.96875Z" fill="#111111" />
+						<path
+							d="M7.5 7.96875H41.1562V12.6562H7.5V7.96875Z"
+							fill="#111111"
+						/>
 						<path d="M7.5 35.0625H41.1562V39.75H7.5V35.0625Z" fill="#111111" />
-						<path d="M2.34375 22.0312H24.75V26.7188H2.34375V22.0312Z" fill="#111111" />
+						<path
+							d="M2.34375 22.0312H24.75V26.7188H2.34375V22.0312Z"
+							fill="#111111"
+						/>
 					</g>
 				</svg>
 				<span>Ethan Olsen</span>
@@ -35,9 +48,10 @@
 			<p class="text-sm opacity-50">
 				© 2020-{new Date().getFullYear()} Ethan Olsen. All Rights Reserved.
 			</p>
-			<div class="grid grid-cols-3 place-items-center gap-4 text-white">
+			<div class="grid grid-cols-3 place-items-center gap-2 text-white">
 				<a
-					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100"
+					use:cursorFlow
+					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
 					href="mailto:ethan@eolsen.dev"
 					><svg
 						width="2rem"
@@ -68,8 +82,9 @@
 					></a
 				>
 				<a
+					use:cursorFlow
 					target="_blank"
-					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100"
+					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
 					href="https://www.linkedin.com/in/eolsendev/"
 					><svg
 						width="2rem"
@@ -84,8 +99,9 @@
 					></a
 				>
 				<a
+					use:cursorFlow
 					target="_blank"
-					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100"
+					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
 					href="https://github.com/o2dependent"
 					><svg
 						width="2rem"

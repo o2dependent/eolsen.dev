@@ -152,6 +152,7 @@
 			height 0.075s,
 			border-radius 0.2s,
 			border-width 0.2s;
+		will-change: width, height, border-radius, border-width, transform;
 		@apply z-50 pointer-events-none rounded-full fixed;
 	}
 </style>

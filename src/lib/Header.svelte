@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { cursorFlow } from "./../utils/cursorFlow.ts";
 	export let navHeight = 0;
 	export let isHome = false;
 </script>
@@ -10,7 +11,8 @@
 	<nav class="container flex px-4">
 		<div class="flex flex-grow items-center gap-2">
 			<a
-				class="relative z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
+				use:cursorFlow
+				class="relative px-1 rounded-lg z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
 				href="/"
 				><svg
 					width="48"
@@ -48,25 +50,29 @@
 		</div>
 		<div class="flex flex-grow items-center justify-end gap-2 text-lg">
 			<a
-				class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
+				use:cursorFlow
+				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
 				href={isHome ? "#about" : "/#about"}
 			>
 				About
 			</a>
 			<a
-				class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
+				use:cursorFlow
+				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
 				href="/project"
 			>
 				Projects
 			</a>
 			<a
-				class="relative flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 hover:before:h-0.5"
+				use:cursorFlow
+				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
 				href="/blog"
 			>
 				Blogs
 			</a>
 			<a
-				class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-all hover:opacity-100 active:scale-95"
+				use:cursorFlow
+				class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-all hover:bg-white/10 hover:text-white active:ring active:ring-white hover:opacity-100 active:scale-95"
 				href="/desktop"
 			>
 				Open Desktop

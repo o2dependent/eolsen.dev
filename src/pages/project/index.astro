@@ -11,7 +11,7 @@ const projects = (await getCollection("projects")).sort(
 ---
 
 <MainLayout description="Ethan Olsen Projects." title="Projects">
-	<Header />
+	<Header client:load />
 	<section class="max-w-screen-lg mx-auto px-4 pt-12">
 		<ul class="grid grid-cols-1 md:grid-cols-2 gap-8">
 			{
