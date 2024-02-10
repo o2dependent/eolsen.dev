@@ -253,17 +253,17 @@
 			const x = e.pageX;
 			const y = e.pageY;
 			// if the canvas is clicked, prevent the user from selecting text
-			if (
-				x > canvas.offsetLeft &&
-				x < canvas.offsetLeft + canvas.width &&
-				y > canvas.offsetTop &&
-				y < canvas.offsetTop + canvas.height
-			)
-				document.body.style.userSelect = "none";
+			// if (
+			// 	x > canvas.offsetLeft &&
+			// 	x < canvas.offsetLeft + canvas.width &&
+			// 	y > canvas.offsetTop &&
+			// 	y < canvas.offsetTop + canvas.height
+			// )
+			// 	document.body.style.userSelect = "none";
 		};
 		const onmouseup = (e: MouseEvent) => {
 			mouse.down = false;
-			document.body.style.userSelect = "auto";
+			// document.body.style.userSelect = "auto";
 		};
 		window.addEventListener("mousemove", onmousemove);
 		window.addEventListener("mousedown", onmousedown);

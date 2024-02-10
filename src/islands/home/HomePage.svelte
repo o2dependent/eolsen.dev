@@ -89,7 +89,7 @@
 				<h1
 					bind:clientHeight={textHeight}
 					style="filter: drop-shadow(0px 0px 1px black) drop-shadow(0px 1px 1px black) drop-shadow(0px 2px 0px black);"
-					class="rainbow mx-auto max-w-4xl bg-clip-text text-center text-6xl font-bold md:text-8xl"
+					class="select-none rainbow mx-auto max-w-4xl bg-clip-text text-center text-6xl font-bold md:text-8xl"
 				>
 					Full-Stack Developer With
 					<span class="text-transparent">Passion</span>
