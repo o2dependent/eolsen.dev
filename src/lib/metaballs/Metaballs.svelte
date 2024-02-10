@@ -238,27 +238,43 @@
 			return attributeLocation;
 		}
 		const onmousemove = function (e: MouseEvent) {
-			// find the x and y relative to the canvas position on the page
 			const boundingRect = canvas.getBoundingClientRect();
-			mouse.x = e.clientX - boundingRect.left;
-			mouse.y = -1 * e.clientY - boundingRect.top + boundingRect.height;
+			// find the x and y relative to the canvas position on the page
+			// mouse.x = e.clientX - contentRect.left;
+			// mouse.y = -1 * e.clientY - contentRect.top + contentRect.height;
+			// mouse.x = e.x - contentRect.left + window.scrollX;
+			// mouse.y = -1 * e.y - contentRect.top + window.scrollY;
+			mouse.x = e.pageX - boundingRect.left + window.scrollX;
+			mouse.y =
+				-1 * e.pageY + boundingRect.top + boundingRect.height + window.scrollY;
 		};
-		const onmousedown = function () {
+		const onmousedown = (e: MouseEvent) => {
 			mouse.down = true;
+			const x = e.pageX;
+			const y = e.pageY;
+			// if the canvas is clicked, prevent the user from selecting text
+			if (
+				x > canvas.offsetLeft &&
+				x < canvas.offsetLeft + canvas.width &&
+				y > canvas.offsetTop &&
+				y < canvas.offsetTop + canvas.height
+			)
+				document.body.style.userSelect = "none";
 		};
-		const onmouseup = function () {
+		const onmouseup = (e: MouseEvent) => {
 			mouse.down = false;
+			document.body.style.userSelect = "auto";
 		};
-		window.onmousemove = onmousemove;
-		window.onmousedown = onmousedown;
-		window.onmouseup = onmouseup;
+		window.addEventListener("mousemove", onmousemove);
+		window.addEventListener("mousedown", onmousedown);
+		window.addEventListener("mouseup", onmouseup);
 		setTimeout(() => {
 			canAttract = true;
-		}, 4000);
+		}, 2000);
 		return () => {
-			window.onmousemove = () => {};
-			window.onmousedown = () => {};
-			window.onmouseup = () => {};
+			window.removeEventListener("mousemove", onmousemove);
+			window.removeEventListener("mousedown", onmousedown);
+			window.removeEventListener("mouseup", onmouseup);
 		};
 	};
 	onMount(initMetaballs);
