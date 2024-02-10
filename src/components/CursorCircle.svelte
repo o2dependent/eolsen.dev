@@ -152,6 +152,7 @@
 	style:border-radius={borderRadius}
 	style:border="{borderWidth} solid white"
 	style:transform
+	class="hidden md:block"
 ></div>
 
 <style lang="postcss">

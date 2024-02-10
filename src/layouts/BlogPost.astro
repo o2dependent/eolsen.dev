@@ -46,11 +46,11 @@ console.log({ updatedDate });
 	<Header client:load />
 	<div class="w-full pt-12">
 		<article class="mx-auto">
-			<div class="hero-image prose mx-auto">
+			<div class="hero-image prose mx-auto px-4">
 				{heroImage && <img width={1020} height={510} src={heroImage} alt="" />}
 			</div>
 			<div class="">
-				<div class="title prose prose-invert w-full mx-auto">
+				<div class="title prose prose-invert w-full mx-auto px-4">
 					<div class="date">
 						<FormattedDate date={pubDate} />
 						{
@@ -63,7 +63,7 @@ console.log({ updatedDate });
 					</div>
 					<h1>{title}</h1>
 				</div>
-				<div class="bg-gray-950 pb-32 pt-24 w-full">
+				<div class="bg-gray-950 pb-32 pt-24 w-full px-4">
 					<div class="prose prose-invert mx-auto">
 						<slot />
 					</div>
