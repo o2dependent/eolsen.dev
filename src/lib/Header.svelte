@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { cursorFlow } from "./../utils/cursorFlow.ts";
+	import StickyLink from "$components/StickyLink.svelte";
 	export let navHeight = 0;
 	export let isHome = false;
 </script>
@@ -10,9 +10,11 @@
 >
 	<nav class="container flex px-4">
 		<div class="flex flex-grow items-center gap-2">
-			<a
-				use:cursorFlow
-				class="relative px-1 rounded-lg z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
+			<StickyLink
+				mag={{
+					strength: { x: 0.3, y: 0.3 },
+				}}
+				class="relative px-1 rounded-lg z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-opacity hover:opacity-100"
 				href="/"
 				><svg
 					width="48"
@@ -46,37 +48,45 @@
 					</g>
 				</svg>
 				<span>Ethan Olsen</span>
-			</a>
+			</StickyLink>
 		</div>
 		<div class="flex flex-grow items-center justify-end gap-2 text-lg">
-			<a
-				use:cursorFlow
-				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
+			<StickyLink
+				mag={{
+					strength: { x: 0.3, y: 0.3 },
+				}}
+				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 				href={isHome ? "#about" : "/#about"}
 			>
 				About
-			</a>
-			<a
-				use:cursorFlow
-				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
+			</StickyLink>
+			<StickyLink
+				mag={{
+					strength: { x: 0.3, y: 0.3 },
+				}}
+				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 				href="/project"
 			>
 				Projects
-			</a>
-			<a
-				use:cursorFlow
-				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-all before:absolute before:bottom-0 before:left-0 before:h-0 before:w-full before:origin-center before:bg-current before:transition-all hover:opacity-100 active:before:h-0.5"
+			</StickyLink>
+			<StickyLink
+				mag={{
+					strength: { x: 0.3, y: 0.3 },
+				}}
+				class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 				href="/blog"
 			>
 				Blogs
-			</a>
-			<a
-				use:cursorFlow
-				class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-all hover:bg-white/10 hover:text-white active:ring active:ring-white hover:opacity-100 active:scale-95"
+			</StickyLink>
+			<StickyLink
+				mag={{
+					strength: { x: 0.3, y: 0.3 },
+				}}
+				class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-colors hover:bg-white/10 hover:text-white active:ring active:ring-white hover:opacity-100 active:scale-95"
 				href="/desktop"
 			>
 				Open Desktop
-			</a>
+			</StickyLink>
 		</div>
 	</nav>
 </header>

@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import type { Action } from "svelte/action";
 
-interface Options {
+export interface MagneticHoverOptions {
 	strength?: { x: number | undefined; y: number | undefined };
 	duration?: number | undefined;
 	hoverParent?: HTMLElement;
@@ -10,7 +10,7 @@ interface Options {
 	scale?: { init: number; hover: number; duration: number };
 }
 
-export const magneticHover: Action<HTMLElement, Options> = (
+export const magneticHover: Action<HTMLElement, MagneticHoverOptions> = (
 	node,
 	{ strength, duration, initTranslate, hoverParent, opacity, scale } = {
 		strength: { x: 0.3, y: 0.3 },

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { cursorCircle } from "$utils/cursor-circle.store";
+	import gsap from "gsap";
 	import { onMount } from "svelte";
 
 	let borderWidth = "1px";
@@ -103,10 +104,26 @@
 	onMount(() => {
 		// Start the animation loop
 		tick();
+
 		// Update mouse position on the 'mousemove' event
 		const mousemove = (e: MouseEvent) => {
 			mouse.x = e.x;
 			mouse.y = e.y;
+		};
+		const firstmousemove = (e: MouseEvent) => {
+			mouse.x = e.x;
+			mouse.y = e.y;
+			previousMouse.x = e.x;
+			previousMouse.y = e.y;
+			circle.x = e.x;
+			circle.y = e.y;
+			transform = `translate(${circle.x}px, ${circle.y}px) rotate(0deg) scale(1, 1)`;
+			gsap.to("#cursor-circle", {
+				opacity: 1,
+				duration: 1,
+			});
+			window.removeEventListener("mousemove", firstmousemove);
+			window.addEventListener("mousemove", mousemove);
 		};
 		const mousedown = () => {
 			borderWidth = "2px";
@@ -114,11 +131,12 @@
 		const mouseup = () => {
 			borderWidth = "1px";
 		};
-		window.addEventListener("mousemove", mousemove);
+		window.addEventListener("mousemove", firstmousemove);
 		window.addEventListener("mousedown", mousedown);
 		window.addEventListener("mouseup", mouseup);
 		return () => {
 			window.removeEventListener("mousemove", mousemove);
+			window.removeEventListener("mousemove", firstmousemove);
 			window.removeEventListener("mousedown", mousedown);
 			window.removeEventListener("mouseup", mouseup);
 		};
@@ -144,7 +162,7 @@
 		top: calc(var(--circle-size) / 2 * -1);
 		left: calc(var(--circle-size) / 2 * -1);
 		border-color: white;
-		opacity: 0.8;
+		opacity: 0;
 		border-style: solid;
 		border-width: 1px;
 		transition:
