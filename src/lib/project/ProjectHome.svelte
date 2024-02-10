@@ -1,18 +1,20 @@
 <script lang="ts">
-	import type { ProjectFileData } from '$stores/directory.store';
-	import type { createHistory } from '$utils/createHistory';
+	import type { ProjectFileData } from "$stores/directory.store";
+	import type { createHistory } from "$utils/createHistory";
 	export let tags: string[];
 	export let projects: (ProjectFileData & { name: string })[];
 	export let history: ReturnType<typeof createHistory>;
-	export let curProject: typeof projects[0] | undefined;
+	export let curProject: (typeof projects)[0] | undefined;
 
 	let activeTag: string | undefined;
 	let activeProjects = projects;
 	let alertDismissed = false;
 
 	$: {
-		if (typeof activeTag === 'string') {
-			activeProjects = projects.filter((project) => project?.tags?.includes?.(activeTag ?? ''));
+		if (typeof activeTag === "string") {
+			activeProjects = projects.filter((project) =>
+				project?.tags?.includes?.(activeTag ?? ""),
+			);
 		} else {
 			activeProjects = projects;
 		}
@@ -41,14 +43,18 @@
 		{#each activeProjects as project, index}
 			<button
 				on:click={() => {
-					if ($history.current === project.name || curProject?.name === project.name) {
+					if (
+						$history.current === project.name ||
+						curProject?.name === project.name
+					) {
 						return;
 					}
 					history.push(`${project.name}`);
 				}}
 				type="button"
 				class="group flex flex-col gap-2 rounded-xl bg-slate-700/25 p-2 text-left text-white text-opacity-50 shadow-none transition-all hover:bg-slate-700/50 hover:text-opacity-100 hover:shadow-xl"
-				><div class="flex w-full flex-col justify-between">
+			>
+				<div class="flex w-full flex-col justify-between">
 					<h2 class="flex-grow text-2xl font-black">
 						{project.title}
 					</h2>
@@ -63,7 +69,7 @@
 						{/each}
 					</div>
 				</div>
-				<p>{project?.description ?? ''}</p>
+				<p>{project?.description ?? ""}</p>
 			</button>
 		{/each}
 	</div>

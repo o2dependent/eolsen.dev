@@ -55,22 +55,24 @@
 	<button
 		on:click|stopPropagation={() => dismissNotification(id)}
 		class="absolute -left-2 -top-2 ml-auto rounded-full border border-[#474A56] bg-[#252B3B]/50 p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
-		><svg
+	>
+		<svg
 			width="16"
 			height="16"
 			xmlns="http://www.w3.org/2000/svg"
 			class="ionicon"
 			viewBox="0 0 512 512"
-			><path
+		>
+			<path
 				fill="none"
 				stroke="currentColor"
 				stroke-linecap="round"
 				stroke-linejoin="round"
 				stroke-width="32"
 				d="M368 368L144 144M368 144L144 368"
-			/></svg
-		></button
-	>
+			/>
+		</svg>
+	</button>
 	<div class="flex h-full w-9 items-center justify-center">
 		<AppIcon {appKey} size="small" />
 	</div>

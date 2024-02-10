@@ -265,6 +265,7 @@
 </script>
 
 <div class="w-full h-full relative">
-	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full"></div> -->
+	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full">
+</div> -->
 	<canvas {height} {width} bind:this={canvas} />
 </div>

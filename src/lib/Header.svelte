@@ -16,7 +16,8 @@
 				}}
 				class="relative px-1 rounded-lg z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-opacity hover:opacity-100"
 				href="/"
-				><svg
+			>
+				<svg
 					width="48"
 					height="48"
 					viewBox="0 0 48 48"

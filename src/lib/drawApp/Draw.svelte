@@ -389,13 +389,16 @@
 					bind:value={pixelNumSelected}
 					items={pixelNumSelectValues}
 				/> -->
-				<!-- <label>Width <input bind:value={width} type="number" /></label> -->
-				<!-- <label>Height <input bind:value={height} type="number" /></label> -->
+				<!-- <label>Width <input bind:value={width} type="number" />
+</label> -->
+				<!-- <label>Height <input bind:value={height} type="number" />
+</label> -->
 				<!-- <label class="block w-full aspect-square relative p-0.5">
 					<div
 						style="background-color: {tool.color}"
 						class="w-full aspect-square rounded-full border border-black/50"
-					></div>
+					>
+</div>
 					<input
 					class="opacity-0 absolute top-0 left-0 w-full h-full"
 					bind:value={tool.color}

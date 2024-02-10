@@ -1,41 +1,44 @@
 <script lang="ts">
-	import { scale } from 'svelte/transition';
+	import { scale } from "svelte/transition";
 	import {
 		directory,
 		type Directory,
 		type DirectoryFile,
-		type ProjectFileData
-	} from '$stores/directory.store';
-	import Window from '$lib/window/Window.svelte';
-	import type { AppWindow } from '$stores/apps.store';
-	import { createHistory } from '$utils/createHistory';
-	import ProjectHome from './ProjectHome.svelte';
-	import ProjectView from './ProjectView.svelte';
-	import ProjectSideBar from './ProjectSideBar.svelte';
-	import AppSideBar from '$lib/appComponents/TextFileApp/AppSideBar.svelte';
-	import AppHome from '$lib/appComponents/TextFileApp/AppHome.svelte';
+		type ProjectFileData,
+	} from "$stores/directory.store";
+	import Window from "$lib/window/Window.svelte";
+	import type { AppWindow } from "$stores/apps.store";
+	import { createHistory } from "$utils/createHistory";
+	import ProjectHome from "./ProjectHome.svelte";
+	import ProjectView from "./ProjectView.svelte";
+	import ProjectSideBar from "./ProjectSideBar.svelte";
+	import AppSideBar from "$lib/appComponents/TextFileApp/AppSideBar.svelte";
+	import AppHome from "$lib/appComponents/TextFileApp/AppHome.svelte";
 
 	export let appWindow: AppWindow;
 
 	let alertDismissed = false;
 
 	const projectDir = (
-		($directory.contents?.['Desktop'] as Directory)?.contents?.['Projects'] as Directory
+		($directory.contents?.["Desktop"] as Directory)?.contents?.[
+			"Projects"
+		] as Directory
 	).contents;
 
 	let projects = Object.keys(projectDir).map((key) => {
 		const project = {
-			...((projectDir[key as keyof typeof projectDir] as DirectoryFile).data as ProjectFileData),
-			name: key
+			...((projectDir[key as keyof typeof projectDir] as DirectoryFile)
+				.data as ProjectFileData),
+			name: key,
 		};
 		return project;
 	});
 
 	let tags = [...new Set(projects.flatMap((project) => project.tags))];
 
-	let history = createHistory('');
+	let history = createHistory("");
 
-	let curProject: typeof projects[0] | undefined;
+	let curProject: (typeof projects)[0] | undefined;
 	let scrollContainer: HTMLDivElement;
 
 	let open = false;
@@ -43,20 +46,27 @@
 	$: {
 		console.log({ $history });
 		if ($history.current) {
-			curProject = projects.find((project) => project.name === $history.current);
+			curProject = projects.find(
+				(project) => project.name === $history.current,
+			);
 		} else {
 			curProject = undefined;
 		}
 	}
 </script>
 
-<Window headerClass="!bg-purple-900" {appWindow} startingWidth="60rem" startingHeight="40rem">
+<Window
+	headerClass="!bg-purple-900"
+	{appWindow}
+	startingWidth="60rem"
+	startingHeight="40rem"
+>
 	<div slot="header" class="flex w-full flex-grow px-4">
 		<button
 			on:click={() => {
-				history.replace('');
+				history.replace("");
 			}}
-			disabled={$history.current === ''}
+			disabled={$history.current === ""}
 			class="mr-4 flex h-6 w-6 items-center justify-center rounded bg-black bg-opacity-0 transition-opacity hover:bg-opacity-25 disabled:cursor-not-allowed disabled:opacity-50"
 		>
 			<svg
@@ -123,16 +133,19 @@
 		</button>
 		<div class="flex w-full flex-grow items-center justify-center pr-12">
 			<p>
-				Projects{curProject ? ` - ${curProject.name}` : ''}
+				Projects{curProject ? ` - ${curProject.name}` : ""}
 			</p>
 		</div>
 	</div>
-	<div bind:this={scrollContainer} class="flex h-full max-h-full flex-col overflow-y-auto">
+	<div
+		bind:this={scrollContainer}
+		class="flex h-full max-h-full flex-col overflow-y-auto"
+	>
 		{#if !alertDismissed && !curProject}
 			<div class="flex bg-red-500 px-4 py-1 text-black">
 				<p class="flex-grow">
-					I specialize in team internal tooling so most projects are not publicly available. A write
-					up will still be available
+					I specialize in team internal tooling so most projects are not
+					publicly available. A write up will still be available
 				</p>
 				<button
 					on:click={() => {
@@ -146,20 +159,29 @@
 						xmlns="http://www.w3.org/2000/svg"
 						class="ionicon"
 						viewBox="0 0 512 512"
-						><path
+					>
+						<path
 							fill="none"
 							stroke="currentColor"
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="32"
 							d="M368 368L144 144M368 144L144 368"
-						/></svg
-					>
+						/>
+					</svg>
 				</button>
 			</div>
 		{/if}
-		<form class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black">
-			<AppSideBar bind:open items={projects} curItem={curProject} title="Projects" {history} />
+		<form
+			class="flex h-full w-full min-w-fit bg-white font-mono text-sm text-black"
+		>
+			<AppSideBar
+				bind:open
+				items={projects}
+				curItem={curProject}
+				title="Projects"
+				{history}
+			/>
 			<div
 				class="flex-grow overflow-y-auto bg-slate-800 p-4 {open && curProject
 					? 'pl-60 max-h-full'
