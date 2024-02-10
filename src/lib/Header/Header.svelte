@@ -7,5 +7,5 @@
 
 <header bind:clientHeight={navHeight} class="relative z-50 w-full">
 	<FullHeader {isHome} />
-	<MobileHeader {navHeight} />
+	<MobileHeader />
 </header>
