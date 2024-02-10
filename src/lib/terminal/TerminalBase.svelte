@@ -6,6 +6,7 @@
 	export let lines: TerminalLine[];
 	export let className = "";
 	export let style = "";
+	export let preExecute: (keyof typeof commands)[] = [];
 
 	let cliInput: HTMLInputElement;
 	let cliLabel: HTMLLabelElement;
@@ -116,6 +117,13 @@
 	const print = (str: TerminalLine) => {
 		lines = [...lines, str];
 	};
+
+	if (preExecute.length > 0) {
+		for (const command of preExecute) {
+			print({ text: `${curDir?.join("/")}> ${command}` });
+			commands[command].action([]);
+		}
+	}
 </script>
 
 <form
