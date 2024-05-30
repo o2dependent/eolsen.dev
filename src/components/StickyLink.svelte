@@ -2,13 +2,15 @@
 	import {
 		magneticHover,
 		type MagneticHoverOptions,
-	} from "$utils/magneticHover.ts";
-	import { cursorFlow } from "$utils/cursorFlow.ts";
+	} from "$utils/magneticHover";
+	import { cursorFlow } from "$utils/cursorFlow";
 
-	export let href: string;
-	export let mag: MagneticHoverOptions = {
+	const DEFAULT_MAG: MagneticHoverOptions = {
 		strength: { x: 0.2, y: 0.2 },
 	};
+
+	export let href: string;
+	export let mag: MagneticHoverOptions = DEFAULT_MAG;
 	export let ref: HTMLElement | undefined = undefined;
 
 	let zIndex = "";
@@ -19,7 +21,7 @@
 	on:mouseleave={() => (zIndex = "")}
 	style:z-index={zIndex}
 	use:cursorFlow
-	use:magneticHover={mag}
+	use:magneticHover={{ ...DEFAULT_MAG, ...mag }}
 	{href}
 	bind:this={ref}
 	{...$$restProps}

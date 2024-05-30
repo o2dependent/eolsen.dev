@@ -3,7 +3,9 @@
 	export let isHome = false;
 </script>
 
-<nav class="container px-4 hidden md:flex w-full items-center justify-center">
+<nav
+	class="container px-4 hidden md:flex w-full items-center justify-center mx-auto"
+>
 	<div class="flex flex-grow items-center gap-2">
 		<StickyLink
 			mag={{
