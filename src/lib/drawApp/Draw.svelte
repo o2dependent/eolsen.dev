@@ -3,7 +3,6 @@
 	import Window from "$lib/window/Window.svelte";
 	import type { AppWindow } from "$stores/apps.store";
 	import chroma from "chroma-js";
-	import Select from "svelte-select";
 	import ColorDropper from "./svgs/ColorDropper.svelte";
 	import FillBucket from "./svgs/FillBucket.svelte";
 	import Pencil from "./svgs/Pencil.svelte";
