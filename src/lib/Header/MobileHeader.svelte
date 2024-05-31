@@ -40,7 +40,7 @@
 							x: -100,
 							opacity: 0,
 							duration: 0.3,
-							delay: i * 0.1,
+							delay: i * 0.01,
 							ease: "power3.out",
 						},
 					);
@@ -87,7 +87,13 @@
 		>
 		<a
 			on:click={() => (active = false)}
+			class="menu-item"
 			bind:this={menuItems[3]}
+			href="/music">Music Visualizer</a
+		>
+		<a
+			on:click={() => (active = false)}
+			bind:this={menuItems[4]}
 			class="fixed bottom-4 left-4 flex gap-4 items-center text-xl"
 			href="/"
 		>

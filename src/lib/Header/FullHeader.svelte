@@ -78,9 +78,9 @@
 				strength: { x: 0.3, y: 0.3 },
 			}}
 			class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-colors hover:bg-white/10 hover:text-white active:ring active:ring-white hover:opacity-100 active:scale-95"
-			href="/desktop"
+			href="/music"
 		>
-			Open Desktop
+			Music Visualizer
 		</StickyLink>
 	</div>
 </nav>
