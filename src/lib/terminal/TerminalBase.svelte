@@ -154,7 +154,7 @@
 				name="cli-input-{id}"
 				id="cli-input-{id}"
 				autocomplete="off"
-				class="flex-grow bg-transparent outline-none"
+				class="flex-grow bg-transparent !outline-none focus-visible:!ring-opacity-0 focus-visible:!shadow-none focus-visible:!ring-offset-transparent"
 				type="text"
 				bind:this={cliInput}
 			/>
