@@ -14,7 +14,7 @@
 	import AppSideBar from "$lib/appComponents/TextFileApp/AppSideBar.svelte";
 
 	export let appWindow: AppWindow;
-	console.log({ $directory });
+	// console.log({ $directory });
 	const blogDir = (
 		($directory?.contents?.["Desktop"] as Directory)?.contents?.[
 			"Blogs"
@@ -38,7 +38,7 @@
 	let open = false;
 
 	$: {
-		console.log({ $history });
+		// console.log({ $history });
 		if ($history.current) {
 			curBlog = blogs.find((blog) => blog.name === $history.current);
 		} else {

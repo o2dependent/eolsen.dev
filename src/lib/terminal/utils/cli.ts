@@ -37,11 +37,14 @@ type CommandsRegistry = { [name: string]: Command };
 
 export class CLI {
 	public directory: Directory;
-	public curDir = '';
+	public curDir = "";
 	public commands: CommandsRegistry;
 	public lines: string[] = [];
 
-	constructor(commands: { [name: string]: Omit<CommandInput, 'cli'> }, directory: Directory) {
+	constructor(
+		commands: { [name: string]: Omit<CommandInput, "cli"> },
+		directory: Directory,
+	) {
 		this.directory = directory;
 		this.commands = {};
 		for (const key in commands) {
@@ -50,18 +53,21 @@ export class CLI {
 		}
 	}
 
-	addCommand(commandInputs: Omit<CommandInput, 'cli'>) {
-		this.commands[commandInputs.name] = new Command({ ...commandInputs, cli: this });
+	addCommand(commandInputs: Omit<CommandInput, "cli">) {
+		this.commands[commandInputs.name] = new Command({
+			...commandInputs,
+			cli: this,
+		});
 	}
 
 	execute(argStr: string) {
-		const args = argStr.split(' ');
+		const args = argStr.split(" ");
 		const command = args[0];
 		const commandArgs = args.slice(1);
 		if (command in this.commands) {
 			this.commands[command].action(commandArgs, this);
 		} else {
-			console.log(`Command ${command} not found`);
+			console.error(`Command ${command} not found`);
 		}
 	}
 

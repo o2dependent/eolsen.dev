@@ -44,7 +44,7 @@
 	let open = false;
 
 	$: {
-		console.log({ $history });
+		// console.log({ $history });
 		if ($history.current) {
 			curProject = projects.find(
 				(project) => project.name === $history.current,

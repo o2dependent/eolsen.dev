@@ -127,7 +127,7 @@
 			source.buffer = audioBuffer;
 			source.connect(audioContext.destination);
 
-			console.log("Audio buffer loaded:", audioBuffer);
+			// console.log("Audio buffer loaded:", audioBuffer);
 		} catch (error) {
 			console.error("Error decoding audio data:", error);
 		}

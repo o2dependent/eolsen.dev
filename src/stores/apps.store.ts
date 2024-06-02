@@ -1,7 +1,13 @@
-import type { SvelteComponent } from 'svelte';
-import { writable } from 'svelte/store';
+import type { SvelteComponent } from "svelte";
+import { writable } from "svelte/store";
 
-export type AppNames = 'Terminal' | 'Project' | 'Blog' | 'About Site' | 'Pixel Paint' | 'Settings';
+export type AppNames =
+	| "Terminal"
+	| "Project"
+	| "Blog"
+	| "About Site"
+	| "Pixel Paint"
+	| "Settings";
 export interface AppWindow {
 	id: string;
 	name: AppNames;
@@ -11,8 +17,8 @@ export interface AppWindow {
 export type Apps = AppWindow[];
 
 export const apps = writable<Apps>([
-	{ id: 'init-terminal', name: 'Terminal' },
-	{ id: 'about-site', name: 'About Site' }
+	{ id: "init-terminal", name: "Terminal" },
+	{ id: "about-site", name: "About Site" },
 ]);
 
 function generateUUID() {
@@ -20,11 +26,13 @@ function generateUUID() {
 	window.crypto.getRandomValues(buf);
 	buf[6] = (buf[6] & 0x0f) | 0x40; // set version number to 4
 	buf[8] = (buf[8] & 0x3f) | 0x80; // set variant number to RFC4122
-	const hex = Array.prototype.map.call(buf, (x) => ('00' + x.toString(16)).slice(-2)).join('');
-	return `${hex.substr(0, 8)}-${hex.substr(8, 4)}-4${hex.substr(12, 3)}-8${hex.substr(
-		16,
-		3
-	)}-${hex.substr(20, 12)}`;
+	const hex = Array.prototype.map
+		.call(buf, (x) => ("00" + x.toString(16)).slice(-2))
+		.join("");
+	return `${hex.substr(0, 8)}-${hex.substr(8, 4)}-4${hex.substr(
+		12,
+		3,
+	)}-8${hex.substr(16, 3)}-${hex.substr(20, 12)}`;
 }
 
 export const addOrFocusApp = (appName: AppNames) => {
@@ -47,7 +55,7 @@ export const addApp = (appName: AppNames) => {
 
 export const removeApp = (appKey: AppNames, appId: string) => {
 	apps.update((oldApps) => {
-		console.log({ oldApps, appKey, appId });
+		// console.log({ oldApps, appKey, appId });
 		return oldApps.filter((app) => app.id !== appId);
 	});
 };

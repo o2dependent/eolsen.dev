@@ -1,7 +1,7 @@
-import { type AppNames, apps, addApp } from '$stores/apps.store';
-import { writable } from 'svelte/store';
+import { type AppNames, apps, addApp } from "$stores/apps.store";
+import { writable } from "svelte/store";
 
-export const activeTab = writable('');
+export const activeTab = writable("");
 
 export interface Tab {
 	name: string;
@@ -16,91 +16,91 @@ export type AppTabs = Record<AppNames, Tab[]>;
 export const removeAppsByName = (appName: AppNames) => {
 	apps.update((apps) => {
 		const newApps = apps.filter((app) => app.name !== appName);
-		console.log({
-			newApps
-		});
+		// console.log({
+		// 	newApps
+		// });
 		return newApps;
 	});
-	activeTab.set('');
+	activeTab.set("");
 };
 
 export const appTabs: AppTabs = {
 	Terminal: [
 		{
-			name: 'Terminal',
+			name: "Terminal",
 			content: [
 				{
-					name: 'Add Window',
+					name: "Add Window",
 					onClick: () => {
-						addApp('Terminal');
-					}
+						addApp("Terminal");
+					},
 				},
 				{
-					name: 'Quit',
+					name: "Quit",
 					onClick: () => {
-						removeAppsByName('Terminal');
-					}
-				}
-			]
-		}
+						removeAppsByName("Terminal");
+					},
+				},
+			],
+		},
 	],
-	'About Site': [],
+	"About Site": [],
 	Project: [
 		{
-			name: 'Project',
+			name: "Project",
 			content: [
 				{
-					name: 'Add Window',
+					name: "Add Window",
 					onClick: () => {
-						addApp('Project');
-					}
+						addApp("Project");
+					},
 				},
 				{
-					name: 'Quit',
+					name: "Quit",
 					onClick: () => {
-						removeAppsByName('Project');
-					}
-				}
-			]
-		}
+						removeAppsByName("Project");
+					},
+				},
+			],
+		},
 	],
 	Blog: [
 		{
-			name: 'Blog',
+			name: "Blog",
 			content: [
 				{
-					name: 'Add Window',
+					name: "Add Window",
 					onClick: () => {
-						addApp('Blog');
-					}
+						addApp("Blog");
+					},
 				},
 				{
-					name: 'Quit',
+					name: "Quit",
 					onClick: () => {
-						removeAppsByName('Blog');
-					}
-				}
-			]
-		}
+						removeAppsByName("Blog");
+					},
+				},
+			],
+		},
 	],
-	'Pixel Paint': [
+	"Pixel Paint": [
 		{
-			name: 'Pixel Paint',
+			name: "Pixel Paint",
 			content: [
 				{
-					name: 'Add Window',
+					name: "Add Window",
 					onClick: () => {
-						addApp('Pixel Paint');
-					}
+						addApp("Pixel Paint");
+					},
 				},
 				{
-					name: 'Quit',
+					name: "Quit",
 					onClick: () => {
-						removeAppsByName('Pixel Paint');
-					}
-				}
-			]
-		}
+						removeAppsByName("Pixel Paint");
+					},
+				},
+			],
+		},
 	],
-	Settings: []
+	Settings: [],
 };

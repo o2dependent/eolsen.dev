@@ -136,7 +136,7 @@ export class BabylonTestApp {
 
 	seizureModeToggle() {
 		this.seizureMode = !this.seizureMode;
-		console.log(this.nodes);
+		// console.log(this.nodes);
 		this.nodes?.forEach((node) => node?.setSeizureMode?.(this.seizureMode));
 	}
 

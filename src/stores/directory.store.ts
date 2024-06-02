@@ -71,32 +71,30 @@ const dir = {
 	name: "~",
 } as Directory;
 
-const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
+const capitalize = (str: string) =>
+	str
+		.split(" ")
+		.map((word) => word[0].toUpperCase() + word.slice(1))
+		.join(" ");
+
+const desktop = dir.contents.Desktop as Directory;
 
 // transform allFiles into a directory structure
 allFiles.forEach((file) => {
 	const { slug, collection, id, body, data } = file ?? {};
 	if (typeof collection !== "string") return;
 
-	let open: DirectoryFile["open"] | null = null;
-	if (collection === "projects") open = "Project";
-	else if (collection === "blogs") open = "Blog";
-	else return;
+	let open = capitalize(collection) as DirectoryFile["open"];
 
-	let capCollection = capitalize(collection);
+	if (!(Object.keys(desktop.contents) as AppNames[]).includes(open)) return;
 
-	if (
-		capCollection in dir.contents &&
-		isDirectory((dir.contents.Desktop as Directory).contents[capCollection])
-	) {
-		(
-			(dir.contents.Desktop as Directory).contents[capCollection] as Directory
-		).contents[id] = {
+	if (open in desktop.contents && isDirectory(desktop.contents[open])) {
+		(desktop.contents[open] as Directory).contents[id] = {
 			data,
 			name: id,
 			open,
 		} as DirectoryFile;
 	}
 });
-console.log(dir);
+
 export const directory = writable<Directory>(dir);

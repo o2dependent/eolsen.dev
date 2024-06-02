@@ -231,9 +231,9 @@
 		pixelArray = newLayerPixelArray;
 	};
 	const removeLayer = (idx: number) => {
-		console.log(idx);
+		// console.log(idx);
 		const newLayers = [...layers].filter((_, i) => i !== idx);
-		console.log({ layers, newLayers, canvas });
+		// console.log({ layers, newLayers, canvas });
 		if (newLayers.length - 1 < layerSelectedIdx) {
 			layerSelectedIdx = newLayers.length - 1;
 		}

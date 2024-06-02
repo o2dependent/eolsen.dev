@@ -100,7 +100,7 @@
 		print({ text: `${curDir?.join("/")}> ${argStr}` });
 		if (!argStr) return;
 		const args = argStr.split(" ");
-		console.log(args);
+		// console.log(args);
 		const command = args[0];
 		const commandArgs = args.slice(1);
 		if (command in commands) {
