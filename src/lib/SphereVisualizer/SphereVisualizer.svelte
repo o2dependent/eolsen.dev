@@ -18,6 +18,7 @@
 	import DotFilled from "../icons/DotFilled.svelte";
 	import type { ChangeEventHandler } from "svelte/elements";
 	import { cursorFlow } from "$utils/cursorFlow";
+	import HorizontalAutoScroll from "./HorizontalAutoScroll.svelte";
 
 	export let audioList: { name: string; url: string }[] = [];
 
@@ -44,7 +45,7 @@
 		app.setup().then(() => {
 			audioContext = new AudioContext();
 
-			handleRemoteAudio("/audio/kthx - tothawall.mp3", "kthx - tothawall").then(
+			handleRemoteAudio(audioList?.[0]?.url, audioList?.[0]?.name).then(
 				() => (loading = false),
 			);
 		});
@@ -174,10 +175,10 @@
 </script>
 
 <div
-	class="fixed bottom-2 left-1/2 -translate-x-1/2 container w-fit flex items-center justify-center"
+	class="fixed bottom-2 left-1/2 w-fit -translate-x-1/2 max-w-xl md:w-full flex items-center justify-center"
 >
 	<Toolbar.Root
-		class="flex h-12 items-center justify-center rounded-10px border border-border bg-background-alt px-[4px] py-1 shadow-mini"
+		class="flex h-12 items-center justify-center rounded-10px border border-border bg-background-alt px-[4px] py-1 shadow-mini w-full max-w-screen-sm"
 	>
 		<div class="flex items-center">
 			<Tooltip.Root>
@@ -280,9 +281,9 @@
 		</div>
 		<Separator.Root class="-my-1 mx-1 w-[1px] self-stretch bg-dark-10" />
 		<div
-			class="flex items-center max-w-sm h-full w-full px-3 shadow-inner bg-muted rounded mx-1 text-muted-foreground whitespace-nowrap"
+			class="flex items-center w-32 h-full md:w-full md:flex-grow px-3 shadow-inner bg-muted rounded mx-1 text-muted-foreground whitespace-nowrap"
 		>
-			{currentAudioName}
+			<HorizontalAutoScroll text={currentAudioName}></HorizontalAutoScroll>
 		</div>
 		<Separator.Root class="-my-1 mx-1 w-[1px] self-stretch bg-dark-10" />
 
@@ -297,7 +298,9 @@
 							class="inline-flex items-center justify-center rounded-9px px-3 py-2 text-sm  font-medium text-foreground/80 transition-all hover:bg-muted active:scale-98 active:bg-dark-10"
 						>
 							<ListBullet class="mr-2 size-6" />
-							<span class="whitespace-nowrap"> Change music </span>
+							<span class="whitespace-nowrap hidden md:block">
+								Change music
+							</span>
 						</Toolbar.Button>
 					</div>
 				</div>
