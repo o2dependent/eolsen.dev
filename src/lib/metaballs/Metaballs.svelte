@@ -224,6 +224,7 @@
 
 		function getUniformLocation(program: WebGLProgram, name: string) {
 			let uniformLocation = gl?.getUniformLocation(program, name);
+			// @ts-ignore
 			if (uniformLocation === -1) {
 				throw "Can not find uniform " + name + ".";
 			}
