@@ -1,8 +1,9 @@
 <script lang="ts">
-	import Window from '$lib/window/Window.svelte';
-	import type { AppWindow } from '$stores/apps.store';
-	import TerminalBase from './TerminalBase.svelte';
-	import type { TerminalLine } from './terminal';
+	import Window from "$lib/window/Window.svelte";
+	import { addOrFocusApp, type AppWindow } from "$stores/apps.store";
+	import type { DirectoryFile } from "$stores/directory.store";
+	import TerminalBase from "./TerminalBase.svelte";
+	import type { TerminalLine } from "./terminal";
 
 	export let appWindow: AppWindow;
 
@@ -17,7 +18,7 @@
      \\/  \\/ \\___|_|\\___\\___/|_| |_| |_|\\___|
 `,
 			class:
-				'w-fit font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
+				"w-fit font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600",
 		},
 		{
 			text: `
@@ -28,13 +29,17 @@
 
 `,
 			class:
-				'w-fit pl-10 !font-black text-[0.5rem] leading-[0.6rem] text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600'
-		}
+				"w-fit pl-10 !font-black text-[0.5rem] leading-[0.6rem] text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-red-600 to-purple-600",
+		},
 	];
+
+	const terminalOpen = (file: DirectoryFile) => {
+		addOrFocusApp(file.open);
+	};
 </script>
 
 <Window {appWindow}>
-	<TerminalBase id={appWindow.id} bind:lines />
+	<TerminalBase id={appWindow.id} bind:lines open={terminalOpen} />
 </Window>
 
 <style>

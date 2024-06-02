@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { directory, type Directory } from "$stores/directory.store";
+	import {
+		directory,
+		type Directory,
+		type DirectoryFile,
+	} from "$stores/directory.store";
 	import type { Commands, TerminalLine } from "./terminal";
 
 	export let id: string;
@@ -7,38 +11,49 @@
 	export let className = "";
 	export let style = "";
 	export let preExecute: (keyof typeof commands)[] = [];
+	export let open: (file: DirectoryFile) => void;
 
 	let cliInput: HTMLInputElement;
 	let cliLabel: HTMLLabelElement;
 
 	let curDir: string[] = ["Desktop"];
 
-	const getDir = (dirArr?: string[]) => {
+	const getDir = (
+		dirArr?: string[],
+	): { error: null; dir: Directory } | { error: string; dir: null } => {
 		if (!dirArr) {
 			dirArr = curDir;
 		}
 		let dir = $directory.contents[dirArr[0]] as Directory;
+		let error: string | null = null;
 		for (let i = 1; i < dirArr.length; i++) {
-			const newDir = dir.contents[dirArr[i]];
+			const newDir = dir?.contents?.[dirArr[i]];
+			if (!newDir) {
+				error = "Directory not found";
+				break;
+			}
 			if ("contents" in newDir) {
 				dir = newDir;
 			} else {
-				return;
+				error = "Not a directory";
+				break;
 			}
 		}
-		return dir;
+		if (error) return { error, dir: null };
+		return { error: null, dir };
 	};
 	const commands: { [name: string]: Commands } = {
 		ls: {
 			name: "ls",
 			description: "List files in a directory",
 			action: (args) => {
-				const dirObj = getDir();
-				if (!dirObj) {
-					print({ text: "No directory specified", class: "text-red-500" });
+				args = args.filter(Boolean);
+				const { dir, error } = getDir([...curDir, ...args]);
+				if (typeof error === "string") {
+					print({ text: error, class: "text-red-500" });
 					return;
 				}
-				print({ text: Object.keys(dirObj.contents).join("\t") });
+				print({ text: Object.keys(dir.contents).join("\t") });
 			},
 		},
 		cd: {
@@ -62,13 +77,16 @@
 						}
 						newCurDir.pop();
 					} else {
-						const dir = getDir(newCurDir);
-						if (!getDir([...newCurDir, arg])) {
+						const { dir, error } = getDir(newCurDir);
+						if (!getDir([...newCurDir, arg]).dir) {
 							print({ text: `Not a directory: ${arg}`, class: "text-red-500" });
 							return;
 						}
-						if (!dir || !(arg in dir.contents)) {
-							print({ text: "Directory not found", class: "text-red-500" });
+						if (typeof error === "string" || !dir || !(arg in dir.contents)) {
+							print({
+								text: error ?? "Directory not found",
+								class: "text-red-500",
+							});
 							return;
 						}
 						newCurDir.push(arg);
@@ -92,6 +110,31 @@
 				for (const command in commands) {
 					print({ text: `  ${command} - ${commands[command].description}` });
 				}
+			},
+		},
+		open: {
+			name: "open",
+			description: "Open a file",
+			action: (args) => {
+				if (args.length === 0) {
+					print({ text: "No file specified", class: "text-red-500" });
+					return;
+				}
+				const { dir } = getDir();
+				if (!dir) return;
+
+				if (getDir([...curDir, ...args]).dir) {
+					print({ text: "Not a file", class: "text-red-500" });
+					return;
+				}
+
+				const file = dir.contents[args[0]] as DirectoryFile;
+				console.log(dir.contents);
+				if (!file) {
+					print({ text: "File not found", class: "text-red-500" });
+					return;
+				}
+				open(file);
 			},
 		},
 	};

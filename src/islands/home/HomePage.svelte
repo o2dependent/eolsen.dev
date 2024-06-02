@@ -5,6 +5,9 @@
 	import { fade, fly } from "svelte/transition";
 	import { intersectionObserver } from "$lib/actions/intersectionObserver";
 	import Header from "$lib/Header/Header.svelte";
+	import type { DirectoryFile } from "$stores/directory.store";
+	// @ts-ignore
+	import { navigate } from "astro:transitions/client";
 
 	let execute: (command: string) => void;
 	let lines: TerminalLine[] = [
@@ -63,6 +66,11 @@
 			canvasHeight = window.innerHeight;
 		});
 	});
+
+	const terminalOpen = (file: DirectoryFile) => {
+		console.log(file);
+		navigate(`/${file.open.toLowerCase()}/${file.slug}`);
+	};
 </script>
 
 <div class="overflow-x-hidden">
@@ -127,6 +135,7 @@
 							style="font-size: clamp(0.25rem, 2vw, 0.75rem); line-height: calc(0.25rem + clamp(0.25rem, 2vw, 0.75rem));"
 							id="home"
 							preExecute={["help", "ls"]}
+							open={terminalOpen}
 							bind:lines
 							bind:execute
 						/>

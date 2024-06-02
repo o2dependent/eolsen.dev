@@ -38,6 +38,8 @@ export type TextFileData = Pick<
 // }
 
 export interface DirectoryFile {
+	name: string;
+	slug: string;
 	open: AppNames;
 	data: ProjectFileData | TextFileData;
 }
@@ -81,17 +83,26 @@ const desktop = dir.contents.Desktop as Directory;
 
 // transform allFiles into a directory structure
 allFiles.forEach((file) => {
-	const { slug, collection, id, body, data } = file ?? {};
-	if (typeof collection !== "string") return;
+	const { slug, collection: _collection, id, body, data } = file ?? {};
+	if (typeof _collection !== "string") return;
 
-	let open = capitalize(collection) as DirectoryFile["open"];
+	const collection = capitalize(_collection) as DirectoryFile["open"];
 
-	if (!(Object.keys(desktop.contents) as AppNames[]).includes(open)) return;
+	if (!(Object.keys(desktop.contents) as AppNames[]).includes(collection))
+		return;
 
-	if (open in desktop.contents && isDirectory(desktop.contents[open])) {
-		(desktop.contents[open] as Directory).contents[id] = {
+	if (
+		collection in desktop.contents &&
+		isDirectory(desktop.contents[collection])
+	) {
+		let open = collection as AppNames;
+		if (["Projects", "Blogs"].includes(collection)) {
+			open = collection.slice(0, -1) as AppNames;
+		}
+		(desktop.contents[collection] as Directory).contents[id] = {
 			data,
 			name: id,
+			slug: slug ?? "",
 			open,
 		} as DirectoryFile;
 	}
