@@ -115,6 +115,11 @@ export class SphereVisualizer {
 		// hl.addMesh(this.ribbon, this.shaderColors.colorA);
 	}
 
+	toggleWireframe() {
+		if (!this.ribbon || !this.ribbon.material) throw new Error("No ribbon");
+		this.ribbon.material.wireframe = !this.ribbon.material.wireframe;
+	}
+
 	addShaders() {
 		Effect.ShadersStore["sphereVisualizerVertexShader"] = `
 		precision highp float;

@@ -140,6 +140,10 @@ export class BabylonTestApp {
 		this.nodes?.forEach((node) => node?.setSeizureMode?.(this.seizureMode));
 	}
 
+	toggleWireframe() {
+		this.nodes?.forEach((node) => node?.toggleWireframe?.());
+	}
+
 	async startRecording() {
 		if (!this.engine) throw Error("Engine not initialized");
 		this.recorder = new VideoRecorder(this.engine);
