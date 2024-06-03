@@ -26,8 +26,8 @@
 		class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 flex items-center justify-center w-full h-5/6 transition-all"
 	>
 		<img
-			class="group-hover:rounded-3xl !m-0 rounded-2xl border-2 blur-xl opacity-15 w-full h-full ease-in-out -mb-full"
-			src={image ?? `/blog_placeholder${(title?.length % 4) + 1}-.jpg`}
+			class="group-hover:rounded-3xl !m-0 rounded-2xl border-2 blur-xl opacity-15 w-full h-full ease-in-out -mb-full aspect-video object-cover"
+			src={image ?? `/blog_placeholder-${(title?.length % 4) + 1}.jpg`}
 			alt=""
 			use:magneticHover={{
 				strength: { x: 0.25, y: 0.25 },
@@ -41,7 +41,7 @@
 	<div class={`z-10 mx-auto w-fit p-2 ${isFull ? "md:text-center" : ""}`}>
 		<img
 			style="grid-area: 1 / 1"
-			class="rounded-xl !m-0 border-2 border-black/5 z-10"
+			class="rounded-xl !m-0 border-2 border-black/5 z-10 aspect-video object-cover"
 			width={720}
 			height={360}
 			src={image ?? `/blog_placeholder${(title?.length % 4) + 1}-.jpg`}
