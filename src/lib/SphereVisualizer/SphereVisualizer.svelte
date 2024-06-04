@@ -26,7 +26,7 @@
 	let loading = true;
 	let isAudioListOpen = false;
 	let isDropdownOpen = false;
-	let currentAudioName = "kthx - tothawall";
+	let currentAudioName = "";
 	let willRecord = false;
 	let isRecording = false;
 
