@@ -129,7 +129,6 @@
 				}
 
 				const file = dir.contents[args[0]] as DirectoryFile;
-				console.log(dir.contents);
 				if (!file) {
 					print({ text: "File not found", class: "text-red-500" });
 					return;

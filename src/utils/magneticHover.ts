@@ -77,7 +77,6 @@ export const magneticHover: Action<HTMLElement, MagneticHoverOptions> = (
 	hoverParent.addEventListener("mousemove", mousemove);
 	return {
 		update(updatedOptions) {
-			console.log(`update`, hoverParent);
 			hoverParent!.removeEventListener("mouseleave", mouseleave);
 			hoverParent!.removeEventListener("mouseenter", mouseenter);
 			hoverParent!.removeEventListener("mousemove", mousemove);
