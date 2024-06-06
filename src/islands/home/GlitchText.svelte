@@ -63,14 +63,18 @@
 	});
 </script>
 
-<span
-	class="rainbow bg-clip-text text-white/{replaceCount < 5
-		? '0'
-		: '100'} {replaceCount < 5 || isPreGlitch ? 'glitch layers' : ''}"
-	data-text={text}
->
-	<span>
-		{text}
+<span class="px-4 py-2 {replaceCount < 5 ? 'bg-black' : ''}">
+	<span
+		class="rainbow bg-clip-text text-white {replaceCount < 5
+			? 'text-opacity-0'
+			: 'text-opacity-100'} {replaceCount < 5 || isPreGlitch
+			? 'glitch layers'
+			: ''}"
+		data-text={text}
+	>
+		<span>
+			{text}
+		</span>
 	</span>
 </span>
 

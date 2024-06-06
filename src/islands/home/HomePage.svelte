@@ -151,7 +151,7 @@
 				>
 					<h2 id="about" class="mb-10 text-5xl md:col-span-2 md:mb-4">About</h2>
 					<div
-						class="flex flex-col-reverse gap-2 md:grid md:grid-cols-[1fr_11rem]"
+						class="flex flex-col-reverse gap-2 lg:grid lg:grid-cols-[1fr_11rem]"
 					>
 						<div class="w-full">
 							<div
