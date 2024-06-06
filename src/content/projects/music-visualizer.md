@@ -5,7 +5,7 @@ pubDate: "Jan 30 2024"
 projectLink: "https://eolsen.dev/music"
 githubLink: "https://github.com/o2dependent/OlsenOS-Portfolio.git"
 tags: ["Svelte", "Astro", "Meyda", "BABYLONjs"]
-heroImage: "/blog-placeholder-4.jpg"
+heroImage: "/visualizer-screenshot.jpg"
 ---
 
 # Project Overview
