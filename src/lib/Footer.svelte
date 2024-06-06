@@ -57,7 +57,7 @@
 						strength: { x: 0.35, y: 0.35 },
 					}}
 					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
-					href="mailto:ethan@eolsen.dev"
+					href="mailto:131eolsen@gmail.com"
 				>
 					<svg
 						width="2rem"
