@@ -1,37 +1,35 @@
 ---
-title: EOlsen Personal Site (sveltekit version)
-description: My personal site built with sveltekit and tailwindcss.
-pubDate: "Mar 21 2023"
+title: EOlsen Personal Site (astro version)
+description: My personal site rebuilt with Astro.
+pubDate: "Jun 6 2024"
 projectLink: https://eolsen.dev
 githubLink: https://github.com/o2dependent
-tags: ["Svelte", "Personal", "Tailwind"]
-heroImage: "/blog-placeholder-4.jpg"
+tags: ["Astro", "Tailwind"]
+heroImage: "/personal-site-screenshot.png"
 ---
 
 # Project Overview
 
 ## Purpose
 
-The purpose of this project was to demonstrate my skills in creating a sophisticated and distinctive user interface using Svelte and Tailwind. I wanted to showcase my learning achievements by developing a crude version of the OSX operating system. As an avid OSX user, I appreciate its efficient app management system. My aim was to replicate the OSX look on a website and, more importantly, capture the overall experience of using an operating system.
+I wanted to move my site from Sveltekit to Astro and spruce up aspect of the site for a more fun feel. I wanted to add in a couple of things I have made that I'm proud of and get over my "[publishing agoraphobia](/blog/publishing-agoraphobia)" that I've struggled with for years. Adding elements that I feel represent myself and my process was also an important motivator.
 
 ## Tech Stack
 
-### UI Framework: Svelte and SvelteKit
+### Web Framework: Astro
 
-I made the deliberate choice to utilize Svelte and SvelteKit as the framework for this project. Compared to React or Vue, I recognized that Svelte stores would greatly simplify the management of apps and global state. SvelteKit, being the top-tier full-stack Svelte metaframework, was the obvious and ideal choice for this endeavor.
-
-### Styling: Tailwind
-
-While Tailwind is my go-to styling tool for most projects, I did consider alternative options like SCSS or PostCSS for this particular project. However, after careful consideration, I decided to incorporate Tailwind to explore its compatibility in this context. Thankfully, I encountered minimal issues, with the exception of the potential problem of generating bloated HTML. Given that this project consists of a single page with numerous dynamic elements entering and leaving the DOM, the production stylesheet should be significantly smaller compared to styling each element independently.
+I am by far the most familiar with Astro as a framework at this point. As a developer that is proficient in multiple frontend UI frameworks (React, Svelte, Solid, etc) Astro allows me to leverage all ecosystems to build faster and stronger applications. It is also the framework that's most similar to Sveltekit and I have had the least issues with in general.
 
 # Challenges Faced
 
-## Replicating OSX Functionality
+## Porting everything over
 
-One of the primary challenges encountered in this project was striving to faithfully mimic the functionality of the OSX operating system. Although I attempted to include as many features as possible, there were certain aspects that had to be excluded. For instance, implementing key bindings such as CMD + S for saving proved to be impractical due to the endless compatibility issues arising across various browsers. Nevertheless, I aimed to capture the essence of OSX's functionality within the limitations of web development.
+This wasn't as challenging as other projects I've ported to other frameworks, but it was time consuming. I didn't have any APIs on the site so I didn't have to change anything from the Sveltekit way to the Astro way, but getting the content was the biggest pain point. I Astro uses a different way of handling markdown routes so setting up the frontmatter schema validator and dumping all the content into a layout was tedious.
 
-## Mobile Compatibility
+## Refining
 
-Enhancing mobile compatibility emerged as another challenge during the course of this project. Considering that OSX is primarily designed for desktop operating systems, its visual appeal on mobile phones is less than optimal. To address this issue, I plan to develop a basic clone of iOS specifically tailored for mobile devices. Fortunately, the apps in this project are not heavily dependent on mouse and keyboard interactions, making the implementation of an iOS-like interface feasible.
+Refining some actions was a tedious process. Some of the choices I made were definitely bad from a code maintainability perspective, but since it will only be me editing this project I went along with it. This made doing some minor edits frustrating.
 
-By undertaking this project, I aimed to demonstrate my expertise in developing complex user interfaces using Svelte and Tailwind, while tackling the challenges of emulating OSX functionality and ensuring mobile compatibility. The combination of these technologies and my commitment to refining the user experience can contribute to the success of future projects.
+# Conclusion
+
+This was a very easy thing to port. I spent a lot of time adding little pieces here and there, but the port itself was easy. I'm proud of the site and feel it represent me more than any other personal site I've made (and I've made too many if I'm being honest).
