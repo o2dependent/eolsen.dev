@@ -160,18 +160,32 @@
 								class="m-0 transition-all duration-1000"
 							>
 								<p>
-									I am a full stack cross platform web developer with a focus on
+									I'm a full stack cross platform web developer with a focus on
 									developing internal development frameworks and tools to
 									increase developer and admin productivity. My primary
 									experience is in UI and UX design and development, backend
 									development, and database management.
 								</p>
 								<p>
-									I've got two cats, Omen and Lua. They are both a year old and
-									are very cute. Omen is a standard issue cat and Lua is a short
-									tail tortoise shell cat. I ended up getting to name Lua which
-									means "moon" in portuguese. It is also a scripting language I
-									like. Please don't tell my girlfriend she does not know.
+									Outside of software development, I enjoy making art and music
+									as well as skateboarding. I have a passion for learning and
+									creating new things. I'm always looking for new projects to
+									work on and new ideas to explore. I have a strong interest in
+									the intersection of art and technology and how they can be
+									used to create new and interesting experiences, which has been
+									my primary focus as a hobby for years.
+								</p>
+								<p>
+									I have two cats named Lua and Omen. Lua is a tortoiseshell cat
+									with short tail and Omen is a tabby with a not short tail. We
+									got Lua from a family friend when she was about 6 months old.
+									She's sweet, sassy, and disturbingly smart with how well she's
+									able to communicate with my partner and I. Omen was abandoned
+									by his mom as a kitten when my Grandma found him almost gone
+									in the sun. She nursed him back to health and a few weeks
+									later we took him in, and he's been my sweet little boy since
+									then. They are my constant companions and are always by my
+									side when I'm working on projects.
 								</p>
 							</div>
 						</div>
