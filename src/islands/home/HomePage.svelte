@@ -8,6 +8,7 @@
 	import type { DirectoryFile } from "$stores/directory.store";
 	// @ts-ignore
 	import { navigate } from "astro:transitions/client";
+	import GlitchText from "./GlitchText.svelte";
 
 	let execute: (command: string) => void;
 	let lines: TerminalLine[] = [
@@ -68,7 +69,6 @@
 	});
 
 	const terminalOpen = (file: DirectoryFile) => {
-		console.log(file);
 		navigate(`/${file.open.toLowerCase()}/${file.slug}`);
 	};
 </script>
@@ -90,17 +90,17 @@
 	</div>
 	<div class="background-shift h-full w-full font-roboto text-gray-50">
 		<Header bind:navHeight />
-		<div class="relative h-full w-full pt-9">
-			<div class="fly-down mx-auto w-fit px-4">
+		<div in:fly class="relative h-full w-full pt-9">
+			<div class="mx-auto w-fit px-4">
 				<h1
 					bind:clientHeight={textHeight}
 					style="filter: drop-shadow(0px 0px 1px black) drop-shadow(0px 1px 1px black) drop-shadow(0px 2px 0px black);"
-					class="select-none rainbow mx-auto max-w-4xl bg-clip-text text-center text-6xl font-bold md:text-8xl"
+					class="select-none mx-auto max-w-4xl py-8 text-left font-bold text-[calc(100vw/6)] sm:text-8xl md:text-9xl font-mono"
 				>
-					Full-Stack Developer With
-					<span class="text-transparent">Passion</span>
+					<GlitchText glitchText={["LEARN", "CREATE", "ENJOY"]}></GlitchText>
 				</h1>
 			</div>
+
 			<div class="mt-20 grid w-full grid-cols-1 grid-rows-1">
 				<div
 					style="grid-column: 1; grid-row: 1;"
