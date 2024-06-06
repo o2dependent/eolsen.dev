@@ -71,35 +71,47 @@
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[0]}
-			href="/">Home</a
-		>
+			href="/"
+			>Home
+		</a>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[1]}
-			href="/#about">About</a
-		>
+			href="/#about"
+			>About
+		</a>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[2]}
-			href="/project">Projects</a
-		>
+			href="/project"
+			>Projects
+		</a>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[3]}
-			href="/blog">Blog</a
-		>
+			href="/blog"
+			>Blog
+		</a>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[4]}
-			href="/music">Music Visualizer</a
-		>
+			href="/music"
+			>Music
+		</a>
 		<a
 			on:click={() => (active = false)}
+			class="menu-item"
 			bind:this={menuItems[5]}
+			href="mailto:131eolsen@gmail.com"
+			>Contact
+		</a>
+		<a
+			on:click={() => (active = false)}
+			bind:this={menuItems[6]}
 			class="fixed bottom-4 left-4 flex gap-4 items-center text-xl"
 			href="/"
 		>

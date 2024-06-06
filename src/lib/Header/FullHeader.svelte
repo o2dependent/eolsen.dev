@@ -77,10 +77,19 @@
 			mag={{
 				strength: { x: 0.3, y: 0.3 },
 			}}
-			class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-colors hover:bg-white/10 hover:text-white active:ring active:ring-white hover:opacity-100 active:scale-95"
+			class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 			href="/music"
 		>
-			Music Visualizer
+			Music
+		</StickyLink>
+		<StickyLink
+			mag={{
+				strength: { x: 0.3, y: 0.3 },
+			}}
+			class="my-4 flex items-center justify-center rounded bg-white px-3 py-2 text-black opacity-75 transition-colors hover:bg-white/10 hover:text-white active:ring active:ring-white hover:opacity-100 active:scale-95"
+			href="mailto:131eolsen@gmail.com"
+		>
+			Contact
 		</StickyLink>
 	</div>
 </nav>
