@@ -71,29 +71,35 @@
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[0]}
-			href="/#about">About</a
+			href="/">Home</a
 		>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[1]}
-			href="/project">Projects</a
+			href="/#about">About</a
 		>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[2]}
-			href="/blog">Blog</a
+			href="/project">Projects</a
 		>
 		<a
 			on:click={() => (active = false)}
 			class="menu-item"
 			bind:this={menuItems[3]}
+			href="/blog">Blog</a
+		>
+		<a
+			on:click={() => (active = false)}
+			class="menu-item"
+			bind:this={menuItems[4]}
 			href="/music">Music Visualizer</a
 		>
 		<a
 			on:click={() => (active = false)}
-			bind:this={menuItems[4]}
+			bind:this={menuItems[5]}
 			class="fixed bottom-4 left-4 flex gap-4 items-center text-xl"
 			href="/"
 		>
