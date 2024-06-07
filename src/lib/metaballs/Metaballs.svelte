@@ -24,6 +24,7 @@
 	let metaballsHandle: WebGLUniformLocation | null | undefined;
 	let program: WebGLProgram | null | undefined;
 	let canAttract = false;
+	let loading = true;
 
 	let fragmentShaderSrc = `
             precision highp float;
@@ -272,6 +273,8 @@
 		setTimeout(() => {
 			canAttract = true;
 		}, 2000);
+
+		if (gl) loading = false;
 		return () => {
 			window.removeEventListener("mousemove", onmousemove);
 			window.removeEventListener("mousedown", onmousedown);
@@ -281,7 +284,11 @@
 	onMount(initMetaballs);
 </script>
 
-<div class="w-full h-full relative">
+<div
+	class:bg-black={loading}
+	class:bg-transparent={!loading}
+	class="transition-colors duration-150 w-full h-full relative"
+>
 	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full">
 </div> -->
 	<canvas {height} {width} bind:this={canvas} />
