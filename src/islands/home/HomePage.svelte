@@ -75,7 +75,7 @@
 
 <div class="overflow-x-hidden">
 	<div class="relative h-0 w-0">
-		<div class="rainbow absolute left-0 top-0">
+		<div class="absolute left-0 top-0">
 			{#await import("$lib/metaballs/Metaballs.svelte")}
 				<div class="w-full h-full bg-black absolute top-0 left-0" />
 			{:then Module}

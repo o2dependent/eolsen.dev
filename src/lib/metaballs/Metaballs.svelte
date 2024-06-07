@@ -78,7 +78,8 @@
 
 		const dataToSendToGPU = new Float32Array(3 * numMetaballs);
 		for (let i = 0; i < numMetaballs; i++) {
-			const metaball = metaballs[i];
+			const metaball = metaballs?.[i] ?? null;
+			if (metaball === null) continue;
 			// move all element toward to mouse if mouse is down and it is within a certain distance
 			const dx = metaball.x - mouse.x;
 			const dy = metaball.y - mouse.y;
@@ -145,8 +146,8 @@
 
 	$: gl?.viewport(0, 0, width, height);
 
-	const initMetaballs = () => {
-		gl = canvas.getContext("webgl2");
+	const genMetaBalls = () => {
+		metaballs = [];
 		for (let i = 0; i < numMetaballs; i++) {
 			// let radius = Math.random() * Math.min(50, width / 50) + 10;
 			// random radius between min and max
@@ -165,6 +166,11 @@
 				br: radius,
 			});
 		}
+	};
+
+	const initMetaballs = () => {
+		gl = canvas.getContext("webgl2");
+		// genMetaBalls(); // <- this was the og position and caused the metaballs to stutter onto the canvas
 
 		let vertexShaderSrc = `
             attribute vec2 position;
@@ -221,7 +227,10 @@
 
 		metaballsHandle = getUniformLocation(program, "metaballs");
 
+		loading = false;
+		setTimeout(genMetaBalls, 0); // <- this will make it smooth bc it's not blocking the thread????? idk 0ms timeouts are weird but fix a lot of weird race condition stuff.
 		requestAnimationFrame(loop);
+		// genMetaBalls(); // <- this will cause the metaballs to flash onto screen and not be smooth
 
 		function getUniformLocation(program: WebGLProgram, name: string) {
 			let uniformLocation = gl?.getUniformLocation(program, name);
@@ -274,7 +283,6 @@
 			canAttract = true;
 		}, 2000);
 
-		if (gl) loading = false;
 		return () => {
 			window.removeEventListener("mousemove", onmousemove);
 			window.removeEventListener("mousedown", onmousedown);
@@ -287,7 +295,7 @@
 <div
 	class:bg-black={loading}
 	class:bg-transparent={!loading}
-	class="w-full h-full relative"
+	class="w-full h-full relative rainbow"
 >
 	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full">
 </div> -->
