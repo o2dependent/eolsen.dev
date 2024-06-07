@@ -287,7 +287,7 @@
 <div
 	class:bg-black={loading}
 	class:bg-transparent={!loading}
-	class="transition-colors duration-150 w-full h-full relative"
+	class="w-full h-full relative"
 >
 	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full">
 </div> -->
