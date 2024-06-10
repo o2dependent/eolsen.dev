@@ -42,7 +42,7 @@
 			"babylon-canvas",
 		) as HTMLCanvasElement;
 
-		app = new BabylonTestApp(canvas);
+		app = new SphereVisualizerApp(canvas);
 		app.setup().then(() => {
 			audioContext = new AudioContext();
 
