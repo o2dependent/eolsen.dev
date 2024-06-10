@@ -42,6 +42,7 @@ export interface DirectoryFile {
 	slug: string;
 	open: AppNames;
 	data: ProjectFileData | TextFileData;
+	body?: string;
 }
 
 export interface Directory {
@@ -59,6 +60,7 @@ function isDirectory(obj: any): obj is Directory {
 const projects = await getCollection("projects");
 const blogs = await getCollection("blogs");
 const allFiles = [...projects, ...blogs];
+console.log(blogs);
 
 const dir = {
 	contents: {
@@ -104,7 +106,8 @@ allFiles.forEach((file) => {
 			name: id,
 			slug: slug ?? "",
 			open,
-		} as DirectoryFile;
+			body,
+		} satisfies DirectoryFile;
 	}
 });
 

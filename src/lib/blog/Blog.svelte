@@ -25,6 +25,7 @@
 		const blog = {
 			...((blogDir[key as keyof typeof blogDir] as DirectoryFile)
 				.data as BlogFileData),
+			body: (blogDir[key as keyof typeof blogDir] as DirectoryFile).body,
 			name: key,
 		};
 		return blog;

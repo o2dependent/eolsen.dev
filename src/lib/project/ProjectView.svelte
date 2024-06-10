@@ -1,10 +1,22 @@
 <script lang="ts">
-	import { fade } from "svelte/transition";
 	import type { ProjectFileData } from "$stores/directory.store";
+	import rehypeStringify from "rehype-stringify";
+	import remarkParse from "remark-parse";
+	import remarkRehype from "remark-rehype";
+	import { unified } from "unified";
 
 	export let scrollContainer: HTMLDivElement;
 	export let curProject: ProjectFileData & { name: string };
 
+	let file: Awaited<ReturnType<(typeof unified)["process"]>>;
+	$: {
+		unified()
+			.use(remarkParse)
+			.use(remarkRehype)
+			.use(rehypeStringify)
+			.process(curProject.body)
+			.then((f) => (file = f));
+	}
 	const resetScroll = () => {
 		scrollContainer.scrollTo(0, 0);
 	};
@@ -71,7 +83,5 @@
 	</div>
 </div>
 <div class="prose prose-invert w-full">
-	{#key curProject?.id}
-		<svelte:component this={curProject?.html} />
-	{/key}
+	{@html file?.value ?? ""}
 </div>

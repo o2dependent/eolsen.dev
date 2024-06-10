@@ -14,4 +14,10 @@
 {/await}
 <!-- <Desktop bind:loaded /> -->
 <BiosBootScreen {loaded} />
+
 <!-- <BootScreen /> -->
+<style>
+	:global(html, body) {
+		color: white;
+	}
+</style>

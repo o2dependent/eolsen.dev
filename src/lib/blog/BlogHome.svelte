@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { BlogFileData } from '$stores/directory.store';
-	import type { createHistory } from '$utils/createHistory';
+	import type { BlogFileData } from "$stores/directory.store";
+	import type { createHistory } from "$utils/createHistory";
 
-	export let tags: string[];
+	export let tags: (string | undefined)[] = [];
 	export let blogs: (BlogFileData & { name: string })[];
 	export let history: ReturnType<typeof createHistory>;
 	export let curBlog: (typeof blogs)[0] | undefined;
@@ -11,8 +11,10 @@
 	let activeBlogs = blogs;
 
 	$: {
-		if (typeof activeTag === 'string') {
-			activeBlogs = blogs.filter((blog) => blog?.tags?.includes?.(activeTag ?? ''));
+		if (typeof activeTag === "string") {
+			activeBlogs = blogs.filter((blog) =>
+				blog?.tags?.includes?.(activeTag ?? ""),
+			);
 		} else {
 			activeBlogs = blogs;
 		}

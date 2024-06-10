@@ -29,6 +29,7 @@
 		const project = {
 			...((projectDir[key as keyof typeof projectDir] as DirectoryFile)
 				.data as ProjectFileData),
+			body: (projectDir[key as keyof typeof projectDir] as DirectoryFile).body,
 			name: key,
 		};
 		return project;

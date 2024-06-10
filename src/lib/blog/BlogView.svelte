@@ -1,7 +1,20 @@
 <script lang="ts">
-	import type { BlogFileData } from '$stores/directory.store';
+	import type { BlogFileData } from "$stores/directory.store";
+	import rehypeStringify from "rehype-stringify";
+	import remarkParse from "remark-parse";
+	import remarkRehype from "remark-rehype";
+	import { unified } from "unified";
 
-	export let curBlog: BlogFileData & { name: string };
+	export let curBlog: BlogFileData & { name: string; body: string };
+	let file: Awaited<ReturnType<(typeof unified)["process"]>>;
+	$: {
+		unified()
+			.use(remarkParse)
+			.use(remarkRehype)
+			.use(rehypeStringify)
+			.process(curBlog.body)
+			.then((f) => (file = f));
+	}
 </script>
 
 <div class="prose prose-invert mb-4 w-full border-b border-slate-600 pb-2">
@@ -24,5 +37,5 @@
 	</div>
 </div>
 <div class="prose prose-invert w-full">
-	<svelte:component this={curBlog?.html} />
+	{@html file?.value ?? ""}
 </div>
