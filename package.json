@@ -25,12 +25,16 @@
     "date-fns": "^3.6.0",
     "gsap": "^3.12.5",
     "meyda": "^5.6.3",
+    "rehype-parse": "^9.0.0",
+    "rehype-stringify": "^10.0.0",
+    "remark-rehype": "^11.1.0",
     "svelte": "^4.2.9",
     "svelte-awesome-color-picker": "^3.0.4",
     "svelte-range-slider-pips": "^2.3.1",
     "svelte-select": "^5.8.3",
     "tailwind-scrollbar": "^3.0.5",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "unified": "^11.0.4"
   },
   "devDependencies": {
     "@types/chroma-js": "^2.4.3",

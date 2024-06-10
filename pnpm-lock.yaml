@@ -53,6 +53,15 @@ importers:
       meyda:
         specifier: ^5.6.3
         version: 5.6.3(rollup@4.18.0)
+      rehype-parse:
+        specifier: ^9.0.0
+        version: 9.0.0
+      rehype-stringify:
+        specifier: ^10.0.0
+        version: 10.0.0
+      remark-rehype:
+        specifier: ^11.1.0
+        version: 11.1.0
       svelte:
         specifier: ^4.2.9
         version: 4.2.9
@@ -71,6 +80,9 @@ importers:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.1
+      unified:
+        specifier: ^11.0.4
+        version: 11.0.4
     devDependencies:
       '@types/chroma-js':
         specifier: ^2.4.3
