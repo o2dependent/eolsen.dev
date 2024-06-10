@@ -60,7 +60,6 @@ function isDirectory(obj: any): obj is Directory {
 const projects = await getCollection("projects");
 const blogs = await getCollection("blogs");
 const allFiles = [...projects, ...blogs];
-console.log(blogs);
 
 const dir = {
 	contents: {

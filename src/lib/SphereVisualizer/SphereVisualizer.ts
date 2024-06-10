@@ -179,7 +179,6 @@ export class SphereVisualizer {
 
 	setSeizureMode(seizureMode: boolean) {
 		this.seizureMode = seizureMode;
-		console.log(this.seizureMode);
 		return this?.seizureMode;
 	}
 

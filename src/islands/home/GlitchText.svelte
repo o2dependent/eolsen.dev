@@ -6,7 +6,6 @@
 	$: {
 		const maxTextLength = Math.max(...texts.map((t) => t.length));
 		texts = texts.map((t) => t.padStart(maxTextLength, "_") + "_");
-		console.log(texts, maxTextLength);
 	}
 	$: text = texts[0];
 
