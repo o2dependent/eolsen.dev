@@ -2,7 +2,7 @@
 	import Globe from "./../icons/Globe.svelte";
 	import Meyda from "meyda";
 	import { onMount } from "svelte";
-	import { BabylonTestApp } from "./App";
+	import { SphereVisualizerApp } from "./App";
 	import {
 		DropdownMenu,
 		ScrollArea,
@@ -30,7 +30,7 @@
 	let willRecord = false;
 	let isRecording = false;
 
-	let app: BabylonTestApp;
+	let app: SphereVisualizerApp;
 
 	let audioBuffer: AudioBuffer;
 	let audioContext: AudioContext;

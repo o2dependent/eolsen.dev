@@ -16,7 +16,7 @@ import {
 import { SphereVisualizer } from "./SphereVisualizer";
 import type Meyda from "meyda";
 
-export class BabylonTestApp {
+export class SphereVisualizerApp {
 	nodes: any[] = [];
 
 	engine: WebGPUEngine | null = null;
