@@ -60,7 +60,10 @@
 			name: "cd",
 			description: "Change directory",
 			action: (args) => {
-				const path = args[0]?.split("/")?.filter(Boolean);
+				const path = args[0]
+					?.split("/")
+					?.filter(Boolean)
+					.filter((arg) => arg !== ".");
 				if (path.length === 0) {
 					print({ text: "No directory specified", class: "text-red-500" });
 					return;
@@ -122,13 +125,14 @@
 				}
 				const { dir } = getDir();
 				if (!dir) return;
+				const path = args[0]?.split("/").filter((arg) => arg !== ".");
 
-				if (getDir([...curDir, ...args]).dir) {
+				if (getDir([...curDir, ...path]).dir) {
 					print({ text: "Not a file", class: "text-red-500" });
 					return;
 				}
 
-				const file = dir.contents[args[0]] as DirectoryFile;
+				const file = dir.contents[path[0]] as DirectoryFile;
 				if (!file) {
 					print({ text: "File not found", class: "text-red-500" });
 					return;
