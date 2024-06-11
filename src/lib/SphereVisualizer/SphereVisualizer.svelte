@@ -22,6 +22,7 @@
 	import HorizontalAutoScroll from "./HorizontalAutoScroll.svelte";
 
 	export let audioList: { name: string; url: string }[] = [];
+	export let startIndex = 0;
 
 	let loading = true;
 	let isAudioListOpen = false;
@@ -45,8 +46,8 @@
 		app = new SphereVisualizerApp(canvas);
 		app.setup().then(() => {
 			audioContext = new AudioContext();
-
-			handleRemoteAudio(audioList?.[0]?.url, audioList?.[0]?.name).then(
+			const remoteAudio = audioList?.[startIndex] ?? audioList?.[0];
+			handleRemoteAudio(remoteAudio?.url, remoteAudio?.name).then(
 				() => (loading = false),
 			);
 		});
