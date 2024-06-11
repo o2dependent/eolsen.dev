@@ -295,7 +295,7 @@
 <div
 	class:bg-black={loading}
 	class:bg-transparent={!loading}
-	class="w-full h-full relative rainbow"
+	class="w-full h-full relative"
 >
 	<!-- <div class="absolute top-0 left-0 bg-dark-noise w-full h-full">
 </div> -->
