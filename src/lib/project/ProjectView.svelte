@@ -1,17 +1,22 @@
 <script lang="ts">
 	import type { ProjectFileData } from "$stores/directory.store";
 	import rehypeStringify from "rehype-stringify";
-	import remarkParse from "remark-parse";
+	import rehypeParse from "rehype-parse";
 	import remarkRehype from "remark-rehype";
 	import { unified } from "unified";
 
 	export let scrollContainer: HTMLDivElement;
-	export let curProject: ProjectFileData & { name: string };
+	export let curProject: ProjectFileData & {
+		name: string;
+		body: string;
+		githubLink?: string;
+		projectLink?: string;
+	};
 
 	let file: Awaited<ReturnType<(typeof unified)["process"]>>;
 	$: {
 		unified()
-			.use(remarkParse)
+			.use(rehypeParse)
 			.use(remarkRehype)
 			.use(rehypeStringify)
 			.process(curProject.body)

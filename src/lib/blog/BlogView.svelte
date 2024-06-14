@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { BlogFileData } from "$stores/directory.store";
 	import rehypeStringify from "rehype-stringify";
-	import remarkParse from "remark-parse";
+	import rehypeParse from "rehype-parse";
 	import remarkRehype from "remark-rehype";
 	import { unified } from "unified";
 
@@ -9,7 +9,7 @@
 	let file: Awaited<ReturnType<(typeof unified)["process"]>>;
 	$: {
 		unified()
-			.use(remarkParse)
+			.use(rehypeParse)
 			.use(remarkRehype)
 			.use(rehypeStringify)
 			.process(curBlog.body)
