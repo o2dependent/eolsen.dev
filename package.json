@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@types/chroma-js": "^2.4.3",
-    "@types/meyda": "^4.3.8"
+    "@types/meyda": "^4.3.8",
+    "postcss-nesting": "^12.1.5"
   }
 }
