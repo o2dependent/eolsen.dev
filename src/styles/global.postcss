@@ -187,9 +187,9 @@ html {
 @layer components {
 	*:not(body) {
 		outline: none !important;
-		&:focus-visible {
-			@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background;
-		}
+	}
+	*:not(body):focus-visible {
+		@apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-foreground focus-visible:ring-offset-2 focus-visible:ring-offset-background;
 	}
 
 	.link {
