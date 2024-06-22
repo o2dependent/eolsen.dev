@@ -1,8 +1,5 @@
 <script lang="ts">
-	import Globe from "./../icons/Globe.svelte";
-	import Meyda from "meyda";
-	import { onMount } from "svelte";
-	import { SphereVisualizerApp } from "./App";
+	import Globe from "../icons/Globe.svelte";
 	import {
 		DropdownMenu,
 		ScrollArea,
@@ -16,86 +13,26 @@
 	import { fly } from "svelte/transition";
 	import MagicWand from "../icons/MagicWand.svelte";
 	import File from "../icons/File.svelte";
-	import DotFilled from "../icons/DotFilled.svelte";
 	import type { ChangeEventHandler } from "svelte/elements";
 	import { cursorFlow } from "$utils/cursorFlow";
 	import HorizontalAutoScroll from "./HorizontalAutoScroll.svelte";
+	import { loadingGL, loadingModule } from "./visualizer-loading.store";
+	import {
+		audioList,
+		currentAudioName,
+		handleRemoteAudio,
+		loadAudioBuffer,
+		playing,
+		setAnalyzer,
+		togglePlay,
+		visualizerApp,
+	} from "./visualizer-app.store";
 
-	export let audioList: { name: string; url: string }[] = [];
-	export let startIndex = 0;
-
-	let loading = true;
-	let isAudioListOpen = false;
 	let isDropdownOpen = false;
-	let currentAudioName = "";
-	let willRecord = false;
-	let isRecording = false;
 
-	let app: SphereVisualizerApp;
-
-	let audioBuffer: AudioBuffer;
-	let audioContext: AudioContext;
-	let source: AudioBufferSourceNode;
-	let analyzer: Meyda.MeydaAnalyzer;
-	let features: Record<string, any> | null = null;
-	onMount(() => {
-		const canvas = document.getElementById(
-			"babylon-canvas",
-		) as HTMLCanvasElement;
-
-		app = new SphereVisualizerApp(canvas);
-		app.setup().then(() => {
-			audioContext = new AudioContext();
-			const remoteAudio = audioList?.[startIndex] ?? audioList?.[0];
-			handleRemoteAudio(remoteAudio?.url, remoteAudio?.name).then(
-				() => (loading = false),
-			);
-		});
-
-		return () => {
-			app.dispose();
-		};
-	});
-
-	const setAnalyzer = () => {
-		if (analyzer) analyzer.stop();
-
-		analyzer = Meyda.createMeydaAnalyzer({
-			audioContext: audioContext,
-			source: source,
-			bufferSize: 512,
-			featureExtractors: [
-				"rms",
-				"spectralFlatness",
-				"chroma",
-				"zcr",
-				"complexSpectrum",
-				"mfcc",
-				"amplitudeSpectrum",
-				"energy",
-				"loudness",
-				"perceptualSharpness",
-				"perceptualSpread",
-				"powerSpectrum",
-				"spectralCentroid",
-				"spectralKurtosis",
-				"spectralRolloff",
-				"spectralSkewness",
-				"spectralSlope",
-				"spectralSpread",
-				"buffer",
-			] satisfies Meyda.MeydaAudioFeature[],
-			inputs: 2,
-			callback: (_features: Record<string, any>) => {
-				features = _features;
-				if (features !== null) app.setMeydaFeatures(features);
-			},
-		});
-		analyzer.start();
-		app.setMeydaAnalyser(analyzer);
-	};
-
-	const handleFileChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+	export const handleFileChange: ChangeEventHandler<HTMLInputElement> = (
+		event,
+	) => {
 		const file = (event?.target as HTMLInputElement)?.files?.[0];
 
 		if (file) {
@@ -104,76 +41,14 @@
 			reader.onload = (e) => {
 				const buffer = e?.target?.result;
 				loadAudioBuffer(buffer).then(setAnalyzer);
-				currentAudioName =
-					file?.name?.split(/.mp3|.mp4/)?.[0] ?? "Custom Audio";
+				currentAudioName?.set(
+					file?.name?.split(/.mp3|.mp4/)?.[0] ?? "Custom Audio",
+				);
 			};
 
 			reader.readAsArrayBuffer(file);
 		}
 	};
-
-	const loadAudioBuffer = async (
-		buffer: string | ArrayBuffer | null | undefined,
-	) => {
-		if (playing) stopAudio();
-
-		if (!buffer) return console.error("No buffer provided");
-		if (!(buffer instanceof ArrayBuffer))
-			return console.error("Invalid buffer");
-
-		try {
-			audioBuffer = await audioContext.decodeAudioData(buffer);
-
-			source = audioContext.createBufferSource();
-			source.buffer = audioBuffer;
-			source.connect(audioContext.destination);
-
-			// console.log("Audio buffer loaded:", audioBuffer);
-		} catch (error) {
-			console.error("Error decoding audio data:", error);
-		}
-	};
-
-	const handleRemoteAudio = async (url: string, name: string) => {
-		const res = await fetch(url);
-		const buffer = await res.arrayBuffer();
-		loadAudioBuffer(buffer).then(setAnalyzer);
-		currentAudioName = name;
-	};
-
-	let playing = false;
-
-	const playAudio = () => {
-		if (playing || !audioBuffer) {
-			return;
-		}
-		if (willRecord) {
-			isRecording = true;
-			app.startRecording();
-		}
-		source = audioContext.createBufferSource();
-		source.buffer = audioBuffer;
-		source.connect(audioContext.destination);
-		analyzer.setSource(source);
-		source.start();
-		source.addEventListener("ended", (e) => {
-			stopAudio();
-		});
-		playing = true;
-	};
-
-	const stopAudio = () => {
-		if (source && playing) {
-			source.stop();
-			playing = false;
-		}
-		if (isRecording) {
-			isRecording = false;
-			app.stopRecording();
-		}
-	};
-
-	const togglePlay = () => (playing ? stopAudio() : playAudio());
 </script>
 
 <div
@@ -187,10 +62,10 @@
 				<Tooltip.Trigger>
 					<div class="rounded-9px" use:cursorFlow>
 						<Toolbar.Button
-							on:click={!loading ? togglePlay : undefined}
+							on:click={!$loadingGL ? togglePlay : undefined}
 							class="inline-flex items-center justify-center rounded-9px px-3 py-2 text-sm font-medium text-foreground/80 transition-all hover:bg-muted active:scale-98 active:bg-dark-10"
 						>
-							{#if playing}
+							{#if $playing}
 								<Stop class="size-6" />
 							{:else}
 								<Play class="size-6" />
@@ -211,7 +86,7 @@
 					<div
 						class="flex items-center justify-center rounded-input border border-dark-10 bg-background p-3 text-sm font-medium shadow-popover outline-none"
 					>
-						{#if playing}
+						{#if $playing}
 							Stop
 						{:else}
 							Play
@@ -224,8 +99,8 @@
 				<Tooltip.Trigger>
 					<div class="rounded-9px" use:cursorFlow>
 						<Toolbar.Button
-							on:click={() => app.seizureModeToggle()}
-							data-state={app?.seizureMode ? "active" : undefined}
+							on:click={() => $visualizerApp?.seizureModeToggle()}
+							data-state={$visualizerApp?.seizureMode ? "active" : undefined}
 							class="inline-flex items-center justify-center rounded-9px px-3 py-2 text-sm  font-medium text-foreground/80 transition-all hover:bg-muted active:scale-98 active:bg-dark-10 [data-state=active]:bg-dark-10"
 						>
 							<MagicWand class="size-6" />
@@ -253,8 +128,8 @@
 				<Tooltip.Trigger>
 					<div class="rounded-9px" use:cursorFlow>
 						<Toolbar.Button
-							on:click={() => app.toggleWireframe()}
-							data-state={app?.seizureMode ? "active" : undefined}
+							on:click={() => $visualizerApp?.toggleWireframe()}
+							data-state={$visualizerApp?.seizureMode ? "active" : undefined}
 							class="inline-flex items-center justify-center rounded-9px px-3 py-2 text-sm  font-medium text-foreground/80 transition-all hover:bg-muted active:scale-98 active:bg-dark-10 [data-state=active]:bg-dark-10"
 						>
 							<Globe class="size-6" />
@@ -314,7 +189,7 @@
 		<div
 			class="flex items-center w-32 h-full md:w-full md:flex-grow px-3 shadow-inner bg-muted rounded mx-1 text-muted-foreground whitespace-nowrap"
 		>
-			<HorizontalAutoScroll text={currentAudioName}></HorizontalAutoScroll>
+			<HorizontalAutoScroll text={$currentAudioName}></HorizontalAutoScroll>
 		</div>
 		<Separator.Root class="-my-1 mx-1 w-[1px] self-stretch bg-dark-10" />
 
@@ -349,7 +224,7 @@
 				<ScrollArea.Root class="relative h-[205px] bg-muted rounded-md">
 					<ScrollArea.Viewport class="h-full w-full">
 						<ScrollArea.Content>
-							{#each audioList as { name, url }}
+							{#each $audioList ?? [] as { name, url }}
 								<div class="rounded-button" use:cursorFlow>
 									<DropdownMenu.Item
 										on:click={() => handleRemoteAudio(url, name)}
@@ -400,9 +275,3 @@
 	accept=".mp3, .mp4"
 	on:change|stopPropagation={handleFileChange}
 />
-<canvas
-	style="width: 100%; height: 100vh;"
-	id="babylon-canvas"
-	width="100%"
-	height="100vh"
-></canvas>

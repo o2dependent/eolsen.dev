@@ -1,52 +1,13 @@
 ---
 import MainLayout from "$layouts/MainLayout.astro";
 import Header from "$lib/Header/Header.svelte";
-import SphereVisualizer from "$lib/SphereVisualizer/SphereVisualizer.svelte";
+import SphereVisualizer from "$lib/SphereVisualizer/SphereVisualizer.astro";
 ---
 
 <MainLayout description={`Music Sphere Visualizer`} title="Music" hideFooter>
-	<div class="fixed top-0 left-0 w-full">
+	<div class="fixed top-0 left-0 w-full z-50">
 		<Header client:load />
 	</div>
 
-	<SphereVisualizer
-		startIndex={10}
-		audioList={[
-			{
-				name: "kthx - Includes mario samples.",
-				url: "/audio/kthx - Includes mario samples.mp3",
-			},
-			{
-				name: "kthx - 80s induced coma",
-				url: "/audio/kthx - 80s induced coma.mp3",
-			},
-			{
-				name: "kthx - Why Am I Up At 5am.",
-				url: "/audio/kthx - Why Am I Up At 5am.mp3",
-			},
-			{
-				name: "kthx - Cruising Down The Street In My Nintendo 64",
-				url: "/audio/kthx - Cruising Down The Street In My Nintendo 64.mp3",
-			},
-			{ name: "kthx - raul labrador", url: "/audio/kthx - raul labrador.mp3" },
-			{ name: "kthx - $ENTINEL", url: "/audio/kthx - $ENTINEL.mp3" },
-
-			{ name: "kthx - 12mg", url: "/audio/kthx - 12mg.mp3" },
-			{
-				name: "kthx - Talk (ROUGH ASF)",
-				url: "/audio/kthx - Talk (ROUGH ASF).mp3",
-			},
-			{ name: "EOlsen - Hassy", url: "/audio/EOlsen - Hassy.mp3" },
-			{ name: "EOlsen - Eat", url: "/audio/EOlsen - Eat.mp3" },
-			{
-				name: "EOlsen - little guys",
-				url: "/audio/EOlsen - little_guys_song.mp3",
-			},
-			{
-				name: "Stepa K - Shadow (Enzuna Remix)",
-				url: "/audio/Stepa K - Shadow (Enzuna Remix).mp3",
-			},
-		]}
-		client:only
-	/>
+	<SphereVisualizer client:load />
 </MainLayout>
