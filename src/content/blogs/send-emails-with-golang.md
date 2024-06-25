@@ -15,18 +15,18 @@ First you will need a GMail account and Golang installed on your machine.
 
 Make sure you have 2FA enabled on your GMail account or you will get an error.
 
-![alt text](send-emails-with-golang/manage-account-2fa.png)
-![alt text](send-emails-with-golang/2fa.png)
+![Manage account option to get to 2FA settings](/send-emails-with-golang/manage-account-2fa.png "Manage account option to get to 2FA settings")
+![2FA setting](/send-emails-with-golang/2fa.png "2FA setting")
 
 After enabling 2FA we will enabled IMAP.
 
-![alt text](send-emails-with-golang/setting-to-pop-imap.png)
-![alt text](send-emails-with-golang/pop-imap.png)
+![Setting select to get to pop/imap settings](/send-emails-with-golang/setting-to-pop-imap.png "Setting select to get to pop/imap settings")
+![Pop/imap settings](/send-emails-with-golang/pop-imap.png "Pop/imap settings")
 
 Then search "App" and select "App Passwords". Then create your app using whatever name you'd like and save the password in the modal.
 
-![alt text](send-emails-with-golang/search-app-passwords.png)
-![alt text](send-emails-with-golang/app-password.png)
+![Search for app passwords](/send-emails-with-golang/search-app-passwords.png "Search for app passwords")
+![App passwords page](/send-emails-with-golang/app-password.png "App passwords page")
 
 ## Code
 
