@@ -20,6 +20,7 @@ import {
 } from "@babylonjs/core";
 import { lerp } from "../math";
 import { getInterpolatedValue } from "../getInterpolatedValue";
+import { shaderColorThemes } from "./shaderColorThemes";
 
 export class SphereVisualizer {
 	scene: Scene;
@@ -29,12 +30,8 @@ export class SphereVisualizer {
 	vertexPosBuffer: Nullable<FloatArray>;
 	particleSystem: ParticleSystem;
 	seizureMode: boolean = false;
-	shaderColors = {
-		colorA: new Color3(1, 0.1, 0.21),
-		colorB: new Color3(1, 0.56, 0.1),
-		colorC: new Color3(1, 0.2, 0.1),
-		colorD: new Color3(0.1, 0.1, 0.1),
-	};
+	shaderColorTheme = "Candy";
+	shaderColors = shaderColorThemes["Candy"];
 
 	analyser: Meyda.MeydaAnalyzer | null = null;
 	features: Record<string, any> = {};
@@ -113,6 +110,12 @@ export class SphereVisualizer {
 
 		// const hl = new HighlightLayer("hl1", scene);
 		// hl.addMesh(this.ribbon, this.shaderColors.colorA);
+	}
+
+	setColorTheme(themeName: keyof typeof shaderColorThemes) {
+		if (!Object.keys(shaderColorThemes).includes(themeName)) return;
+		this.shaderColorTheme = themeName;
+		this.shaderColors = shaderColorThemes[themeName];
 	}
 
 	toggleWireframe() {
