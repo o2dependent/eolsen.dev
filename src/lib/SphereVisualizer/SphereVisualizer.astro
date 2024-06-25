@@ -6,8 +6,8 @@ import VisualizerControllers from "./VisualizerControllers.svelte";
 const { audioList, startIndex } = Astro.props;
 ---
 
-<VisualizerLoader client:load />
+<VisualizerLoader client:only />
 
-<VisualizerControllers client:load />
+<VisualizerControllers client:only />
 
-<SphereVisualizerApp {audioList} {startIndex} client:only />
+<SphereVisualizerApp client:only />
