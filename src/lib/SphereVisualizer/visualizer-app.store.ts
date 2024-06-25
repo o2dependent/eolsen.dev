@@ -58,11 +58,11 @@ export const setAnalyzer = () => {
 	const $analyzer = get(analyzer);
 	const $visualizerApp = get(visualizerApp);
 
-	if (analyzer) $analyzer?.stop();
+	if ($analyzer) $analyzer?.stop();
 
 	analyzer.set(
 		Meyda.createMeydaAnalyzer({
-			audioContext: audioContext,
+			audioContext: $audioContext,
 			source: $source,
 			bufferSize: 512,
 			featureExtractors: [
@@ -100,7 +100,8 @@ export const setAnalyzer = () => {
 export const loadAudioBuffer = async (
 	buffer: string | ArrayBuffer | null | undefined,
 ) => {
-	if (playing) stopAudio();
+	const $playing = get(playing);
+	if ($playing) stopAudio();
 
 	if (!buffer) return console.error("No buffer provided");
 	if (!(buffer instanceof ArrayBuffer)) return console.error("Invalid buffer");
@@ -136,7 +137,7 @@ export const playAudio = () => {
 	const $audioBuffer = get(audioBuffer);
 	const $willRecord = get(willRecord);
 	const $playing = get(playing);
-	if ($playing || !audioBuffer) {
+	if ($playing || !$audioBuffer) {
 		return;
 	}
 	if ($willRecord) {
@@ -174,7 +175,7 @@ export const stopAudio = () => {
 	}
 };
 
-export const togglePlay = () => (playing ? stopAudio() : playAudio());
+export const togglePlay = () => (get(playing) ? stopAudio() : playAudio());
 
 export const createVisualizerApp = (canvas: HTMLCanvasElement) => {
 	visualizerApp.set(new SphereVisualizerApp(canvas));
