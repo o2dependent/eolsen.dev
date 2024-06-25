@@ -228,7 +228,7 @@
 					<ScrollArea.Root class="relative h-[205px] bg-muted rounded-md">
 						<ScrollArea.Viewport class="h-full w-full">
 							<ScrollArea.Content>
-								{#each $audioList ?? [] as { name, url }}
+								{#each audioList ?? [] as { name, url }}
 									<div class="rounded-button" use:cursorFlow>
 										<DropdownMenu.Item
 											on:click={() => handleRemoteAudio(url, name)}

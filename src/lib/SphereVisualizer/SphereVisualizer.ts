@@ -476,6 +476,7 @@ export class SphereVisualizer {
 	setMeydaFeatures(features: Record<string, any>) {
 		// multiply all highend buffer values by 5 and replace them to the buffer
 		this.features = features;
+		console.log(features);
 		const lSpec = this.features?.loudness?.specific;
 		// hardcoding, but not actually using the variable because it makes it easier to see what bands you are targeting
 		// const lSpecLength = 24
