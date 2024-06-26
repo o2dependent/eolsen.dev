@@ -1,17 +1,17 @@
 ---
-title: Send emails with golang
-description: How to send emails easy and cheap with golang.
+title: Send emails with GoLang
+description: How to send emails easy and cheap with GoLang.
 pubDate: "Jun 25 2024"
 heroImage: "/blog-placeholder-2.jpg"
 tags:
-  - Golang
+  - GoLang
 ---
 
-I recently needed to send emails and chose Golang to send them since I've been enjoying the language. It's pretty easy to set up and free if you aren't sending thousands a day. I have another post going over how to make a serverless endpoint for sending your emails in an upcoming blog post.
+I recently needed to send emails and chose GoLang to send them since I've been enjoying the language. It's pretty easy to set up and free if you aren't sending thousands a day. I have another post going over how to make a serverless endpoint for sending your emails in an upcoming blog post.
 
 ## Setup
 
-First you will need a GMail account and Golang installed on your machine.
+First you will need a GMail account and GoLang installed on your machine.
 
 Make sure you have 2FA enabled on your GMail account or you will get an error.
 
@@ -30,7 +30,7 @@ Then search "App" and select "App Passwords". Then create your app using whateve
 
 ## Code
 
-Finally we can move onto making and testing our Golang program. I will be using `os.Getenv()` to get our email and password, but you can just put these in plain variables to make sure you configured your account properly.
+Finally we can move onto making and testing our GoLang program. I will be using `os.Getenv()` to get our email and password, but you can just put these in plain variables to make sure you configured your account properly.
 
 ```go
 package main
