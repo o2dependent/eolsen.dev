@@ -20,6 +20,7 @@ import {
 } from "@babylonjs/core";
 import { lerp } from "../math";
 import { getInterpolatedValue } from "../getInterpolatedValue";
+import type Meyda from "meyda";
 
 export class ArtGallery {
 	scene: Scene;
@@ -36,7 +37,7 @@ export class ArtGallery {
 		colorD: new Color3(0.1, 0.1, 0.1),
 	};
 
-	analyser: Meyda.MeydaAnalyzer | null = null;
+	analyzer: ReturnType<typeof Meyda.createMeydaAnalyzer> | null = null;
 	features: Record<string, any> = {};
 
 	constructor(scene: Scene) {

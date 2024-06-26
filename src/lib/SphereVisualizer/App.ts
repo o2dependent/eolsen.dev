@@ -25,7 +25,7 @@ export class SphereVisualizerApp {
 
 	recorder: VideoRecorder | null = null;
 
-	analyser: Meyda.MeydaAnalyzer | null = null;
+	analyzer: ReturnType<typeof Meyda.createMeydaAnalyzer> | null = null;
 	features: Record<string, any> = {};
 
 	activeNodes: "sphereVisualizer"[] = ["sphereVisualizer"];
@@ -124,9 +124,9 @@ export class SphereVisualizerApp {
 		this.scene = scene;
 	}
 
-	setMeydaAnalyser(analyser: Meyda.MeydaAnalyzer) {
-		this.analyser = analyser;
-		this.nodes?.forEach((node) => node?.setMedyaAnalyser?.(analyser));
+	setMeydaAnalyzer(analyzer: ReturnType<typeof Meyda.createMeydaAnalyzer>) {
+		this.analyzer = analyzer;
+		this.nodes?.forEach((node) => node?.setMedyaAnalyzer?.(analyzer));
 	}
 
 	setMeydaFeatures(features: Record<string, any>) {

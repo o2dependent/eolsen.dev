@@ -1,7 +1,7 @@
 import { get, writable } from "svelte/store";
 import { SphereVisualizerApp } from "./App";
 import { loadingGL } from "./visualizer-loading.store";
-import Meyda from "meyda";
+import Meyda, { type MeydaAudioFeature } from "meyda";
 
 export const visualizerApp = writable<SphereVisualizerApp | null>(null);
 export const currentAudioName = writable("Loading...");
@@ -50,7 +50,7 @@ export const audioList = [
 const startIndex = 10;
 let audioBuffer: AudioBuffer | null;
 let source: AudioBufferSourceNode | null;
-let analyzer: Meyda.MeydaAnalyzer | null;
+let analyzer: ReturnType<typeof Meyda.createMeydaAnalyzer> | null;
 let audioContext: AudioContext | null;
 
 export const setAnalyzer = () => {
@@ -82,7 +82,7 @@ export const setAnalyzer = () => {
 			"spectralSlope",
 			"spectralSpread",
 			"buffer",
-		] satisfies Meyda.MeydaAudioFeature[],
+		] satisfies MeydaAudioFeature[],
 		inputs: 2,
 		callback: (_features: Record<string, any>) => {
 			// features.set = _features;
@@ -90,7 +90,7 @@ export const setAnalyzer = () => {
 		},
 	});
 	analyzer?.start();
-	analyzer && $visualizerApp?.setMeydaAnalyser(analyzer);
+	analyzer && $visualizerApp?.setMeydaAnalyzer(analyzer);
 };
 
 export const loadAudioBuffer = async (

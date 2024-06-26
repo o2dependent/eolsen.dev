@@ -14,13 +14,12 @@ import {
 	ParticleSystem,
 	Texture,
 	MeshParticleEmitter,
-	ShadowGenerator,
-	DirectionalLight,
 	type Nullable,
 } from "@babylonjs/core";
 import { lerp } from "../math";
 import { getInterpolatedValue } from "../getInterpolatedValue";
 import { shaderColorThemes } from "./shaderColorThemes";
+import type Meyda from "meyda";
 
 export class SphereVisualizer {
 	scene: Scene;
@@ -33,7 +32,7 @@ export class SphereVisualizer {
 	shaderColorTheme = "Candy";
 	shaderColors = shaderColorThemes["Candy"];
 
-	analyser: Meyda.MeydaAnalyzer | null = null;
+	analyzer: ReturnType<typeof Meyda.createMeydaAnalyzer> | null = null;
 	features: Record<string, any> = {};
 
 	constructor(scene: Scene) {
@@ -472,8 +471,8 @@ export class SphereVisualizer {
 		// this.ribbon.material.wireframe = rms > 0.5;
 	}
 
-	setMeydaAnalyser(analyser: Meyda.MeydaAnalyzer) {
-		this.analyser = analyser;
+	setMeydaAnalyzer(analyzer: ReturnType<typeof Meyda.createMeydaAnalyzer>) {
+		this.analyzer = analyzer;
 	}
 
 	setMeydaFeatures(features: Record<string, any>) {

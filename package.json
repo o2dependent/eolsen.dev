@@ -10,6 +10,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/check": "^0.7.0",
     "@astrojs/mdx": "^3.0.1",
     "@astrojs/rss": "^4.0.6",
     "@astrojs/sitemap": "^3.1.5",
@@ -34,6 +35,7 @@
     "svelte-select": "^5.8.3",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.4.1",
+    "typescript": "^5.5.2",
     "unified": "^11.0.4"
   },
   "devDependencies": {
