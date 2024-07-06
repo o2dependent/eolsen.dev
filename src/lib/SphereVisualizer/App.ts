@@ -10,7 +10,6 @@ import {
 	FreeCamera,
 	PointLight,
 	Color4,
-	WebGPUEngine,
 	VideoRecorder,
 } from "@babylonjs/core";
 import { SphereVisualizer } from "./SphereVisualizer";
@@ -19,7 +18,7 @@ import type Meyda from "meyda";
 export class SphereVisualizerApp {
 	nodes: any[] = [];
 
-	engine: WebGPUEngine | null = null;
+	engine: Engine | null = null;
 	scene: Scene | null = null;
 	camera: ArcRotateCamera | FreeCamera | null = null;
 
@@ -41,8 +40,9 @@ export class SphereVisualizerApp {
 
 	async setup() {
 		// initialize babylon scene and engine
-		const engine = new WebGPUEngine(this.canvas);
-		await engine.initAsync();
+		const engine = new Engine(this.canvas);
+		// const engine = new Engine(this.canvas);
+		// await engine.initAsync();
 		const scene = new Scene(engine);
 
 		scene.clearColor = new Color4(0, 0, 0, 1);
