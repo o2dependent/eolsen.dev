@@ -39,6 +39,10 @@ export const audioList = [
 	{ name: "EOlsen - Hassy", url: "/audio/EOlsen - Hassy.mp3" },
 	{ name: "EOlsen - Eat", url: "/audio/EOlsen - Eat.mp3" },
 	{
+		name: "EOlsen - everything falls apart",
+		url: "/audio/EOlsen - everything falls apart.mp3",
+	},
+	{
 		name: "EOlsen - little guys",
 		url: "/audio/EOlsen - little_guys_song.mp3",
 	},
