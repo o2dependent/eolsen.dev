@@ -12,7 +12,7 @@ heroImage: "/personal-site-screenshot.png"
 
 ## Purpose
 
-I wanted to move my site from Sveltekit to Astro and spruce up aspect of the site for a more fun feel. I wanted to add in a couple of things I have made that I'm proud of and get over my "[publishing agoraphobia](/blog/publishing-agoraphobia)" that I've struggled with for years. Adding elements that I feel represent myself and my process was also an important motivator.
+I wanted to move my site from Sveltekit to Astro and spruce up aspect of the site for a more fun feel.
 
 ## Tech Stack
 
