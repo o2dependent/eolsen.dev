@@ -22,6 +22,8 @@ I chose this because I wanted to try out Remix. I only used Remix in small proje
 
 ### Styling: Radix
 
+I like the style of Radix for internal tools and they have a good suite of components that make developing modals, data grids, and inputs easier. It has been my go to choice if I am using React for a couple projects now so it made scaffolding the application a breeze.
+
 # Challenges Faced
 
 ## Remix SSR
