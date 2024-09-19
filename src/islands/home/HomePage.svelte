@@ -9,6 +9,7 @@
 	// @ts-ignore
 	import { navigate } from "astro:transitions/client";
 	import GlitchText from "./GlitchText.svelte";
+	import Metaballs from "$lib/metaballs/Metaballs.svelte";
 
 	let execute: (command: string) => void;
 	let lines: TerminalLine[] = [
@@ -76,13 +77,14 @@
 <div class="overflow-x-hidden">
 	<div class="relative h-0 w-0">
 		<div class="absolute left-0 top-0 rainbow">
-			{#await import("$lib/metaballs/Metaballs.svelte")}
+			<Metaballs bind:width={canvasWidth} bind:height={canvasHeight} />
+			<!-- {#await import("$lib/metaballs/Metaballs.svelte")}
 				<div class="w-full h-full bg-black absolute top-0 left-0" />
 			{:then Module}
 				<div>
 					<Module.default bind:width={canvasWidth} bind:height={canvasHeight} />
 				</div>
-			{/await}
+			{/await} -->
 		</div>
 	</div>
 	<div class="background-shift h-full w-full font-roboto text-gray-50">
