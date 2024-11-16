@@ -1,21 +1,15 @@
 <script lang="ts">
+	import { VHSApp } from "./VHSApp.ts";
 	import { onMount } from "svelte";
-	import { loadingModule } from "./visualizer-loading.store";
-	import { createVisualizerApp } from "./visualizer-app.store";
 
 	onMount(() => {
-		loadingModule.set(false);
-
 		const canvas = document.getElementById(
 			"babylon-canvas",
 		) as HTMLCanvasElement | null;
 		if (!canvas) return;
 
-		const { dispose } = createVisualizerApp(canvas);
-
-		return () => {
-			dispose();
-		};
+		const app = new VHSApp(canvas);
+		app.setup();
 	});
 </script>
 
