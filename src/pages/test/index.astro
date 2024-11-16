@@ -1,5 +1,8 @@
 ---
+import MainLayout from "$layouts/MainLayout.astro";
 import VHS from "$lib/vhs/VHS.svelte";
 ---
 
-<VHS client:only />
+<MainLayout hideFooter hideCursorCircle description="" title="">
+	<VHS client:only />
+</MainLayout>
