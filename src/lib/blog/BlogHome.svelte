@@ -57,7 +57,7 @@
 				<h2 class="text-2xl font-black">
 					{blog.title}
 				</h2>
-				<div class="flex flex-grow gap-2">
+				<div class="flex flex-grow gap-2 overflow-x-auto w-full">
 					{#each blog.tags as tag}
 						<button
 							type="button"
