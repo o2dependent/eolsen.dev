@@ -32,7 +32,7 @@ After researching libraries to analyze audio for a bit I found Meyda which had e
 
 I needed a clean component library to use to add controls and BitsUI fits my aesthetic. I've been using it in my past couple one off projects and after ripping their default styles I found it to be one of the easiest component libraries out there. Currently it isn't as large as others, but it has had everything I need.
 
-# Challenges Faced
+# Challenges
 
 ## Learning BABYLONjs
 

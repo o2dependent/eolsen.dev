@@ -18,11 +18,11 @@ My client needed an application to replace their current excel file workflow whe
 
 ### UI Framework: React and Remix
 
-I chose this because I wanted to try out Remix. I only used Remix in small projects where I wasn't doing much other than making a basic React app, and was far too confident going into this project. I have become very accustom to Astro's way of setting up API endpoints and handling server side data, which made it kinda jarring at first. Overall I don't think I would use Remix over Astro again for various reasons I will touch on in the challenges faced section.
+I chose this because I wanted to try out Remix. I only used Remix in small projects where I wasn't doing much other than making a basic React app, and was far too confident going into this project. I have become very accustom to Astro's way of setting up API endpoints and handling server side data, which made it kinda jarring at first. Overall I don't think I would use Remix over Astro again for various reasons I will touch on in the Challenges section.
 
 ### Styling: Radix
 
-# Challenges Faced
+# Challenges
 
 ## Remix SSR
 

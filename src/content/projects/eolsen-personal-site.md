@@ -12,7 +12,7 @@ heroImage: "/personal-site-screenshot.png"
 
 ## Purpose
 
-I wanted to move my site from Sveltekit to Astro and spruce up aspect of the site for a more fun feel. I wanted to add in a couple of things I have made that I'm proud of and get over my "[publishing agoraphobia](/blog/publishing-agoraphobia)" that I've struggled with for years. Adding elements that I feel represent myself and my process was also an important motivator.
+I wanted to move my site from Sveltekit to Astro and spruce up aspect of the site for a more fun feel. Adding elements that I feel represent myself and my process was also an important motivator.
 
 ## Tech Stack
 
@@ -20,7 +20,7 @@ I wanted to move my site from Sveltekit to Astro and spruce up aspect of the sit
 
 I am by far the most familiar with Astro as a framework at this point. As a developer that is proficient in multiple frontend UI frameworks (React, Svelte, Solid, etc) Astro allows me to leverage all ecosystems to build faster and stronger applications. It is also the framework that's most similar to Sveltekit and I have had the least issues with in general.
 
-# Challenges Faced
+# Challenges
 
 ## Porting everything over
 

@@ -24,7 +24,7 @@ React served as the foundation for all frontend repositories, making it a necess
 
 I am a strong advocate for Nest.js for similar reasons as my support for React. Its excellent type safety features make it a reliable choice for production environments. The modular nature of Nest.js allowed me to focus on creating CMS modules specifically for content type and page data management. Since most functionality remains consistent across applications, integrating these modules into the existing content manager was a fantastic solution.
 
-# Challenges Faced
+# Challenges
 
 ## Type Safety
 
