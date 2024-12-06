@@ -3,7 +3,7 @@ title: EOlsen Personal Site (sveltekit version)
 description: My personal site built with sveltekit and tailwindcss.
 pubDate: "Mar 21 2023"
 projectLink: https://eolsen.dev
-githubLink: https://github.com/o2dependent/eolsen.dev/tree/sveltekit
+githubLink: https://github.com/o2dependent/eolsen.dev
 tags: ["Svelte", "Tailwind"]
 heroImage: "/sveltekit-personal-site-screenshot.png"
 ---

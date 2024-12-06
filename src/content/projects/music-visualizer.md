@@ -3,7 +3,7 @@ title: Music Visualizer
 description: Music Visualizer using Meyda and BABYLONjs
 pubDate: "Jan 30 2024"
 projectLink: "https://eolsen.dev/music"
-githubLink: "https://github.com/o2dependent/OlsenOS-Portfolio.git"
+githubLink: "https://github.com/o2dependent/eolsen.dev"
 tags: ["Svelte", "Astro", "Meyda", "BABYLONjs"]
 heroImage: "/visualizer-screenshot.jpg"
 ---

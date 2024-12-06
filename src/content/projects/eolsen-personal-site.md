@@ -3,7 +3,7 @@ title: EOlsen Personal Site (astro version)
 description: My personal site rebuilt with Astro.
 pubDate: "Jun 6 2024"
 projectLink: https://eolsen.dev
-githubLink: https://github.com/o2dependent
+githubLink: https://github.com/o2dependent/eolsen.dev
 tags: ["Astro", "Tailwind"]
 heroImage: "/personal-site-screenshot.png"
 ---
