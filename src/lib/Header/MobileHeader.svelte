@@ -6,46 +6,43 @@
 	let menu: HTMLElement;
 	let menuItems: HTMLElement[] = [];
 	let showMenu = false;
+	let animations: (null | gsap.core.Tween)[] = [];
 
 	$: {
+		animations?.forEach((a) => a?.pause());
 		if (typeof window !== "undefined") {
 			if (active) {
 				showMenu = true;
 				for (let i = 0; i < menuItems.length; i++) {
 					if (!menuItems?.[i]) continue;
-					gsap.fromTo(
-						menuItems[i],
-						{ x: -100, opacity: 0 },
-						{
-							x: 0,
-							opacity: 1,
-							duration: 0.5,
-							delay: i * 0.1 + 0.25,
-							ease: "power3.out",
-						},
-					);
+					const animation = gsap.to(menuItems[i], {
+						x: 0,
+						opacity: 1,
+						duration: 0.5,
+						delay: i * 0.1 + 0.25,
+						ease: "power3.out",
+					});
+					animations.push(animation);
 				}
-				gsap.to(menu, {
+				const animation = gsap.to(menu, {
 					backgroundColor: "rgb(0 0 0 / 0.75)",
 					"--tw-backdrop-blur": "blur(16px)",
 					duration: 0.25 + menuItems.length * 0.1,
 				});
+				animations.push(animation);
 			} else {
 				for (let i = 0; i < menuItems.length; i++) {
 					if (!menuItems?.[i]) continue;
-					gsap.fromTo(
-						menuItems[i],
-						{ x: 0, opacity: 1 },
-						{
-							x: -100,
-							opacity: 0,
-							duration: 0.3,
-							delay: i * 0.01,
-							ease: "power3.out",
-						},
-					);
+					const animation = gsap.to(menuItems[i], {
+						x: -100,
+						opacity: 0,
+						duration: 0.3,
+						delay: i * 0.01,
+						ease: "power3.out",
+					});
+					animations.push(animation);
 				}
-				gsap
+				const animation = gsap
 					.to(menu, {
 						backgroundColor: "rgb(0 0 0 / 0)",
 						"--tw-backdrop-blur": "blur(0px)",
@@ -54,6 +51,7 @@
 					.eventCallback("onComplete", () => {
 						showMenu = false;
 					});
+				animations.push(animation);
 			}
 		}
 	}
@@ -65,46 +63,28 @@
 		bind:this={menu}
 		class:flex={showMenu}
 		class:hidden={!showMenu}
-		class="fixed top-0 left-0 w-full pt-20 h-full bg-black/75 backdrop-blur-lg z-40 px-4 flex flex-col gap-4 overflow-hidden"
+		class="fixed top-0 left-0 w-full pt-20 h-full bg-black/75 backdrop-blur-lg z-40 px-4 flex flex-col gap-4 overflow-hidden text-3xl"
 	>
-		<a
-			on:click={() => (active = false)}
-			class="menu-item"
-			bind:this={menuItems[0]}
-			href="/"
+		<a on:click={() => (active = false)} bind:this={menuItems[0]} href="/"
 			>Home
 		</a>
-		<a
-			on:click={() => (active = false)}
-			class="menu-item"
-			bind:this={menuItems[1]}
-			href="/#about"
+		<a on:click={() => (active = false)} bind:this={menuItems[1]} href="/#about"
 			>About
 		</a>
 		<a
 			on:click={() => (active = false)}
-			class="menu-item"
 			bind:this={menuItems[2]}
 			href="/project"
 			>Projects
 		</a>
-		<a
-			on:click={() => (active = false)}
-			class="menu-item"
-			bind:this={menuItems[3]}
-			href="/blog"
+		<a on:click={() => (active = false)} bind:this={menuItems[3]} href="/blog"
 			>Blog
 		</a>
-		<a
-			on:click={() => (active = false)}
-			class="menu-item"
-			bind:this={menuItems[4]}
-			href="/music"
+		<a on:click={() => (active = false)} bind:this={menuItems[4]} href="/music"
 			>Music
 		</a>
 		<a
 			on:click={() => (active = false)}
-			class="menu-item"
 			bind:this={menuItems[5]}
 			href="mailto:131eolsen@gmail.com"
 			>Contact
@@ -146,9 +126,3 @@
 		</a>
 	</div>
 </nav>
-
-<style lang="postcss">
-	.menu-item {
-		@apply text-3xl;
-	}
-</style>
