@@ -2,14 +2,13 @@
 	import TerminalBase from "$lib/terminal/TerminalBase.svelte";
 	import type { TerminalLine } from "$lib/terminal/terminal";
 	import { onMount } from "svelte";
-	import { fade, fly } from "svelte/transition";
+	import { fly } from "svelte/transition";
 	import { intersectionObserver } from "$lib/actions/intersectionObserver";
 	import Header from "$lib/Header/Header.svelte";
 	import type { DirectoryFile } from "$stores/directory.store";
 	// @ts-ignore
 	import { navigate } from "astro:transitions/client";
 	import GlitchText from "./GlitchText.svelte";
-	import Metaballs from "$lib/metaballs/Metaballs.svelte";
 
 	let execute: (command: string) => void;
 	let lines: TerminalLine[] = [
@@ -65,7 +64,12 @@
 		isMounted = true;
 		window.addEventListener("resize", () => {
 			canvasWidth = window.innerWidth;
-			canvasHeight = window.innerHeight;
+			canvasHeight =
+				halfTerminalHeight +
+				textHeight +
+				terminalMarginTop +
+				navHeight +
+				containerPaddingTop;
 		});
 	});
 
