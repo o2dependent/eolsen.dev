@@ -24,7 +24,7 @@
 		if (!dirArr) {
 			dirArr = curDir;
 		}
-		let dir = $directory.contents[dirArr[0]] as Directory;
+		let dir = $directory?.contents?.[dirArr[0]] as Directory;
 		let error: string | null = null;
 		for (let i = 1; i < dirArr.length; i++) {
 			const newDir = dir?.contents?.[dirArr[i]];
@@ -53,7 +53,9 @@
 					print({ text: error, class: "text-red-500" });
 					return;
 				}
-				print({ text: Object.keys(dir.contents).join("\t") });
+				print({
+					text: Object?.keys?.(dir?.contents ?? {})?.join?.("\t") ?? "",
+				});
 			},
 		},
 		cd: {

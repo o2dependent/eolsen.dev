@@ -5,6 +5,7 @@ import HomePage from "../islands/home/HomePage.svelte";
 import { getCollection } from "astro:content";
 import PostCard from "$components/PostCard.svelte";
 import StickyLink from "$components/StickyLink.svelte";
+import Header from "$lib/Header/Header.svelte";
 
 const projects = (await getCollection("projects"))
 	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -18,66 +19,74 @@ const blogs = (await getCollection("blogs"))
 	description={`Home page for Ethan Olsen's personal website.`}
 	title="Home"
 >
-	<HomePage client:load>
-		<div slot="content" class="flex flex-col gap-4">
+	<div class="overflow-x-hidden">
+		<div class="background-shift h-full w-full font-roboto text-gray-50">
+			<Header client:load />
 			<div
-				class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+				class="-mt-1 flex h-full w-full flex-col overflow-hidden bg-gray-950 pb-32 pt-32"
 			>
-				<div class="flex justify-between items-baseline">
-					<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
-					<StickyLink
-						client:load
-						href="/project"
-						class="px-2 py-1 rounded text-xl"
+				<HomePage client:load />
+				<div slot="content" class="flex flex-col gap-4">
+					<div
+						class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
 					>
-						View All
-					</StickyLink>
-				</div>
-				<div
-					class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
-				>
-					{
-						projects?.map((project) => (
-							<PostCard
+						<div class="flex justify-between items-baseline">
+							<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
+							<StickyLink
 								client:load
-								title={project.data.title}
-								href={`/project/${project.slug}`}
-								image={project.data.heroImage}
-								pubDate={project.data.pubDate}
-							/>
-						))
-					}
-				</div>
-			</div>
-			<div
-				class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
-			>
-				<div class="flex justify-between items-baseline">
-					<h2 id="blogs" class="!mt-0 text-5xl md:mb-4">Blog Posts</h2>
-					<StickyLink
-						client:load
-						href="/blog"
-						class="px-2 py-1 rounded text-xl"
+								href="/project"
+								class="px-2 py-1 rounded text-xl"
+							>
+								View All
+							</StickyLink>
+						</div>
+						<div
+							class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+						>
+							{
+								projects?.map((project) => (
+									<PostCard
+										client:load
+										title={project.data.title}
+										href={`/project/${project.slug}`}
+										image={project.data.heroImage}
+										pubDate={project.data.pubDate}
+									/>
+								))
+							}
+						</div>
+					</div>
+					<div
+						class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
 					>
-						View All
-					</StickyLink>
-				</div>
-				<div
-					class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
-				>
-					{
-						blogs?.map((blog) => (
-							<PostCard
+						<div class="flex justify-between items-baseline">
+							<h2 id="blogs" class="!mt-0 text-5xl md:mb-4">Blog Posts</h2>
+							<StickyLink
 								client:load
-								title={blog.data.title}
-								href={`/blog/${blog.slug}`}
-								image={blog.data.heroImage}
-								pubDate={blog.data.pubDate}
-							/>
-						))
-					}
+								href="/blog"
+								class="px-2 py-1 rounded text-xl"
+							>
+								View All
+							</StickyLink>
+						</div>
+						<div
+							class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+						>
+							{
+								blogs?.map((blog) => (
+									<PostCard
+										client:load
+										title={blog.data.title}
+										href={`/blog/${blog.slug}`}
+										image={blog.data.heroImage}
+										pubDate={blog.data.pubDate}
+									/>
+								))
+							}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-	</HomePage>
+	</div>
 </MainLayout>

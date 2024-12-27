@@ -1,11 +1,15 @@
 ---
 import DesktopLayout from "$layouts/DesktopLayout.astro";
 import DesktopPage from "$islands/desktop/DesktopPage.svelte";
+
+import { createDirectory } from "$stores/createDirectory";
+
+const dir = await createDirectory();
 ---
 
 <DesktopLayout
 	title="OlsenOS Desktop"
 	description="OlsenOS desktop for people who like MacOS, but don't like it being usable for everyday tasks or pretty much anything except looking at the things Ethan Olsen has made."
 >
-	<DesktopPage client:load />
+	<DesktopPage dir={dir} client:load />
 </DesktopLayout>

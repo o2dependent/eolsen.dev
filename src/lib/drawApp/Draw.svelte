@@ -319,14 +319,14 @@
 							</div>
 							<div class="flex flex-col gap-1 px-2">
 								{#each layers as layer, idx}
-									<button
-										type="button"
+									<div
 										class="flex gap-2 items-center bg-white rounded py-1 px-2"
 										class:bg-opacity-15={idx === layerSelectedIdx}
 										class:bg-opacity-5={idx !== layerSelectedIdx}
-										on:click={() => changeLayer(idx)}
 									>
-										<label
+										<button
+											type="button"
+											on:click={() => changeLayer(idx)}
 											class="relative h-5 w-5 flex items-center justify-center cursor-pointer"
 										>
 											<input
@@ -346,7 +346,7 @@
 											<div class="peer-checked/visible:block hidden">
 												<EyeOpenIcon />
 											</div>
-										</label>
+										</button>
 
 										<!-- <input
 												type="text"
@@ -372,7 +372,7 @@
 										>
 											<TrashIcon />
 										</button>
-									</button>
+									</div>
 								{/each}
 							</div>
 						</div>

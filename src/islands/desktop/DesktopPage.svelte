@@ -1,11 +1,15 @@
 <script lang="ts">
 	import BiosBootScreen from "$lib/biosBootScreen/BiosBootScreen.svelte";
+	import { directory, type Directory } from "$stores/directory.store";
 	import { onMount } from "svelte";
+
+	export let dir: Directory;
 
 	let loaded = false;
 
 	onMount(() => {
 		window.document.body.setAttribute("data-href", window.location.pathname);
+		directory.set(dir);
 	});
 </script>
 

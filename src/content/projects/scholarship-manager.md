@@ -5,7 +5,7 @@ pubDate: "Jan 30 2024"
 projectLink: ""
 githubLink: ""
 tags: ["React", "Remix", "Supabase", "Postgres"]
-heroImage: "/blog-placeholder-2.jpg"
+heroImage: "/scholarship-manager.png"
 ---
 
 # Project Overview

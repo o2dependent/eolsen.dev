@@ -2,7 +2,7 @@
 title: Magnetize Your Links
 description: Make your links get stuck on your cursor and add a bit of springiness to your site.
 pubDate: "Feb 10 2024"
-heroImage: "/blog-placeholder-3.jpg"
+heroImage: "/magnetize-links.webp"
 tags:
   - CSS
   - Mini

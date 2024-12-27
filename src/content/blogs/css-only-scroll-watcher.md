@@ -2,7 +2,7 @@
 title: CSS Only Scroll Watcher!
 description: CSS finally has a way of animating scroll without JS! Lets go over how to use it and some use cases for it.
 pubDate: "Dec 20 2023"
-heroImage: "/blog-placeholder-3.jpg"
+heroImage: "/scroll-watcher.webp"
 tags:
   - CSS
   - Mini

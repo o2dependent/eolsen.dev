@@ -134,6 +134,7 @@
 		window.addEventListener("mousemove", firstmousemove);
 		window.addEventListener("mousedown", mousedown);
 		window.addEventListener("mouseup", mouseup);
+
 		return () => {
 			window.removeEventListener("mousemove", mousemove);
 			window.removeEventListener("mousemove", firstmousemove);
