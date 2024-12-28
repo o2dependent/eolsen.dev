@@ -43,10 +43,28 @@
 	};
 </script>
 
-<div>
+<div class="relative group">
+	<button
+		style="transform: translateX({pinned || open ? 0 : 400}px)"
+		type="button"
+		class="pointer-events-auto flex min-h-[4.25rem] w-full gap-3 rounded-2xl border border-[#474A56] bg-[#252B3B]/50 py-3 pl-3 pr-6 text-left backdrop-blur-2xl transition-all duration-300 cursor-pointer"
+		on:click|stopPropagation={() => {
+			onClick?.();
+			dismissOnClick && dismissNotification(id);
+		}}
+	>
+		<div class="flex h-full w-9 items-center justify-center">
+			<AppIcon {appKey} size="small" />
+		</div>
+		<div class="h-full text-xs leading-tight">
+			<h4 class="font-semibold">{title}</h4>
+			<p class="line-clamp-3">{description}</p>
+		</div>
+	</button>
 	<button
 		on:click|stopPropagation={() => dismissNotification(id)}
-		class="absolute -left-2 -top-2 ml-auto rounded-full border border-[#474A56] bg-[#252B3B]/50 p-0.5 opacity-0 transition-opacity group-hover:opacity-100"
+		class="absolute -left-2 -top-2 ml-auto rounded-full border border-[#474A56] bg-[#252B3B]/50 p-0.5 opacity-0 transition-opacity hover:opacity-100 group-hover:opacity-100 z-50"
+		aria-label="close notification"
 	>
 		<svg
 			width="16"
@@ -64,22 +82,5 @@
 				d="M368 368L144 144M368 144L144 368"
 			/>
 		</svg>
-	</button>
-	<button
-		style="transform: translateX({pinned || open ? 0 : 400}px)"
-		type="button"
-		class="pointer-events-auto group relative flex min-h-[4.25rem] w-full gap-3 rounded-2xl border border-[#474A56] bg-[#252B3B]/50 py-3 pl-3 pr-6 text-left backdrop-blur-2xl transition-all duration-300 cursor-pointer"
-		on:click|stopPropagation={() => {
-			onClick?.();
-			dismissOnClick && dismissNotification(id);
-		}}
-	>
-		<div class="flex h-full w-9 items-center justify-center">
-			<AppIcon {appKey} size="small" />
-		</div>
-		<div class="h-full text-xs leading-tight">
-			<h4 class="font-semibold">{title}</h4>
-			<p class="line-clamp-3">{description}</p>
-		</div>
 	</button>
 </div>

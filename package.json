@@ -27,21 +27,19 @@
 		"date-fns": "^3.6.0",
 		"gsap": "^3.12.5",
 		"meyda": "^5.6.3",
-		"rehype-parse": "^9.0.0",
-		"rehype-stringify": "^10.0.0",
-		"remark-rehype": "^11.1.0",
+		"showdown": "^2.1.0",
 		"svelte": "^5.14.4",
 		"svelte-awesome-color-picker": "^3.1.4",
 		"svelte-range-slider-pips": "^3.1.4",
 		"svelte-select": "^5.8.3",
 		"tailwind-scrollbar": "^3.0.5",
 		"tailwindcss": "^3.4.1",
-		"typescript": "^5.5.2",
-		"unified": "^11.0.4"
+		"typescript": "^5.5.2"
 	},
 	"devDependencies": {
 		"@types/chroma-js": "^2.4.3",
 		"@types/meyda": "^4.3.8",
+		"@types/showdown": "^2.0.6",
 		"postcss-nesting": "^12.1.5"
 	}
 }

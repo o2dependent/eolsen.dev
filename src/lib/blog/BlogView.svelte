@@ -1,19 +1,12 @@
 <script lang="ts">
+	import showdown from "showdown";
 	import type { BlogFileData } from "$stores/directory.store";
-	import rehypeStringify from "rehype-stringify";
-	import rehypeParse from "rehype-parse";
-	import remarkRehype from "remark-rehype";
-	import { unified } from "unified";
 
 	export let curBlog: BlogFileData & { name: string; body: string };
-	let file: Awaited<ReturnType<(typeof unified)["process"]>>;
+	let file = "";
 	$: {
-		unified()
-			.use(rehypeParse)
-			.use(remarkRehype)
-			.use(rehypeStringify)
-			.process(curBlog.body)
-			.then((f) => (file = f));
+		const f = new showdown.Converter().makeHtml(curBlog.body);
+		file = f;
 	}
 </script>
 
@@ -36,6 +29,6 @@
 		</div>
 	</div>
 </div>
-<div class="prose prose-invert w-full">
-	{@html file?.value ?? ""}
+<div class="prose prose-invert w-full pb-12">
+	{@html file ?? ""}
 </div>

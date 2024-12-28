@@ -1,9 +1,6 @@
 <script lang="ts">
 	import type { ProjectFileData } from "$stores/directory.store";
-	import rehypeStringify from "rehype-stringify";
-	import rehypeParse from "rehype-parse";
-	import remarkRehype from "remark-rehype";
-	import { unified } from "unified";
+	import showdown from "showdown";
 
 	export let scrollContainer: HTMLDivElement;
 	export let curProject: ProjectFileData & {
@@ -13,14 +10,10 @@
 		projectLink?: string;
 	};
 
-	let file: Awaited<ReturnType<(typeof unified)["process"]>>;
+	let file = "";
 	$: {
-		unified()
-			.use(rehypeParse)
-			.use(remarkRehype)
-			.use(rehypeStringify)
-			.process(curProject.body)
-			.then((f) => (file = f));
+		const f = new showdown.Converter().makeHtml(curProject.body);
+		file = f;
 	}
 	const resetScroll = () => {
 		scrollContainer.scrollTo(0, 0);
@@ -49,6 +42,7 @@
 				href={curProject?.githubLink ?? ""}
 				target="_blank"
 				rel="noopener noreferrer"
+				aria-label="github logo"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -67,6 +61,7 @@
 				href={curProject?.projectLink ?? ""}
 				target="_blank"
 				rel="noopener noreferrer"
+				aria-label="website link icon"
 			>
 				<svg
 					width="24"
@@ -87,6 +82,6 @@
 		</div>
 	</div>
 </div>
-<div class="prose prose-invert w-full">
-	{@html file?.value ?? ""}
+<div class="prose prose-invert w-full pb-12">
+	{@html file ?? ""}
 </div>
