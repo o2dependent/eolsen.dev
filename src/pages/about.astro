@@ -1,0 +1,23 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import MainLayout from "../layouts/MainLayout.astro";
+import HomePage from "../islands/home/HomePage.svelte";
+import { getCollection } from "astro:content";
+import PostCard from "$components/PostCard.svelte";
+import StickyLink from "$components/StickyLink.svelte";
+import Header from "$lib/Header/Header.svelte";
+
+const projects = (await getCollection("projects"))
+	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	?.slice(0, 3);
+const blogs = (await getCollection("blogs"))
+	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	?.slice(0, 3);
+---
+
+<MainLayout
+	description={`About Ethan Olsen and his experience as a software developer.`}
+	title="About"
+>
+	<Header client:load />
+</MainLayout>

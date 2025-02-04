@@ -1,11 +1,13 @@
 ---
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import MainLayout from "../layouts/MainLayout.astro";
-import HomePage from "../islands/home/HomePage.svelte";
 import { getCollection } from "astro:content";
 import PostCard from "$components/PostCard.svelte";
 import StickyLink from "$components/StickyLink.svelte";
 import Header from "$lib/Header/Header.svelte";
+import TerminalBase from "$lib/terminal/TerminalBase.svelte";
+import GameOfLifeHero from "$components/game-of-life/GameOfLifeHero.astro";
+import "./index.css";
 
 const projects = (await getCollection("projects"))
 	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -19,71 +21,98 @@ const blogs = (await getCollection("blogs"))
 	description={`Home page for Ethan Olsen's personal website.`}
 	title="Home"
 >
+	<Header client:load />
 	<div class="overflow-x-hidden">
-		<div class="background-shift h-full w-full font-roboto text-gray-50">
-			<Header client:load />
+		<div
+			class="px-4 h-screen flex flex-col items-center justify-center -mt-16 md:-mt-20"
+		>
 			<div
-				class="-mt-1 flex h-full w-full flex-col overflow-hidden bg-gray-950 pb-32 pt-32"
+				style="font-family: StudioFeixenEdgy; filter: backdrop(1px 1px 1px #000)"
+				class="z-10 flex flex-col items-start md:items-center justify-center"
 			>
-				<HomePage client:load />
-				<div slot="content" class="flex flex-col gap-4">
-					<div
-						class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+				<h1 class="font-extrabold text-8xl">Ethan Olsen</h1>
+				<h2 class="text-5xl">Software Engineer</h2>
+				<StickyLink
+					class="font-mono mt-6 text-lg border border-white px-2 py-1 rounded-sm bg-black"
+					href="/about"
+					client:load
+				>
+					Learn about me <svg
+						class="inline bounce-right"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
 					>
-						<div class="flex justify-between items-baseline">
-							<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
-							<StickyLink
-								client:load
-								href="/project"
-								class="px-2 py-1 rounded text-xl"
-							>
-								View All
-							</StickyLink>
-						</div>
-						<div
-							class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+						<path
+							d="M13.2328 16.4569C12.9328 16.7426 12.9212 17.2173 13.2069 17.5172C13.4926 17.8172 13.9673 17.8288 14.2672 17.5431L13.2328 16.4569ZM19.5172 12.5431C19.8172 12.2574 19.8288 11.7827 19.5431 11.4828C19.2574 11.1828 18.7827 11.1712 18.4828 11.4569L19.5172 12.5431ZM18.4828 12.5431C18.7827 12.8288 19.2574 12.8172 19.5431 12.5172C19.8288 12.2173 19.8172 11.7426 19.5172 11.4569L18.4828 12.5431ZM14.2672 6.4569C13.9673 6.17123 13.4926 6.18281 13.2069 6.48276C12.9212 6.78271 12.9328 7.25744 13.2328 7.5431L14.2672 6.4569ZM19 12.75C19.4142 12.75 19.75 12.4142 19.75 12C19.75 11.5858 19.4142 11.25 19 11.25V12.75ZM5 11.25C4.58579 11.25 4.25 11.5858 4.25 12C4.25 12.4142 4.58579 12.75 5 12.75V11.25ZM14.2672 17.5431L19.5172 12.5431L18.4828 11.4569L13.2328 16.4569L14.2672 17.5431ZM19.5172 11.4569L14.2672 6.4569L13.2328 7.5431L18.4828 12.5431L19.5172 11.4569ZM19 11.25L5 11.25V12.75L19 12.75V11.25Z"
+							fill="#fff"></path>
+					</svg>
+				</StickyLink>
+			</div>
+			<GameOfLifeHero client:load />
+		</div>
+		<div
+			class="-mt-1 flex h-full w-full flex-col overflow-hidden bg-gray-950 pb-32 pt-32"
+		>
+			<!-- <HomePage client:load /> -->
+			<div slot="content" class="flex flex-col gap-4">
+				<div
+					class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+				>
+					<div class="flex justify-between items-baseline">
+						<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
+						<StickyLink
+							client:load
+							href="/project"
+							class="px-2 py-1 rounded text-xl"
 						>
-							{
-								projects?.map((project) => (
-									<PostCard
-										client:load
-										title={project.data.title}
-										href={`/project/${project.slug}`}
-										image={project.data.heroImage}
-										pubDate={project.data.pubDate}
-									/>
-								))
-							}
-						</div>
+							View All
+						</StickyLink>
 					</div>
 					<div
-						class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+						class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
 					>
-						<div class="flex justify-between items-baseline">
-							<h2 id="blogs" class="!mt-0 text-5xl md:mb-4">Blog Posts</h2>
-							<StickyLink
-								client:load
-								href="/blog"
-								class="px-2 py-1 rounded text-xl"
-							>
-								View All
-							</StickyLink>
-						</div>
-						<div
-							class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+						{
+							projects?.map((project) => (
+								<PostCard
+									client:load
+									title={project.data.title}
+									href={`/project/${project.slug}`}
+									image={project.data.heroImage}
+									pubDate={project.data.pubDate}
+								/>
+							))
+						}
+					</div>
+				</div>
+				<div
+					class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
+				>
+					<div class="flex justify-between items-baseline">
+						<h2 id="blogs" class="!mt-0 text-5xl md:mb-4">Blog Posts</h2>
+						<StickyLink
+							client:load
+							href="/blog"
+							class="px-2 py-1 rounded text-xl"
 						>
-							{
-								blogs?.map((blog) => (
-									<PostCard
-										client:load
-										title={blog.data.title}
-										href={`/blog/${blog.slug}`}
-										image={blog.data.heroImage}
-										pubDate={blog.data.pubDate}
-									/>
-								))
-							}
-						</div>
+							View All
+						</StickyLink>
+					</div>
+					<div
+						class="grid w-full grid-cols-1 gap-px sm:grid-cols-2 md:grid-cols-3 place-items-start"
+					>
+						{
+							blogs?.map((blog) => (
+								<PostCard
+									client:load
+									title={blog.data.title}
+									href={`/blog/${blog.slug}`}
+									image={blog.data.heroImage}
+									pubDate={blog.data.pubDate}
+								/>
+							))
+						}
 					</div>
 				</div>
 			</div>

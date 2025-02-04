@@ -13,6 +13,7 @@
 </script>
 
 <StickyLink
+	blendDifference={false}
 	class={`relative h-full max-w-fit rounded-xl mx-auto group flex items-start justify-center ${
 		isFull ? "md:col-span-2" : ""
 	}`}

@@ -50,6 +50,29 @@ html {
 	animation: rainbow 10s ease infinite;
 }
 
+@keyframes bounce-right {
+	0% {
+		transform: translateX(0) rotate(0deg);
+	}
+	2.5% {
+		transform: translateX(25%) rotate(-5deg);
+	}
+	5% {
+		transform: translateX(0) rotate(0deg);
+	}
+	7.5% {
+		transform: translateX(25%) rotate(5deg);
+	}
+	10%,
+	100% {
+		transform: translateX(0);
+	}
+}
+
+.bounce-right {
+	animation: bounce-right 10s ease infinite;
+}
+
 @layer base {
 	:root {
 		/* Colors */

@@ -12,12 +12,14 @@
 	export let href: string;
 	export let mag: MagneticHoverOptions = DEFAULT_MAG;
 	export let ref: HTMLElement | undefined = undefined;
+	export let blendDifference = true;
 
 	let zIndex = "";
 </script>
 
 <a
-	on:mouseenter={() => (zIndex = "50")}
+	data-blend-difference={blendDifference}
+	on:mouseenter={() => (zIndex = "40")}
 	on:mouseleave={() => (zIndex = "")}
 	style:z-index={zIndex}
 	use:cursorFlow

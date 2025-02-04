@@ -4,6 +4,7 @@
 	import { onMount } from "svelte";
 
 	let borderWidth = "1px";
+	let blendDifference = false;
 
 	let transform = "translate(0, 0) rotate(0deg) scale(1, 1)";
 	let width = "var(--circle-size)";
@@ -34,6 +35,7 @@
 		const hoveredEl = $cursorCircle?.el;
 		let boundingRect = hoveredEl?.getBoundingClientRect?.() ?? null;
 		const styles = hoveredEl ? window.getComputedStyle(hoveredEl) : null;
+		blendDifference = hoveredEl?.dataset?.blendDifference === "true";
 
 		const newWidth = boundingRect
 			? `${boundingRect?.width}px`
@@ -153,6 +155,7 @@
 	style:border-radius={borderRadius}
 	style:border="{borderWidth} solid white"
 	style:transform
+	class:blend-difference={blendDifference}
 	class="hidden md:block"
 ></div>
 
@@ -171,8 +174,16 @@
 			width 0.075s,
 			height 0.075s,
 			border-radius 0.2s,
-			border-width 0.2s;
-		will-change: width, height, border-radius, border-width, transform;
-		@apply z-50 pointer-events-none rounded-full fixed;
+			border-width 0.2s,
+			background-color 0.2s;
+		background-color: #ffffff00;
+		will-change: width, height, border-radius, border-width, transform,
+			background-color;
+		z-index: 99999;
+		@apply pointer-events-none rounded-full fixed;
+	}
+
+	#cursor-circle.blend-difference {
+		@apply mix-blend-difference bg-white;
 	}
 </style>

@@ -54,9 +54,9 @@
 			<div class="grid grid-cols-3 place-items-center gap-2 text-white">
 				<StickyLink
 					mag={{
-						strength: { x: 0.35, y: 0.35 },
+						strength: { x: 0.5, y: 0.5 },
 					}}
-					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
+					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded-full"
 					href="mailto:131eolsen@gmail.com"
 				>
 					<svg
@@ -91,10 +91,10 @@
 				</StickyLink>
 				<StickyLink
 					mag={{
-						strength: { x: 0.35, y: 0.35 },
+						strength: { x: 0.5, y: 0.5 },
 					}}
 					target="_blank"
-					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
+					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded-full"
 					href="https://www.linkedin.com/in/eolsendev/"
 				>
 					<svg
@@ -112,10 +112,10 @@
 				</StickyLink>
 				<StickyLink
 					mag={{
-						strength: { x: 0.35, y: 0.35 },
+						strength: { x: 0.5, y: 0.5 },
 					}}
 					target="_blank"
-					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded"
+					class="aspect-square w-full opacity-50 transition-opacity hover:opacity-100 p-1 rounded-full"
 					href="https://github.com/o2dependent"
 				>
 					<svg

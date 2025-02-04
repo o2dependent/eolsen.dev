@@ -73,7 +73,6 @@
 		</div>
 	</div>
 </div>
-<slot name="content" />
 
 <style lang="postcss">
 	@keyframes background-shift {

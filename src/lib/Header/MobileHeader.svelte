@@ -68,7 +68,7 @@
 		<a on:click={() => (active = false)} bind:this={menuItems[0]} href="/"
 			>Home
 		</a>
-		<a on:click={() => (active = false)} bind:this={menuItems[1]} href="/#about"
+		<a on:click={() => (active = false)} bind:this={menuItems[1]} href="/about"
 			>About
 		</a>
 		<a
