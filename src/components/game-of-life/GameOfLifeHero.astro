@@ -1,0 +1,88 @@
+<canvas class="rainbow" id="gridCanvas" width="0" height="0"></canvas>
+
+<script src="game-of-life/wasm_exec.js" is:inline></script>
+<script is:inline>
+	//@ts-nocheck
+	// From github.com/o2dependent/go-wasm-game-of-life
+
+	const canvas = document.getElementById("gridCanvas");
+	const ctx = canvas.getContext("2d");
+	let cellSize = 5;
+	let mouseDown = false;
+
+	function updateGrid(jsGrid) {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		for (let x = 0; x < window.goWidth; x++) {
+			for (let y = 0; y < window.goHeight; y++) {
+				if (jsGrid[x][y] === 0) {
+					ctx.fillStyle = "#000";
+					ctx.fillRect(x * cellSize, y * cellSize, cellSize, cellSize);
+				}
+			}
+		}
+	}
+
+	window.addEventListener("mousedown", () => {
+		mouseDown = true;
+	});
+	window.addEventListener("mouseup", () => {
+		mouseDown = false;
+	});
+
+	canvas.addEventListener("mousemove", (e) => {
+		const rect = canvas.getBoundingClientRect();
+		const x = Math.max(
+			0,
+			Math.min(
+				Math.floor((e.clientX - rect.left) / cellSize),
+				window.goWidth - 1,
+			),
+		);
+		const y = Math.max(
+			0,
+			Math.min(
+				Math.floor((e.clientY - rect.top) / cellSize),
+				window.goHeight - 1,
+			),
+		);
+		const grid = goToggleCell(x, y);
+		updateGrid(grid);
+	});
+
+	function startStop() {
+		goStartStop();
+		const button = document.getElementById("startStop");
+		button.textContent = button.textContent === "Start" ? "Stop" : "Start";
+	}
+
+	function clearGrid() {
+		goClearGrid();
+	}
+
+	const resize = () => {
+		canvas.height = window.innerHeight;
+		canvas.width = window.innerWidth;
+		cellSize = Math.ceil(
+			Math.max(canvas.height / window.goWidth, canvas.width / window.goHeight),
+		);
+		console.log(cellSize);
+	};
+
+	window.addEventListener("resize", () => {
+		resize();
+	});
+
+	// Initialize WASM
+	const go = new Go();
+	WebAssembly.instantiateStreaming(
+		fetch("game-of-life/main.wasm"),
+		go.importObject,
+	)
+		.then((result) => {
+			go.run(result.instance);
+			resize();
+			startStop();
+		})
+		.catch((err) => console.error(err));
+</script>
