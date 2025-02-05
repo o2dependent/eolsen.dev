@@ -3,6 +3,25 @@ import MainLayout from "../layouts/MainLayout.astro";
 import Header from "$lib/Header/Header.svelte";
 import { Image } from "astro:assets";
 import aboutImage from "../../public/about_app/about_photo.jpeg";
+
+const skills = [
+	"Web Development",
+	"Cross platform",
+	"Software Architecture",
+	"Database Design",
+	"Node",
+	"React",
+	"Svelte",
+	"JavaScript",
+	"TypeScript",
+	"GoLang",
+	"Python",
+	"Postgres",
+	"UI Design",
+	"UX Design",
+	"Prototyping",
+	"Figma",
+];
 ---
 
 <MainLayout
@@ -10,27 +29,117 @@ import aboutImage from "../../public/about_app/about_photo.jpeg";
 	title="About"
 >
 	<Header client:load />
-	<div class="max-w-screen-lg mx-auto px-4 pt-12">
-		<div class="grid md:grid-cols-2 gap-4">
-			<div class="grid grid-cols-1 grid-rows-1 place-items-center">
+	<div class="max-w-screen-lg mx-auto px-4 pt-12 flex flex-col gap-24">
+		<div class="grid md:grid-cols-5 gap-4">
+			<div
+				class="grid grid-cols-1 grid-rows-1 place-items-center md:col-span-2"
+			>
 				<Image
-					class="aspect-square object-cover rounded-lg col-start-1 col-end-1 row-start-1 row-end-1 z-10"
+					class="select-none pointer-events-none aspect-square object-cover rounded-lg col-start-1 col-end-1 row-start-1 row-end-1 z-10"
 					src={aboutImage}
 					alt="Ethan Olsen"
 				/>
 			</div>
-			<div class="flex flex-col gap-2 h-full justify-center">
+			<div class="flex flex-col gap-2 h-full justify-center md:col-span-3">
 				<h1 class="text-7xl z-20 font-semibold font-edgy">Hello.</h1>
 				<div
 					class="w-full h-1 rainbow relative after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-r after:from-black/0 after:via-black/0 after:to-black"
 				>
 				</div>
-				<p class="text-xl">
+				<p class="text-xl text-white/90">
 					Fuelled by a passion to build compelling and useful products. I have a
 					deep desire to excel and continuously improve my work. Learn more
 					about me below.
 				</p>
 			</div>
+		</div>
+		<div class="flex flex-col gap-2">
+			<h2 class="text-3xl font-semibold font-edgy text-white/90">
+				My Experience so far.
+			</h2>
+			<!-- <div
+				class="w-full h-1 rainbow relative after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-r after:from-black/0 after:via-black/0 after:to-black"
+			>
+			</div> -->
+			<div class="grid md:grid-cols-5 gap-4 py-2">
+				<div class="md:col-span-3 text-xl text-white/80 flex flex-col gap-2">
+					<p>
+						I’m a full-stack software architect with a proven track record of
+						engineering high-impact, scalable solutions across industries. My
+						expertise spans the entire development lifecycle—from crafting
+						pixel-perfect, user-centric interfaces to designing resilient,
+						enterprise-grade backend systems. What sets me apart? A rare fusion
+						of technical precision and design intuition, paired with a
+						relentless focus on delivering business value through innovation.
+					</p>
+				</div>
+				<div
+					class="md:col-span-2 flex flex-wrap gap-2 justify-start items-start h-fit"
+				>
+					{
+						skills?.map((s) => (
+							<div class="rounded px-2 py-1 border border-white/25 text-nowrap h-fit">
+								{s}
+							</div>
+						))
+					}
+				</div>
+			</div>
+			<p class="font-medium text-2xl text-white">Core Strengths:</p>
+			<ul class="text-lg ml-4 list-disc flex flex-col gap-1 text-white/80">
+				<li>
+					Architected systems optimized for performance, security, and
+					scalability using TypeScript and Node.js.
+				</li>
+
+				<li>
+					Led UI/UX redesigns that boosted user engagement by 40%+ through
+					TypeScript-driven frontends and data-driven design principles.
+				</li>
+
+				<li>
+					Designed mission-critical databases (SQL/NoSQL) with sub-10ms query
+					latency, powering real-time analytics for clients.
+				</li>
+
+				<li>
+					Pioneered DevOps pipelines (CI/CD, Kubernetes, AWS/GCP) that reduced
+					deployment cycles by 70% while ensuring 99.99% uptime.
+				</li>
+
+				<li>
+					Translated complex business logic into clean, maintainable codebases
+					using TypeScript and domain-driven design, slashing technical debt by
+					60% for cross-functional teams.
+				</li>
+			</ul>
+
+			<p class="font-medium text-2xl text-white">Why I Stand Out:</p>
+			<ul class="text-lg ml-4 list-disc flex flex-col gap-1 text-white/80">
+				<li>
+					Full-Stack Agility: From designing intuitive user experiences to
+					building distributed microservices, I bridge the gap between
+					aesthetics and engineering rigor.
+				</li>
+
+				<li>
+					Strategic Problem-Solving: I don’t just write code—I solve business
+					challenges. My solutions have driven operational efficiencies for
+					startups and enterprises alike.
+				</li>
+
+				<li>
+					Future-Proof Code: A relentless advocate for clean architecture and
+					type-safe systems (TypeScript/Go), I build software that evolves with
+					market demands.
+				</li>
+
+				<li>
+					Leadership Through Innovation: Mentored 5+ engineers, authored
+					internal frameworks adopted company-wide, and championed agile
+					practices that accelerated product launches.
+				</li>
+			</ul>
 		</div>
 	</div>
 </MainLayout>
