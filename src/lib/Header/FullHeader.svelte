@@ -10,7 +10,7 @@
 			mag={{
 				strength: { x: 0.3, y: 0.3 },
 			}}
-			class="relative px-1 rounded-lg z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-opacity hover:opacity-100"
+			class="hover:bg-black relative px-1 rounded-lg z-50 flex items-center justify-center gap-2 py-4 text-2xl transition-opacity hover:opacity-100"
 			href="/"
 		>
 			<svg
@@ -49,7 +49,7 @@
 			mag={{
 				strength: { x: 0.3, y: 0.3 },
 			}}
-			class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
+			class="hover:bg-black relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 			href="/about"
 		>
 			About
@@ -58,7 +58,7 @@
 			mag={{
 				strength: { x: 0.3, y: 0.3 },
 			}}
-			class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
+			class="hover:bg-black relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 			href="/project"
 		>
 			Projects
@@ -67,7 +67,7 @@
 			mag={{
 				strength: { x: 0.3, y: 0.3 },
 			}}
-			class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
+			class="hover:bg-black relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 			href="/blog"
 		>
 			Blogs
@@ -76,7 +76,7 @@
 			mag={{
 				strength: { x: 0.3, y: 0.3 },
 			}}
-			class="relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
+			class="hover:bg-black relative rounded-lg flex h-full items-center justify-center px-2 py-4 opacity-75 transition-opacity hover:opacity-100"
 			href="/music"
 		>
 			Music
