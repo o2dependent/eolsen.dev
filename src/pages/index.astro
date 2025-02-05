@@ -7,7 +7,6 @@ import StickyLink from "$components/StickyLink.svelte";
 import Header from "$lib/Header/Header.svelte";
 import TerminalBase from "$lib/terminal/TerminalBase.svelte";
 import GameOfLifeHero from "$components/game-of-life/GameOfLifeHero.astro";
-import "./index.css";
 
 const projects = (await getCollection("projects"))
 	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
@@ -27,8 +26,8 @@ const blogs = (await getCollection("blogs"))
 			class="px-4 h-screen flex flex-col items-center justify-center -mt-16 md:-mt-20"
 		>
 			<div
-				style="font-family: StudioFeixenEdgy; filter: backdrop(1px 1px 1px #000)"
-				class="z-10 flex flex-col items-start md:items-center justify-center"
+				style="filter: backdrop(1px 1px 1px #000)"
+				class="font-edgy z-10 flex flex-col items-start md:items-center justify-center"
 			>
 				<h1 class="font-extrabold text-8xl">Ethan Olsen</h1>
 				<h2 class="text-5xl">Software Engineer</h2>
@@ -64,7 +63,9 @@ const blogs = (await getCollection("blogs"))
 					class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
 				>
 					<div class="flex justify-between items-baseline">
-						<h2 id="projects" class="mb-10 text-5xl md:mb-4">Projects</h2>
+						<h2 id="projects" class="mb-10 text-5xl md:mb-4 font-edgy">
+							Projects
+						</h2>
 						<StickyLink
 							client:load
 							href="/project"
@@ -93,7 +94,9 @@ const blogs = (await getCollection("blogs"))
 					class="prose prose-invert mx-auto w-full max-w-4xl px-4 prose-p:m-0 prose-a:no-underline"
 				>
 					<div class="flex justify-between items-baseline">
-						<h2 id="blogs" class="!mt-0 text-5xl md:mb-4">Blog Posts</h2>
+						<h2 id="blogs" class="!mt-0 text-5xl md:mb-4 font-edgy">
+							Blog Posts
+						</h2>
 						<StickyLink
 							client:load
 							href="/blog"

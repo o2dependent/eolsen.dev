@@ -48,9 +48,10 @@ export default {
 				},
 			},
 			fontFamily: {
-				sans: ["Inter", ...fontFamily.sans],
-				mono: ["Source Code Pro", ...fontFamily.mono],
+				sans: ["StudioFeixenSans", ...fontFamily.sans],
+				mono: ["StudioFeixenMono", "Source Code Pro", ...fontFamily.mono],
 				alt: ["Courier", ...fontFamily.sans],
+				edgy: ["StudioFeixenEdgy", ...fontFamily.sans],
 			},
 			fontSize: {
 				xxs: "10px",

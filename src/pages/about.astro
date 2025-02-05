@@ -1,18 +1,8 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import MainLayout from "../layouts/MainLayout.astro";
-import HomePage from "../islands/home/HomePage.svelte";
-import { getCollection } from "astro:content";
-import PostCard from "$components/PostCard.svelte";
-import StickyLink from "$components/StickyLink.svelte";
 import Header from "$lib/Header/Header.svelte";
-
-const projects = (await getCollection("projects"))
-	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	?.slice(0, 3);
-const blogs = (await getCollection("blogs"))
-	?.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-	?.slice(0, 3);
+import { Image } from "astro:assets";
+import aboutImage from "../../public/about_app/about_photo.jpeg";
 ---
 
 <MainLayout
@@ -20,4 +10,27 @@ const blogs = (await getCollection("blogs"))
 	title="About"
 >
 	<Header client:load />
+	<div class="max-w-screen-lg mx-auto px-4 pt-12">
+		<div class="grid md:grid-cols-2 gap-4">
+			<div class="grid grid-cols-1 grid-rows-1 place-items-center">
+				<Image
+					class="aspect-square object-cover rounded-lg col-start-1 col-end-1 row-start-1 row-end-1 z-10"
+					src={aboutImage}
+					alt="Ethan Olsen"
+				/>
+			</div>
+			<div class="flex flex-col gap-2 h-full justify-center">
+				<h1 class="text-7xl z-20 font-semibold font-edgy">Hello.</h1>
+				<div
+					class="w-full h-1 rainbow relative after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-r after:from-black/0 after:via-black/0 after:to-black"
+				>
+				</div>
+				<p class="text-xl">
+					Fuelled by a passion to build compelling and useful products. I have a
+					deep desire to excel and continuously improve my work. Learn more
+					about me below.
+				</p>
+			</div>
+		</div>
+	</div>
 </MainLayout>
