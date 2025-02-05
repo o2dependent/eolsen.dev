@@ -51,15 +51,11 @@
 		updateGrid(grid);
 	});
 
-	function startStop() {
-		goStartStop();
-		const button = document.getElementById("startStop");
-		button.textContent = button.textContent === "Start" ? "Stop" : "Start";
-	}
-
 	function clearGrid() {
 		goClearGrid();
 	}
+
+	let timeout = null;
 
 	const resize = () => {
 		canvas.height = window.innerHeight;
@@ -67,10 +63,13 @@
 		cellSize = Math.ceil(
 			Math.max(canvas.height / window.goWidth, canvas.width / window.goHeight),
 		);
+		ctx.fillStyle = "#000";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
 	};
 
 	window.addEventListener("resize", () => {
-		resize();
+		clearTimeout(timeout);
+		timeout = setTimeout(resize, 250);
 	});
 
 	// Initialize WASM
@@ -82,7 +81,7 @@
 		.then((result) => {
 			go.run(result.instance);
 			resize();
-			startStop();
+			goStartStop();
 		})
 		.catch((err) => console.error(err));
 </script>
