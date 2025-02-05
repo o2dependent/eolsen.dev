@@ -26,11 +26,20 @@ const blogs = (await getCollection("blogs"))
 			class="px-4 h-screen flex flex-col items-center justify-center -mt-16 md:-mt-20"
 		>
 			<div
-				style="filter: backdrop(1px 1px 1px #000)"
 				class="font-edgy z-10 flex flex-col items-start md:items-center justify-center"
 			>
-				<h1 class="font-extrabold text-8xl">Ethan Olsen</h1>
-				<h2 class="text-5xl">Software Engineer</h2>
+				<h1
+					style="filter: drop-shadow(3px 3px 2px #000)"
+					class="font-extrabold text-8xl select-none"
+				>
+					Ethan Olsen
+				</h1>
+				<h2
+					style="filter: drop-shadow(3px 3px 2px #000)"
+					class="text-5xl select-none"
+				>
+					Software Engineer
+				</h2>
 				<StickyLink
 					class="font-mono mt-6 text-lg border border-white px-2 py-1 rounded-sm bg-black"
 					href="/about"
