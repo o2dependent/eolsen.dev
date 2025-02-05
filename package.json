@@ -40,6 +40,7 @@
 		"@types/chroma-js": "^2.4.3",
 		"@types/meyda": "^4.3.8",
 		"@types/showdown": "^2.0.6",
+		"postcss-import": "^16.1.0",
 		"postcss-nesting": "^12.1.5"
 	}
 }

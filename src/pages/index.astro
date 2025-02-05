@@ -1,11 +1,9 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import MainLayout from "../layouts/MainLayout.astro";
 import { getCollection } from "astro:content";
 import PostCard from "$components/PostCard.svelte";
 import StickyLink from "$components/StickyLink.svelte";
 import Header from "$lib/Header/Header.svelte";
-import TerminalBase from "$lib/terminal/TerminalBase.svelte";
 import GameOfLifeHero from "$components/game-of-life/GameOfLifeHero.astro";
 
 const projects = (await getCollection("projects"))
@@ -61,7 +59,7 @@ const blogs = (await getCollection("blogs"))
 					</svg>
 				</StickyLink>
 			</div>
-			<GameOfLifeHero client:load />
+			<GameOfLifeHero />
 		</div>
 		<div
 			class="-mt-1 flex h-full w-full flex-col overflow-hidden bg-gray-950 pb-32 pt-32"

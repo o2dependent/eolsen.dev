@@ -1,8 +1,6 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import Header from "$lib/Header/Header.svelte";
-import { Image } from "astro:assets";
-import aboutImage from "../../public/about_app/about_photo.jpeg";
 
 const skills = [
 	"Web Development",
@@ -34,9 +32,9 @@ const skills = [
 			<div
 				class="grid grid-cols-1 grid-rows-1 place-items-center md:col-span-2"
 			>
-				<Image
+				<img
 					class="select-none pointer-events-none aspect-square object-cover rounded-lg col-start-1 col-end-1 row-start-1 row-end-1 z-10"
-					src={aboutImage}
+					src="/about_app/about_photo.jpeg"
 					alt="Ethan Olsen"
 				/>
 			</div>
