@@ -35,6 +35,9 @@ const blogs = (await getCollection("blogs"))
 				<StickyLink
 					class="font-mono mt-6 text-lg border border-white px-2 py-1 rounded-sm bg-black"
 					href="/about"
+					mag={{
+						strength: { x: 0.35, y: 0.5 },
+					}}
 					client:load
 				>
 					Learn about me <svg
