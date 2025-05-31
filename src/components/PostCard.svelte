@@ -51,8 +51,8 @@
 		<h4 class={`${isFull ? "md:text-3xl text-xl" : "text-xl"} font-bold`}>
 			{title}
 		</h4>
-		<p class="text-white/75">
+		<!-- <p class="text-white/75">
 			<FormattedDate date={pubDate} />
-		</p>
+		</p> -->
 	</div>
 </StickyLink>
